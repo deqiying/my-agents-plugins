@@ -1,28 +1,39 @@
-# My Codex Plugins
+# My Agents Plugins
 
-这是一个 Codex 插件市场仓库，用于维护可复用的本地 workflow 插件、MCP 路由技能、OpenCLI 辅助技能和设计系统参考技能。
+这是一个多 agent 插件市场仓库，用于维护可复用的本地 workflow 插件、MCP 路由技能、OpenCLI 辅助技能和设计系统参考技能。
+
+不同 agent 的插件市场格式不同，因此按 agent 分开维护：
+
+- `plugins/codex/`: Codex 插件包源码。
+- `plugins/claude-code/`: Claude Code 插件市场预留目录，当前暂未维护内容。
+
+当前只有 Codex 插件市场可用。Codex CLI 的 marketplace root 是 `plugins/codex/`，入口文件位于 `plugins/codex/.agents/plugins/marketplace.json`。
 
 ## 添加插件市场
 
-在 Codex CLI 中，可以把仓库根目录添加为插件市场来源：
+在 Codex CLI 中，可以把 `plugins/codex` 目录添加为 Codex 插件市场来源：
 
 ```powershell
-codex plugin marketplace add <repo-url-or-local-path>
+codex plugin marketplace add <repo-root>/plugins/codex
 ```
 
-如果发布到 GitHub，可以固定分支或 tag：
+如果从 GitHub 使用，先 checkout 或 sparse checkout 仓库，再添加本地的 `plugins/codex` 目录：
 
 ```powershell
-codex plugin marketplace add <owner>/my-codex-plugins --ref main
+git clone https://github.com/<owner>/my-agents-plugins.git
+codex plugin marketplace add ./my-agents-plugins/plugins/codex
 ```
 
 如果使用 sparse checkout，需要包含 marketplace 元数据和插件目录：
 
 ```powershell
-codex plugin marketplace add https://github.com/<owner>/my-codex-plugins.git --sparse .agents/plugins --sparse plugins --ref main
+git clone --filter=blob:none --sparse https://github.com/<owner>/my-agents-plugins.git
+cd my-agents-plugins
+git sparse-checkout set plugins/codex
+codex plugin marketplace add ./plugins/codex
 ```
 
-插件市场元数据位于 `.agents/plugins/marketplace.json`，插件源码位于 `plugins/`。
+Codex 插件市场元数据位于 `plugins/codex/.agents/plugins/marketplace.json`，Codex 插件源码位于 `plugins/codex/<plugin-name>/`。
 
 ## 插件说明
 
@@ -96,7 +107,7 @@ Skill:
 
 发布前建议检查：
 
-1. `.agents/plugins/marketplace.json` 可以被 JSON 解析。
-2. 每个 `plugins/*/.codex-plugin/plugin.json` 可以被 JSON 解析。
+1. `plugins/codex/.agents/plugins/marketplace.json` 可以被 JSON 解析。
+2. 每个 `plugins/codex/*/.codex-plugin/plugin.json` 可以被 JSON 解析。
 3. 已扫描 skill 文本，确认没有本机绝对路径或指定用户目录残留。
 4. 安装或更新插件后，重启 Codex 或开启新会话以刷新插件缓存。
