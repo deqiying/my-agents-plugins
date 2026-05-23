@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Tool Skills logo">
+  <rect width="128" height="128" rx="28" fill="#0F766E"/>
+  <rect x="24" y="30" width="80" height="54" rx="12" fill="#ECFDF5"/>
+  <rect x="30" y="38" width="68" height="38" rx="7" fill="#134E4A"/>
+  <path d="M42 50l11 8-11 8" fill="none" stroke="#99F6E4" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M62 67h22" stroke="#CCFBF1" stroke-width="7" stroke-linecap="round"/>
+  <path d="M39 92h50" stroke="#ECFDF5" stroke-width="8" stroke-linecap="round"/>
+  <path d="M48 84l-9 8 9 8M80 84l9 8-9 8" fill="none" stroke="#5EEAD4" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
