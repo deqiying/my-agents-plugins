@@ -1,0 +1,7 @@
+interface:
+  display_name: "Tool OfficeCLI"
+  short_description: "CLI workflows for Office documents"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.png"
+  brand_color: "#2563EB"
+  default_prompt: "Use $tool-officecli to inspect, edit, validate, or render this Office document with the officecli CLI."

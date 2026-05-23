@@ -91,6 +91,7 @@ Skills:
 Skill:
 
 - `tool-codesearch`: 使用本地 `codesearch` CLI 在编辑前做语义代码库发现。
+- `tool-officecli`: 使用本地 `officecli` CLI 创建、检查、修改、验证和渲染 Office 文档。
 
 ## 可移植性约定
 
