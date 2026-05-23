@@ -1,14 +1,14 @@
 {
-  "name": "my-codex-plugins",
+  "name": "my-agents-plugins",
   "interface": {
-    "displayName": "My Codex Plugins"
+    "displayName": "My Agents Plugins - Codex"
   },
   "plugins": [
     {
       "name": "agent-workflows",
       "source": {
         "source": "local",
-        "path": "./plugins/agent-workflows"
+        "path": "./agent-workflows"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -20,7 +20,7 @@
       "name": "awesome-design-md",
       "source": {
         "source": "local",
-        "path": "./plugins/awesome-design-md"
+        "path": "./awesome-design-md"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -32,7 +32,7 @@
       "name": "mcp-skills",
       "source": {
         "source": "local",
-        "path": "./plugins/mcp-skills"
+        "path": "./mcp-skills"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -44,7 +44,7 @@
       "name": "opencli",
       "source": {
         "source": "local",
-        "path": "./plugins/opencli"
+        "path": "./opencli"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -56,7 +56,7 @@
       "name": "tool-skills",
       "source": {
         "source": "local",
-        "path": "./plugins/tool-skills"
+        "path": "./tool-skills"
       },
       "policy": {
         "installation": "AVAILABLE",
