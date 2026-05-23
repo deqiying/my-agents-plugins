@@ -7,3 +7,6 @@ plugins/cache/
 Thumbs.db
 .vscode/
 .idea/
+
+
+.ace-tool
