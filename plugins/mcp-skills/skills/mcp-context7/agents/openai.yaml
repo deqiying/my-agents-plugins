@@ -1,0 +1,8 @@
+interface:
+  display_name: "MCP Context7"
+  short_description: "Current library documentation MCP"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.png"
+  brand_color: "#7C3AED"
+  default_prompt: "Use $mcp-context7 to look up current library documentation for this task."
+

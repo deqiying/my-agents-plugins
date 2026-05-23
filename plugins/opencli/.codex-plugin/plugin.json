@@ -1,0 +1,25 @@
+{
+  "name": "opencli",
+  "version": "1.7.19",
+  "description": "OpenCLI skills for using logged-in browser-backed site and tool adapters from Codex.",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "OpenCLI",
+    "shortDescription": "Browser-backed CLI adapters for Codex.",
+    "longDescription": "OpenCLI skills for using logged-in browser-backed site and tool adapters from Codex.",
+    "developerName": "Maintainer",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Use OpenCLI to inspect this logged-in page.",
+      "Search this site through OpenCLI.",
+      "Use browser-backed extraction for this page."
+    ],
+    "brandColor": "#111827",
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/logo.png"
+  }
+}

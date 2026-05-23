@@ -1,0 +1,34 @@
+{
+  "name": "mcp-skills",
+  "version": "0.1.7",
+  "description": "Local skill pack that documents when to use each managed MCP service and its tools.",
+  "author": {
+    "name": "Maintainer"
+  },
+  "license": "UNLICENSED",
+  "keywords": [
+    "mcp",
+    "tools",
+    "routing",
+    "codex"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "MCP Skills",
+    "shortDescription": "Skill routing notes for local MCP services.",
+    "longDescription": "A personal local plugin that wraps each managed non-excluded MCP service as a Codex skill. Each skill explains when to use that MCP server, which tools it exposes, and when each tool is the right fit.",
+    "developerName": "Maintainer",
+    "category": "Productivity",
+    "capabilities": [
+      "Read"
+    ],
+    "defaultPrompt": [
+      "Use the right MCP skill for this task.",
+      "Show me which MCP tool fits this request.",
+      "Audit my MCP tool routing for this workflow."
+    ],
+    "brandColor": "#2563EB",
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/logo.png"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "name": "awesome-design-md",
+  "version": "0.2.0",
+  "description": "Bundle the VoltAgent awesome-design-md catalogue as a local Codex plugin, with an English skill and helper workflow for fetching real DESIGN.md files into projects.",
+  "author": {
+    "name": "VoltAgent",
+    "url": "https://github.com/VoltAgent/awesome-design-md"
+  },
+  "homepage": "https://github.com/VoltAgent/awesome-design-md",
+  "repository": "https://github.com/VoltAgent/awesome-design-md",
+  "license": "MIT",
+  "keywords": [
+    "design-md",
+    "ui",
+    "design-system",
+    "frontend",
+    "branding"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Awesome DESIGN.md",
+    "shortDescription": "Select, fetch, and apply brand-inspired DESIGN.md templates for frontend work.",
+    "longDescription": "Bundle the awesome-design-md catalogue as a local skill, keep the upstream brand index on disk, and help Codex fetch the real DESIGN.md file for a chosen brand before implementing UI changes.",
+    "developerName": "VoltAgent",
+    "category": "Productivity",
+    "capabilities": [
+      "Write"
+    ],
+    "websiteURL": "https://github.com/VoltAgent/awesome-design-md",
+    "privacyPolicyURL": "https://github.com/VoltAgent/awesome-design-md/blob/main/README.md",
+    "termsOfServiceURL": "https://github.com/VoltAgent/awesome-design-md/blob/main/LICENSE",
+    "defaultPrompt": [
+      "Pick a suitable DESIGN.md from awesome-design-md for this product, fetch it, and restyle the landing page accordingly.",
+      "Use the Vercel DESIGN.md direction from awesome-design-md to redesign the homepage.",
+      "Choose a strong developer-tool aesthetic from awesome-design-md and turn it into concrete frontend implementation rules."
+    ],
+    "brandColor": "#10B981",
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/logo.png"
+  }
+}

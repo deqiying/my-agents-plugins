@@ -1,0 +1,7 @@
+interface:
+  display_name: "Workflow Guidelines"
+  short_description: "Small, careful, verifiable engineering edits"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.png"
+  brand_color: "#F97316"
+  default_prompt: "Use $workflows-guidelines to keep non-trivial code, config, script, CI, plugin, or tooling edits simple, surgical, and verifiable."

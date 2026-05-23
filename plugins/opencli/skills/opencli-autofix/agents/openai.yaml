@@ -1,0 +1,7 @@
+interface:
+  display_name: "OpenCLI AutoFix"
+  short_description: "Repair broken OpenCLI adapters"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.png"
+  brand_color: "#F97316"
+  default_prompt: "Use $opencli-autofix to diagnose and repair this failing OpenCLI adapter command."

@@ -1,0 +1,8 @@
+interface:
+  display_name: "MCP DDG Search"
+  short_description: "Lightweight web lookup MCP"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.png"
+  brand_color: "#F97316"
+  default_prompt: "Use $mcp-ddg-search for a lightweight web lookup for this task."
+

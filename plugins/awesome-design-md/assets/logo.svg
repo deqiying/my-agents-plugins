@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Awesome DESIGN.md logo">
+  <rect width="128" height="128" rx="28" fill="#10B981"/>
+  <path d="M36 84l15-42h26l15 42" fill="none" stroke="#ECFDF5" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M47 69h35" stroke="#D1FAE5" stroke-width="9" stroke-linecap="round"/>
+  <circle cx="97" cy="35" r="11" fill="#FDE68A"/>
+  <circle cx="31" cy="34" r="7" fill="#A7F3D0"/>
+</svg>

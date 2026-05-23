@@ -1,0 +1,37 @@
+{
+  "name": "agent-workflows",
+  "version": "0.1.0",
+  "description": "Personal workflow skills for Codex task planning and execution.",
+  "author": {
+    "name": "Maintainer"
+  },
+  "license": "UNLICENSED",
+  "keywords": [
+    "workflow",
+    "planning",
+    "codex",
+    "skills"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Agent Workflows",
+    "shortDescription": "Personal workflow skills for Codex.",
+    "longDescription": "A local skills-only plugin for reusable agent workflows such as structured planning, stepwise problem solving, coding guidelines, output formatting, plan stress-testing, and task execution discipline. It intentionally does not ship MCP servers.",
+    "developerName": "Maintainer",
+    "category": "Productivity",
+    "capabilities": [
+      "Read"
+    ],
+    "defaultPrompt": [
+      "Use a workflows-prefixed skill to plan this task.",
+      "Apply workflows-sequential-thinking to evidence-driven debugging, diagnostics, or complex multi-step work.",
+      "Break this ambiguous request into a validated plan.",
+      "Apply workflows-output-formatting to any dense user-facing response so it keeps important details while becoming easier to read.",
+      "Apply workflows-guidelines to keep non-trivial engineering edits simple, surgical, and verifiable.",
+      "Use Workflows Grill Me to stress-test this plan with focused questions."
+    ],
+    "brandColor": "#0F766E",
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/logo.png"
+  }
+}
