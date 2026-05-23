@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="OfficeCLI skill icon">
+  <rect width="64" height="64" rx="14" fill="#EFF6FF"/>
+  <path d="M18 14h19l7 7v24a5 5 0 0 1-5 5H18a5 5 0 0 1-5-5V19a5 5 0 0 1 5-5Z" fill="#FFFFFF"/>
+  <path d="M37 14v7h7" fill="#DBEAFE"/>
+  <path d="M18 14h19l7 7v24a5 5 0 0 1-5 5H18a5 5 0 0 1-5-5V19a5 5 0 0 1 5-5Z" fill="none" stroke="#2563EB" stroke-width="3.2" stroke-linejoin="round"/>
+  <path d="M20 27h18M20 34h16M20 41h11" stroke="#2563EB" stroke-width="3.2" stroke-linecap="round"/>
+  <rect x="31" y="32" width="23" height="18" rx="5" fill="#0F766E"/>
+  <path d="M37 39l4 3-4 3" fill="none" stroke="#CCFBF1" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M44 45h5" stroke="#CCFBF1" stroke-width="2.8" stroke-linecap="round"/>
+  <circle cx="17" cy="51" r="4" fill="#2563EB"/>
+  <circle cx="27" cy="53" r="4" fill="#16A34A"/>
+  <circle cx="37" cy="53" r="4" fill="#F97316"/>
+</svg>
