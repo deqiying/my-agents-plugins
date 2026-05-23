@@ -1,0 +1,10 @@
+interface:
+  display_name: "Workflow Output Formatting"
+  short_description: "Clear layout for user-facing responses"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.png"
+  brand_color: "#0891B2"
+  default_prompt: "Use $workflows-output-formatting to preserve important details while improving layout, hierarchy, spacing, and scanability."
+
+policy:
+  allow_implicit_invocation: true

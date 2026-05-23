@@ -1,0 +1,7 @@
+interface:
+  display_name: "OpenCLI Adapter Author"
+  short_description: "Build or extend OpenCLI site adapters"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.png"
+  brand_color: "#0EA5E9"
+  default_prompt: "Use $opencli-adapter-author to build or extend an OpenCLI adapter for this site."

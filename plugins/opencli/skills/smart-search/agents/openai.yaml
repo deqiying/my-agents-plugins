@@ -1,0 +1,7 @@
+interface:
+  display_name: "Smart Search"
+  short_description: "Route searches through OpenCLI sources"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.png"
+  brand_color: "#10B981"
+  default_prompt: "Use $smart-search to choose the best OpenCLI search source for this query."

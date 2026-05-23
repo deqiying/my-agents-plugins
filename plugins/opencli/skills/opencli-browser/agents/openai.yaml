@@ -1,0 +1,7 @@
+interface:
+  display_name: "OpenCLI Browser"
+  short_description: "Drive real Chrome pages with OpenCLI"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.png"
+  brand_color: "#111827"
+  default_prompt: "Use $opencli-browser to inspect and interact with this page through OpenCLI."

@@ -1,0 +1,8 @@
+interface:
+  display_name: "MCP Excel Tools"
+  short_description: "Preferred native Excel workbook MCP"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.png"
+  brand_color: "#16A34A"
+  default_prompt: "Use $mcp-excel-tools first for this Excel workbook inspection or edit."
+

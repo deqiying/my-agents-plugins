@@ -1,0 +1,7 @@
+interface:
+  display_name: "Awesome Design MD"
+  short_description: "Apply brand-inspired DESIGN.md templates"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.png"
+  brand_color: "#8B5CF6"
+  default_prompt: "Use $awesome-design-md to choose and apply a DESIGN.md visual direction."

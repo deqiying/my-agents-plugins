@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Agent Workflows logo">
+  <rect width="128" height="128" rx="28" fill="#0F766E"/>
+  <path d="M31 36h27l13 28-13 28H31l13-28z" fill="none" stroke="#ECFDF5" stroke-width="9" stroke-linejoin="round"/>
+  <path d="M72 36h22L81 64l13 28H72l13-28z" fill="#5EEAD4"/>
+  <circle cx="64" cy="64" r="7" fill="#ECFDF5"/>
+</svg>

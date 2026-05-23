@@ -1,0 +1,9 @@
+# Codex/runtime caches
+plugins/cache/
+.codex/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

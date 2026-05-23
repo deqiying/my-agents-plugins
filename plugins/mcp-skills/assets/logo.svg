@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="MCP Skills logo">
+  <rect width="128" height="128" rx="28" fill="#2563EB"/>
+  <circle cx="39" cy="43" r="13" fill="#EFF6FF"/>
+  <circle cx="89" cy="43" r="13" fill="#93C5FD"/>
+  <circle cx="64" cy="88" r="15" fill="#DBEAFE"/>
+  <path d="M49 50l13 25M79 50L66 75" stroke="#EFF6FF" stroke-width="8" stroke-linecap="round"/>
+  <path d="M39 43h50" stroke="#BFDBFE" stroke-width="6" stroke-linecap="round"/>
+</svg>
