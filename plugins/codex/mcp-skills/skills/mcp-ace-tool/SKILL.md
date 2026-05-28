@@ -1,6 +1,6 @@
 ---
 name: mcp-ace-tool
-description: Use the ace-tool MCP as an optional semantic locator for local codebases when exact file paths or identifiers are unknown, when a feature must be found by behavior, intent, workflow, ownership, or impact area, or when local exact search is too broad.
+description: Use the ace-tool MCP skill for semantic codebase discovery when exact files or identifiers are unknown, especially behavior-based feature location, workflow/call-chain discovery, plan-or-design guided implementation, ownership or impact analysis, and noisy local keyword searches.
 ---
 
 # MCP: ace-tool
@@ -20,6 +20,7 @@ Use `search_context` when:
 - You do not know the exact files, classes, methods, config keys, or error text.
 - Exact search returns too many disconnected hits and you need likely ownership or surrounding context.
 - The task spans hidden calling chains, generated entrypoints, event handlers, or cross-module responsibilities.
+- The task is driven by a plan, design doc, summary, or repo artifact and you need to map intent to likely code areas.
 
 Prefer `rg`, `fd`, or direct reads when:
 
@@ -29,6 +30,14 @@ Prefer `rg`, `fd`, or direct reads when:
 - The MCP is unavailable, slow, unstable, or previously produced irrelevant results for the current project.
 
 If both apply, use ace-tool for initial discovery only when it can reduce uncertainty. Otherwise, use local tools first and mention that semantic lookup was skipped because the path or symbol evidence was already exact.
+
+This skill is "skill-first for unclear semantic location", not "MCP-first for every task". For trivial exact lookups, local commands are the faster and more reliable path. For unfamiliar cross-module behavior, use ace-tool before broad keyword scans.
+
+## Artifact Context
+
+If the user references a plan, design, summary, implementation note, PR note, or repo-local artifact, first read the likely artifact when it can be located cheaply. Then query ace-tool with the artifact's behavior and responsibilities, not just its raw keywords.
+
+Do not turn this into an unconditional hidden-directory crawl. Use bounded local discovery only when the task wording implies artifact-driven work.
 
 ## Communication Discipline
 
@@ -77,7 +86,7 @@ Run these commands from the `mcp-ace-tool` skill directory, or resolve `scripts/
 - Purpose: Semantic retrieval over the current codebase index.
 - Use when: You need likely code snippets and file locations for a natural-language description such as "where is user authentication handled" or "how does config hot reload apply changes".
 - Avoid when: You already know the exact identifier or path and only need all literal references; use exact search instead.
-- Notes: Always provide the absolute project root path as `project_root_path`. Query by feature, behavior, workflow, or responsibility, and include a few known keywords when helpful.
+- Notes: Always provide the absolute project root path as `project_root_path`. Query by feature, behavior, workflow, or responsibility, and include a few known keywords only as anchors.
 
 ### `enhance_prompt`
 
@@ -89,6 +98,7 @@ Run these commands from the `mcp-ace-tool` skill directory, or resolve `scripts/
 
 Good semantic queries:
 
+- `Find where the gateway topology upload plan maps into SDK server selection and game server registration. Keywords: gateway topology, serverInfo, SDK login, route, publicWsAddress`
 - `Find the UI workflow that handles hero level-up and star-up success effects. Keywords: hero upgrade, star up, VFX, Spine_Hero, button effect`
 - `Find where backend validates and consumes materials for hero star-up. Keywords: HeroStarUpReq, cost item, consume hero`
 - `Find config loading and cache refresh flow for fishing pity config. Keywords: FishingPityConfig, config registry, manager cache`
