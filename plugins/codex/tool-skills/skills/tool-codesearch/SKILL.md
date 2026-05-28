@@ -1,6 +1,6 @@
 ---
 name: tool-codesearch
-description: Use the local codesearch CLI when the user wants to search code, find where a feature is implemented, locate code by business behavior, discover entry points, trace likely call paths, identify impact areas, or do semantic/natural-language codebase search before editing. Especially useful when exact files, functions, classes, handlers, configs, packets, or identifiers are unknown.
+description: Use the local codesearch CLI skill for semantic/natural-language codebase discovery, implementation lookup, feature entrypoint discovery, plan-or-design guided development, call-path tracing, impact-area discovery, and narrowing unknown files before editing.
 ---
 
 # Codesearch CLI
@@ -10,6 +10,34 @@ description: Use the local codesearch CLI when the user wants to search code, fi
 Use `codesearch` as a CLI-first semantic locator for local codebases. It is best for natural-language discovery such as "where is authentication handled", "find websocket reconnect logic", or "which files implement rate limiting".
 
 This skill intentionally favors `skill + CLI` over `skill + MCP` in Codex. Codex can run shell commands directly, parse JSON output, then read real files with native tools for verification.
+
+## Routing Ladder
+
+Use this skill before broad local keyword scans when the task asks where a feature is implemented, asks to implement from a plan/design, or gives business intent without exact files.
+
+Do not use this skill as a reflex for simple exact lookups. If the user provides a known path, symbol, packet name, config key, error text, log line, or one narrow directory, use `fd`, `rg`, or direct file reads first.
+
+This skill is for `semantic locate -> narrow -> read -> verify`:
+
+1. Translate the user's intent into a concise English behavior query with a few domain terms.
+2. Run `codesearch search` to get candidate files and snippets.
+3. Read the actual source or artifact files with local tools.
+4. Verify conclusions with exact `rg`, tests, builds, or command output.
+
+## Artifact Context Discovery
+
+When the user says to follow a plan, design doc, summary, PR note, implementation plan, or repo-local artifact, first locate the artifact with a small bounded local search before searching code. Include hidden or ignored repo artifact areas only when the task wording implies such artifacts may exist.
+
+Keep this bounded and contextual. The goal is to read the task artifact, then turn its intent into a better `codesearch` query; it is not a reason to scan every hidden directory on every task.
+
+Useful bounded patterns:
+
+```powershell
+rg --files --hidden --no-ignore -g '!**/.git/**' -g '*.md' .agent .codex docs
+rg -n --hidden --no-ignore "<plan or feature words>" -S -g '!**/.git/**' -g '*.md' .agent .codex docs
+```
+
+If those directories do not exist or the task is already exact, skip this step.
 
 ## Query Language Guidance
 
@@ -59,7 +87,8 @@ codesearch search "<narrower English query>" --json -m 10
 - The user asks for natural-language code search, semantic code search, or "like ace" local retrieval.
 - You do not know the exact files, classes, functions, config keys, or error text.
 - You need likely entry points before reading files.
-- Exact `rg` results are too broad and a conceptual query can reduce the search space.
+- The task is driven by a plan/design/artifact and you need to map it to code entrypoints.
+- Broad `rg` results would be noisy and a conceptual query can reduce the search space.
 - The task benefits from `search -> narrow -> read`:
   1. `codesearch search`
   2. inspect top file paths, line numbers, scores
