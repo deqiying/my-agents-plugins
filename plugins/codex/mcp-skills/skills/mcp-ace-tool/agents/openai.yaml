@@ -1,8 +1,0 @@
-interface:
-  display_name: "MCP Ace Tool"
-  short_description: "Semantic codebase context MCP"
-  icon_small: "./assets/icon.png"
-  icon_large: "./assets/icon.png"
-  brand_color: "#4F46E5"
-  default_prompt: "Use $mcp-ace-tool to find semantic code context for this task."
-

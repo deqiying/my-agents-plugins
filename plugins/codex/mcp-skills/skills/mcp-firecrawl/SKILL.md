@@ -21,7 +21,7 @@ Firecrawl is the robust extraction route for pages, sites, and documents when si
 - The task is simple quick search or low-overhead link discovery; use `mcp-ddg-search`.
 - The task is broad current research, news, policy, price, or multi-source verification; use `mcp-tavily`.
 - The task is semantic discovery of the most relevant public page; use `mcp-exa`.
-- The content is already local source code; use local tools or `mcp-ace-tool` depending on the lookup type.
+- The content is already local source code; use local tools such as `rg`, direct reads, or the relevant local code locator.
 
 ## Communication Discipline
 

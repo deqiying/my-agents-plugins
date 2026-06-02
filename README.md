@@ -62,7 +62,6 @@ Skill:
 
 Skills:
 
-- `mcp-ace-tool`: 按业务行为、工作流或影响面做语义代码检索。
 - `mcp-context7`: 查询当前第三方库、框架、SDK 文档。
 - `mcp-ddg-search`: 轻量网页检索和简单页面文本提取。
 - `mcp-deepwiki`: 理解公开 GitHub 仓库的架构、模块和 API 面。
