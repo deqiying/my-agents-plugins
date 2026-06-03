@@ -13,16 +13,25 @@ This skill intentionally favors `skill + CLI` over `skill + MCP` in Codex. Codex
 
 ## Routing Ladder
 
-Use this skill before broad local keyword scans when the task asks where a feature is implemented, asks to implement from a plan/design, or gives business intent without exact files.
+Use this skill before broad local keyword scans when the task asks where a feature is implemented, asks to implement from a plan/design, asks for architecture/data-flow analysis, or gives business intent without exact files.
 
 Do not use this skill as a reflex for simple exact lookups. If the user provides a known path, symbol, packet name, config key, error text, log line, or one narrow directory, use `fd`, `rg`, or direct file reads first.
 
 This skill is for `semantic locate -> narrow -> read -> verify`:
 
 1. Translate the user's intent into a concise English behavior query with a few domain terms.
-2. Run `codesearch search` to get candidate files and snippets.
-3. Read the actual source or artifact files with local tools.
-4. Verify conclusions with exact `rg`, tests, builds, or command output.
+2. Check `codesearch stats` before the first repository search.
+3. Run `codesearch search` to get candidate files and snippets when an index is available.
+4. Read the actual source or artifact files with local tools.
+5. Verify conclusions with exact `rg`, tests, builds, or command output.
+
+## First Action Contract
+
+When this skill triggers for an unknown-entrypoint task, the first repository-search command must be `codesearch stats`.
+
+Unknown-entrypoint tasks include architecture or data-flow analysis, "where is this implemented", plan/design-to-code mapping, broad feature discovery, call-path tracing, impact-area discovery, and business-intent requests without exact files or symbols.
+
+Do not start with broad full-repo `rg` patterns such as `response|websocket|OpenAI|ws`, `login|auth|token`, or other generic OR queries. Use `rg` after `codesearch` to verify exact symbols, inspect known directories, or recover from a documented `codesearch` failure/no-index path.
 
 ## Artifact Context Discovery
 
@@ -70,6 +79,8 @@ Before querying a repository, make sure the Codesearch index exists and is curre
 3. If an index exists but files may have changed, run the first search with `--sync` to incrementally update changed files before retrieval.
 4. For repeated exploratory searches in the same turn, one initial `--sync` is usually enough; subsequent searches can omit `--sync` unless files were edited or generated after the sync.
 
+`codesearch index` creates `.codesearch.db/` at the git root. Treat it as a reusable local cache, not a disposable temporary artifact. Ensure `.codesearch.db/` is ignored by git, and do not delete it after indexing unless the user explicitly asks, the index is corrupt, it was created in the wrong repository, or cleanup is necessary and confirmed.
+
 Preferred first-query pattern:
 
 ```powershell
@@ -87,6 +98,7 @@ codesearch search "<narrower English query>" --json -m 10
 - The user asks for natural-language code search, semantic code search, or "like ace" local retrieval.
 - You do not know the exact files, classes, functions, config keys, or error text.
 - You need likely entry points before reading files.
+- You are analyzing architecture, request flow, data flow, or cross-module implementation shape from a natural-language prompt.
 - The task is driven by a plan/design/artifact and you need to map it to code entrypoints.
 - Broad `rg` results would be noisy and a conceptual query can reduce the search space.
 - The task benefits from `search -> narrow -> read`:
@@ -107,7 +119,8 @@ codesearch search "<narrower English query>" --json -m 10
 - Do not treat semantic search output as final truth. Use it to locate candidate files, then read the actual source.
 - Before relying on results in a repo, check index state with `codesearch stats` or a targeted search with `--sync` when freshness matters.
 - If the index is missing, run `codesearch index` only when indexing the current repo is appropriate. This creates `.codesearch.db/` at the git root by default.
-- Do not commit `.codesearch.db/` or `.codesearchignore` unless the user asks or the repo convention requires it.
+- Keep `.codesearch.db/` ignored and do not delete it after indexing unless one of the explicit cleanup conditions above applies.
+- Do not commit `.codesearchignore` unless the user asks or the repo convention requires it.
 - If a command fails because `codesearch` is not found, check the shim/PATH with `Get-Command codesearch -All` on Windows.
 
 ## Common Commands
@@ -172,4 +185,4 @@ If `codesearch` fails, is missing, or returns irrelevant results:
 
 1. Run `Get-Command codesearch -All` and `codesearch doctor` if setup is the likely issue.
 2. Use `rg`, `fd`, and direct reads for the immediate task.
-3. In the final answer, distinguish `codesearch CLI search succeeded`, `codesearch was attempted but failed`, or `codesearch was not used because exact local search was more direct`.
+3. In the final answer, distinguish `codesearch CLI search succeeded`, `codesearch was unavailable/no-index and the task was downgraded to exact local search`, `codesearch was attempted but failed`, or `codesearch was not used because exact local search was more direct`.
