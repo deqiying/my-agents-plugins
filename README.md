@@ -67,6 +67,7 @@ Skills:
 - `mcp-deepwiki`: 理解公开 GitHub 仓库的架构、模块和 API 面。
 - `mcp-exa`: 按意图做语义网页发现和干净 markdown 提取。
 - `mcp-excel-tools`: 检查和编辑 Excel 原生工作簿。
+- `mcp-fast-context-mcp`: 用语义搜索定位本地代码库中的相关文件、入口点和影响范围。
 - `mcp-firecrawl`: 做稳健网页抓取、结构化抽取、站点映射、爬取和文档解析。
 - `mcp-freecrawl`: 做轻量公开搜索、简单抓取和小范围爬取。
 - `mcp-tavily`: 处理新闻、政策、产品变化和需要多源验证的当前信息。

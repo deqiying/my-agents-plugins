@@ -1,0 +1,7 @@
+interface:
+  display_name: "MCP Fast Context"
+  short_description: "Semantic local code locator MCP"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.png"
+  brand_color: "#10B981"
+  default_prompt: "Use $mcp-fast-context-mcp to locate code entrypoints and impact areas in this local repository."
