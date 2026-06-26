@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="git operations workflow icon">
+  <rect width="64" height="64" rx="14" fill="#F0FDF4"/>
+  <path d="M18 17h21a7 7 0 0 1 7 7v19a7 7 0 0 1-7 7H18a7 7 0 0 1-7-7V24a7 7 0 0 1 7-7Z" fill="#16A34A" opacity=".12"/>
+  <path d="M23 20v24M23 30h13c5 0 9 4 9 9v5" fill="none" stroke="#16A34A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="23" cy="20" r="5" fill="#16A34A"/>
+  <circle cx="23" cy="44" r="5" fill="#16A34A"/>
+  <circle cx="45" cy="44" r="5" fill="#16A34A"/>
+  <path d="M43 13l10 4v9c0 6-4 11-10 14-6-3-10-8-10-14v-9l10-4Z" fill="#0F766E"/>
+  <path d="M38 25l4 4 8-9" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
