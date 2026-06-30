@@ -16,7 +16,7 @@
   "interface": {
     "displayName": "Tool Skills",
     "shortDescription": "Skill routing notes for local CLI tools.",
-    "longDescription": "A personal local plugin for CLI-first tool workflows. Each bundled skill explains when to use a local command-line tool, how to verify it, and when to fall back to native Codex file and shell tools.",
+    "longDescription": "A personal local plugin for CLI-first tool workflows. Each bundled skill explains when to use a local command-line tool, how to verify it, and when to fall back to native Codex file and shell tools. Onesearch CLI is included as the local entry point for source-backed web research, docs lookup, page fetching, crawling, repo wiki, and MCP-compatible research commands.",
     "developerName": "Maintainer",
     "category": "Productivity",
     "capabilities": [
@@ -25,6 +25,7 @@
     ],
     "defaultPrompt": [
       "Use the right local CLI tool skill for this task.",
+      "Use the tool-onesearch skill for source-backed web research through the local Onesearch CLI.",
       "Use the tool-codesearch skill for natural-language codebase discovery.",
       "Use the tool-officecli skill for Word, Excel, and PowerPoint document workflows.",
       "Show me which CLI tool fits this request."
