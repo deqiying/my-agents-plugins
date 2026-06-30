@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="fast context mcp icon">
+  <rect width="64" height="64" rx="14" fill="#ECFDF5"/>
+  <path d="M16 18h21l7 7v21H16V18Z" fill="#FFFFFF" stroke="#047857" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M37 18v8h8" fill="none" stroke="#047857" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M22 31h11M22 38h16" stroke="#0F766E" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="46" cy="42" r="7" fill="#DBEAFE" stroke="#2563EB" stroke-width="3"/>
+  <path d="M51 47l5 5" stroke="#2563EB" stroke-width="4" stroke-linecap="round"/>
+  <path d="M30 11l-5 13h7l-4 12 12-17h-7l4-8H30Z" fill="#F59E0B"/>
+</svg>

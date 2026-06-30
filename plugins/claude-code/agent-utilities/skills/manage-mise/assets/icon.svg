@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Manage Mise icon">
+  <rect width="256" height="256" rx="48" fill="#0f766e"/>
+  <path d="M68 76h120v104H68z" fill="#ecfeff"/>
+  <path d="M68 76h120v32H68z" fill="#99f6e4"/>
+  <path d="M92 134h24v24H92zM140 134h24v24h-24z" fill="#0f766e"/>
+  <path d="M92 92h6M112 92h6M132 92h6" stroke="#0f766e" stroke-width="8" stroke-linecap="round"/>
+</svg>

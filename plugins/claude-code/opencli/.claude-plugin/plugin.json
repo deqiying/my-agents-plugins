@@ -1,0 +1,10 @@
+{
+  "name": "opencli",
+  "version": "1.7.19",
+  "description": "OpenCLI skills for using logged-in browser-backed site and tool adapters from Claude Code.",
+  "displayName": "OpenCLI",
+  "author": {
+    "name": "Maintainer"
+  },
+  "skills": "./skills/"
+}

@@ -1,0 +1,23 @@
+{
+  "generatedBy": "scripts/sync-claude-code-plugins.py",
+  "sourceRoot": "plugins/codex",
+  "targetRoot": "plugins/claude-code",
+  "managedPaths": [
+    ".claude-plugin",
+    "agent-workflows",
+    "awesome-design-md",
+    "mcp-skills",
+    "opencli",
+    "tool-skills",
+    "agent-utilities",
+    ".sync-state.json"
+  ],
+  "plugins": [
+    "agent-workflows",
+    "awesome-design-md",
+    "mcp-skills",
+    "opencli",
+    "tool-skills",
+    "agent-utilities"
+  ]
+}

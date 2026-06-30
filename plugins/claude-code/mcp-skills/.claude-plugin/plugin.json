@@ -1,0 +1,17 @@
+{
+  "name": "mcp-skills",
+  "version": "0.1.8",
+  "description": "Local skill pack that documents when to use each managed MCP service and its tools.",
+  "displayName": "MCP Skills",
+  "author": {
+    "name": "Maintainer"
+  },
+  "license": "UNLICENSED",
+  "keywords": [
+    "mcp",
+    "tools",
+    "routing",
+    "claude-code"
+  ],
+  "skills": "./skills/"
+}

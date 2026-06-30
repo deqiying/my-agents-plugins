@@ -1,0 +1,67 @@
+{
+  "name": "my-agents-plugins",
+  "description": "Claude Code plugin marketplace mirrored from the Codex-maintained my-agents-plugins source tree.",
+  "owner": {
+    "name": "Maintainer"
+  },
+  "plugins": [
+    {
+      "name": "agent-workflows",
+      "source": "./agent-workflows",
+      "version": "0.1.0",
+      "description": "Personal workflow skills for Claude Code.",
+      "category": "Productivity",
+      "author": {
+        "name": "Maintainer"
+      }
+    },
+    {
+      "name": "awesome-design-md",
+      "source": "./awesome-design-md",
+      "version": "0.2.0",
+      "description": "Select, fetch, and apply brand-inspired DESIGN.md templates for frontend work.",
+      "category": "Productivity",
+      "author": {
+        "name": "VoltAgent",
+        "url": "https://github.com/VoltAgent/awesome-design-md"
+      }
+    },
+    {
+      "name": "mcp-skills",
+      "source": "./mcp-skills",
+      "version": "0.1.8",
+      "description": "Skill routing notes for local MCP services.",
+      "category": "Productivity",
+      "author": {
+        "name": "Maintainer"
+      }
+    },
+    {
+      "name": "opencli",
+      "source": "./opencli",
+      "version": "1.7.19",
+      "description": "Browser-backed CLI adapters for Claude Code.",
+      "category": "Productivity"
+    },
+    {
+      "name": "tool-skills",
+      "source": "./tool-skills",
+      "version": "0.2.0",
+      "description": "Skill routing notes for local CLI tools.",
+      "category": "Productivity",
+      "author": {
+        "name": "Maintainer"
+      }
+    },
+    {
+      "name": "agent-utilities",
+      "source": "./agent-utilities",
+      "version": "0.1.0",
+      "description": "Utility skills for local developer environments.",
+      "category": "Productivity",
+      "author": {
+        "name": "Maintainer"
+      }
+    }
+  ]
+}

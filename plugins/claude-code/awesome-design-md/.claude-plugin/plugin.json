@@ -1,0 +1,22 @@
+{
+  "name": "awesome-design-md",
+  "version": "0.2.0",
+  "description": "Bundle the VoltAgent awesome-design-md catalogue as a local Claude Code plugin, with an English skill and helper workflow for fetching real DESIGN.md files into projects.",
+  "displayName": "Awesome DESIGN.md",
+  "author": {
+    "name": "VoltAgent",
+    "url": "https://github.com/VoltAgent/awesome-design-md"
+  },
+  "homepage": "https://github.com/VoltAgent/awesome-design-md",
+  "repository": "https://github.com/VoltAgent/awesome-design-md",
+  "license": "MIT",
+  "keywords": [
+    "design-md",
+    "ui",
+    "design-system",
+    "frontend",
+    "branding",
+    "claude-code"
+  ],
+  "skills": "./skills/"
+}

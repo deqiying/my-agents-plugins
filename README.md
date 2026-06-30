@@ -4,10 +4,10 @@
 
 不同 agent 的插件市场格式不同，因此按 agent 分开维护：
 
-- `plugins/codex/`: Codex 插件包源码。
-- `plugins/claude-code/`: Claude Code 插件市场预留目录，当前暂未维护内容。
+- `plugins/codex/`: Codex 插件包源码，也是本仓库的手工维护源。
+- `plugins/claude-code/`: Claude Code 插件市场镜像，由同步脚本从 `plugins/codex/` 生成。
 
-当前只有 Codex 插件市场可用。Codex CLI 的 marketplace root 是 `plugins/codex/`，入口文件位于 `plugins/codex/.agents/plugins/marketplace.json`。
+Codex CLI 的 marketplace root 是 `plugins/codex/`，入口文件位于 `plugins/codex/.agents/plugins/marketplace.json`。Claude Code 的 marketplace root 是 `plugins/claude-code/`，入口文件位于 `plugins/claude-code/.claude-plugin/marketplace.json`。
 
 ## 添加插件市场
 
@@ -34,6 +34,35 @@ codex plugin marketplace add ./plugins/codex
 ```
 
 Codex 插件市场元数据位于 `plugins/codex/.agents/plugins/marketplace.json`，Codex 插件源码位于 `plugins/codex/<plugin-name>/`。
+
+## 同步 Claude Code 插件市场
+
+手工维护 Codex 风格目录，然后运行脚本生成 Claude Code 风格目录：
+
+```powershell
+python scripts/sync-claude-code-plugins.py
+python scripts/sync-claude-code-plugins.py --check
+```
+
+脚本会读取 `plugins/codex/.agents/plugins/marketplace.json` 和每个 `plugins/codex/<plugin-name>/.codex-plugin/plugin.json`，生成：
+
+- `plugins/claude-code/.claude-plugin/marketplace.json`
+- `plugins/claude-code/<plugin-name>/.claude-plugin/plugin.json`
+- `plugins/claude-code/<plugin-name>/skills/...`
+
+同步时会保留 `SKILL.md`、`references/`、`scripts/`、`assets/` 等 skill 内容，但不会复制 `agents/openai.yaml`，因为它是 Codex/OpenAI 专用的 UI metadata。不要直接手工维护 `plugins/claude-code/<plugin-name>/`，需要变更时先改 `plugins/codex/`，再重新运行同步脚本。
+
+在 Claude Code 中添加本地 marketplace：
+
+```powershell
+claude plugin marketplace add <repo-root>/plugins/claude-code
+```
+
+安装插件示例：
+
+```powershell
+claude plugin install agent-workflows@my-agents-plugins
+```
 
 ## 插件说明
 
@@ -111,6 +140,7 @@ Skill:
 插件 skill 文本不应包含机器相关绝对路径。文档和 skill 中请使用占位符：
 
 - `<CODEX_HOME>`: 用户的 Codex home 目录，例如包含 `config.toml` 和 `plugins/` 的目录。
+- `<CLAUDE_HOME>`: 用户的 Claude Code home 目录，例如包含 Claude Code 配置、插件和技能的目录。
 - `<AGENTS_HOME>`: 用户的 agents 目录，例如包含插件市场元数据的目录。
 - `<PROJECTS_ROOT>`: 本地源码工作区根目录。
 - `<REPO_ROOT>`: 当前插件市场仓库根目录。
@@ -123,5 +153,7 @@ Skill:
 
 1. `plugins/codex/.agents/plugins/marketplace.json` 可以被 JSON 解析。
 2. 每个 `plugins/codex/*/.codex-plugin/plugin.json` 可以被 JSON 解析。
-3. 已扫描 skill 文本，确认没有本机绝对路径或指定用户目录残留。
-4. 安装或更新插件后，重启 Codex 或开启新会话以刷新插件缓存。
+3. `python scripts/sync-claude-code-plugins.py --check` 通过，确认 Claude Code mirror 没有漂移。
+4. `claude plugin validate plugins/claude-code --strict` 通过。
+5. 已扫描 skill 文本，确认没有本机绝对路径或指定用户目录残留。
+6. 安装或更新插件后，重启 Codex 或 Claude Code，或开启新会话以刷新插件缓存。

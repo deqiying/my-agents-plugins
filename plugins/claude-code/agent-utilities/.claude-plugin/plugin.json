@@ -1,0 +1,20 @@
+{
+  "name": "agent-utilities",
+  "version": "0.1.0",
+  "description": "Reusable local utility skills for developer environment setup, package manager maintenance, and agent tool registry workflows.",
+  "displayName": "Agent Utilities",
+  "author": {
+    "name": "Maintainer"
+  },
+  "license": "UNLICENSED",
+  "keywords": [
+    "utilities",
+    "developer-environment",
+    "scoop",
+    "mise",
+    "brew",
+    "skills",
+    "claude-code"
+  ],
+  "skills": "./skills/"
+}
