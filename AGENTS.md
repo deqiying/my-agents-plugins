@@ -12,6 +12,7 @@
   - `agent-workflows` skills describe reusable agent workflows and must use `workflows-<workflow-id>` names.
   - Utility skills should use clear verb-led names that match their plugin domain, such as `setup-*`, `manage-*`, or `maintain-*`.
 - Do not add bare upstream skill names to a categorized plugin when the repository wrapper needs a category prefix. Keep upstream or CLI-native skill names only inside the skill body or references when describing commands such as `onesearch skills show onesearch-cli`.
+- When adding or materially updating a plugin or any skill inside a plugin, bump the owning `.codex-plugin/plugin.json` `version` in the same change and verify the package/marketplace entry still points at the intended plugin. Use the smallest appropriate semver increment: patch for skill docs, metadata, assets, or compatible command guidance; minor for new skills, new plugin capabilities, or compatibility-affecting workflow changes; major only for intentional breaking changes.
 - When adding or materially updating a Codex plugin or skill, update its user-facing metadata and visual assets in the same change unless the user explicitly narrows the task.
 - For skills, default to adding or refreshing `agents/openai.yaml` and `assets/icon.png`; keep an editable `assets/icon.svg` source when the icon is deterministic/vector-friendly.
 - For plugins, default to checking `.codex-plugin/plugin.json` references and keeping `assets/icon.png`, `assets/logo.png`, and editable SVG sources in sync when applicable.
