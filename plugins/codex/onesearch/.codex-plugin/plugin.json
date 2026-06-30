@@ -1,6 +1,6 @@
 {
   "name": "onesearch",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Onesearch CLI workflow and provider bridge skills for Codex workflows.",
   "author": {
     "name": "Maintainer"
@@ -17,7 +17,7 @@
   "interface": {
     "displayName": "Onesearch",
     "shortDescription": "Onesearch CLI and provider bridge skills.",
-    "longDescription": "A standalone local plugin for Onesearch CLI 0.2.1 workflows. It bundles the main Onesearch router skill plus workflow skills for search, fetch, documentation lookup, and deep research, alongside provider skills for Context7, Exa, Tavily, Firecrawl, DeepWiki, AnySearch, and Zhipu.",
+    "longDescription": "A standalone local plugin for Onesearch CLI 0.2.2 workflows. It bundles the main Onesearch router skill plus workflow skills for current search, hot/trending lists, fetch, documentation lookup, and deep research, alongside provider skills for Context7, Exa, Tavily, Firecrawl, DeepWiki, AnySearch, and Zhipu.",
     "developerName": "Maintainer",
     "category": "Productivity",
     "capabilities": [
@@ -25,7 +25,7 @@
       "Shell"
     ],
     "defaultPrompt": [
-      "Use $onesearch for source-backed web research.",
+      "Use $onesearch for current web research, hot/trending lists, and source-backed facts.",
       "Use $onesearch-search or $onesearch-fetch for source and evidence workflows.",
       "Use provider skills like $onesearch-exa, $onesearch-context7, or $onesearch-zhipu."
     ],

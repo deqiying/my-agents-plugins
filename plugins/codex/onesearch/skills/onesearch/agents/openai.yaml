@@ -1,7 +1,7 @@
 interface:
   display_name: "Onesearch"
-  short_description: "Web search, fetch, docs, crawl, repo wiki via CLI"
+  short_description: "Current web search, fetch, docs, crawl via CLI"
   icon_small: "./assets/icon.png"
   icon_large: "./assets/icon.png"
   brand_color: "#7C3AED"
-  default_prompt: "Use $onesearch for source-backed web research through the local Onesearch CLI."
+  default_prompt: "Use $onesearch for current web research, hot/trending lists, source-backed facts, and fetch/docs workflows through the local Onesearch CLI."

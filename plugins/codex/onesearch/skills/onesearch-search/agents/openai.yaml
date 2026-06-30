@@ -1,7 +1,7 @@
 interface:
   display_name: "Onesearch Search"
-  short_description: "Search and source discovery workflows"
+  short_description: "Current search and hot/trending workflows"
   icon_small: "./assets/icon.png"
   icon_large: "./assets/icon.png"
   brand_color: "#7C3AED"
-  default_prompt: "Use $onesearch-search for answer search, source discovery, current information, and search-result triage through Onesearch."
+  default_prompt: "Use $onesearch-search for answer search, current information, hot/trending lists, source discovery, and search-result triage through Onesearch."
