@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Onesearch MCP tool bridge icon">
-  <rect width="64" height="64" rx="14" fill="#F8FAFC"/>
-  <circle cx="27" cy="28" r="14" fill="#FFFFFF" stroke="#64748B" stroke-width="4"/>
-  <path d="M37 38l10 10" stroke="#64748B" stroke-width="5" stroke-linecap="round"/>
-  <path d="M19 29h18M25 22l-7 7 7 7M31 22l7 7-7 7" fill="none" stroke="#0F766E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-  <text x="14" y="54" font-family="Arial, sans-serif" font-size="10" font-weight="700" fill="#64748B">MCP</text>
-</svg>

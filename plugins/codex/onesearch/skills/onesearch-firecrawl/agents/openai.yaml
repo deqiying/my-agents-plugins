@@ -1,7 +1,7 @@
 interface:
   display_name: "Onesearch Firecrawl"
-  short_description: "Firecrawl search and scrape bridge"
+  short_description: "Firecrawl search, scrape, map, crawl"
   icon_small: "./assets/icon.png"
   icon_large: "./assets/icon.png"
   brand_color: "#EA580C"
-  default_prompt: "Use $onesearch-firecrawl for Firecrawl, firecrawl_scrape, firecrawl_search, map, and crawl through Onesearch."
+  default_prompt: "Use $onesearch-firecrawl for Firecrawl search, scrape, map, and crawl commands through Onesearch."

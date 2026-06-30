@@ -1,7 +1,7 @@
 {
   "name": "onesearch",
-  "version": "0.1.0",
-  "description": "Onesearch CLI provider bridge and MCP replacement skills for Codex workflows.",
+  "version": "0.2.1",
+  "description": "Onesearch CLI workflow and provider bridge skills for Codex workflows.",
   "author": {
     "name": "Maintainer"
   },
@@ -10,7 +10,6 @@
     "onesearch",
     "search",
     "docs",
-    "mcp",
     "skills",
     "codex"
   ],
@@ -18,7 +17,7 @@
   "interface": {
     "displayName": "Onesearch",
     "shortDescription": "Onesearch CLI and provider bridge skills.",
-    "longDescription": "A standalone local plugin for Onesearch CLI workflows. It bundles the main Onesearch router skill plus provider and workflow bridge skills for Context7, Exa, Tavily, Firecrawl, DeepWiki, documentation lookup, and original MCP tool-name replacement.",
+    "longDescription": "A standalone local plugin for Onesearch CLI 0.2.1 workflows. It bundles the main Onesearch router skill plus workflow skills for search, fetch, documentation lookup, and deep research, alongside provider skills for Context7, Exa, Tavily, Firecrawl, DeepWiki, AnySearch, and Zhipu.",
     "developerName": "Maintainer",
     "category": "Productivity",
     "capabilities": [
@@ -27,8 +26,8 @@
     ],
     "defaultPrompt": [
       "Use $onesearch for source-backed web research.",
-      "Use $onesearch-mcp-tools to route original MCP tool names.",
-      "Use provider skills like $onesearch-exa or $onesearch-context7."
+      "Use $onesearch-search or $onesearch-fetch for source and evidence workflows.",
+      "Use provider skills like $onesearch-exa, $onesearch-context7, or $onesearch-zhipu."
     ],
     "brandColor": "#7C3AED",
     "composerIcon": "./assets/icon.png",
