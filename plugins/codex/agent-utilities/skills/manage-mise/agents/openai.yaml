@@ -1,0 +1,9 @@
+interface:
+  display_name: "Manage Mise"
+  short_description: "Check, install, and update mise toolchains"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.png"
+  brand_color: "#0F766E"
+  default_prompt: "Use $manage-mise to inspect and maintain mise-managed toolchains."
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,9 @@
+interface:
+  display_name: "Maintain Dev Tool List"
+  short_description: "Maintain shared developer tool registry"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.png"
+  brand_color: "#7C3AED"
+  default_prompt: "Use $maintain-dev-tool-list to review and update my developer tool registry."
+policy:
+  allow_implicit_invocation: true

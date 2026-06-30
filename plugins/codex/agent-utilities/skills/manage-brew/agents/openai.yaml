@@ -1,0 +1,9 @@
+interface:
+  display_name: "Manage Brew"
+  short_description: "Check, install, and update Homebrew on macOS"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.png"
+  brand_color: "#D97706"
+  default_prompt: "Use $manage-brew to inspect and maintain Homebrew-managed developer tools."
+policy:
+  allow_implicit_invocation: true

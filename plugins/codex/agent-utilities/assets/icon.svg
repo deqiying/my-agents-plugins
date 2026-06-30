@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Agent Utilities icon">
+  <rect width="256" height="256" rx="48" fill="#0f766e"/>
+  <path d="M60 92h136a20 20 0 0 1 20 20v80a20 20 0 0 1-20 20H60a20 20 0 0 1-20-20v-80a20 20 0 0 1 20-20Z" fill="#ecfeff"/>
+  <path d="M92 92V70a18 18 0 0 1 18-18h36a18 18 0 0 1 18 18v22" fill="none" stroke="#ecfeff" stroke-width="16" stroke-linecap="round"/>
+  <path d="m82 134 28 22-28 22" fill="none" stroke="#0f766e" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M130 176h46" fill="none" stroke="#0f766e" stroke-width="14" stroke-linecap="round"/>
+</svg>

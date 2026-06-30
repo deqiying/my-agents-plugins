@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Manage Brew icon">
+  <rect width="256" height="256" rx="48" fill="#d97706"/>
+  <path d="M82 90h94l-12 100H94L82 90Z" fill="#fff7ed"/>
+  <path d="M100 72h58" stroke="#fff7ed" stroke-width="16" stroke-linecap="round"/>
+  <path d="M102 122h50M108 150h38" stroke="#d97706" stroke-width="12" stroke-linecap="round"/>
+</svg>

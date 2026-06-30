@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Maintain Dev Tool List icon">
+  <rect width="256" height="256" rx="48" fill="#7c3aed"/>
+  <rect x="68" y="56" width="120" height="144" rx="18" fill="#f5f3ff"/>
+  <path d="M94 96h68M94 128h68M94 160h48" stroke="#7c3aed" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="82" cy="96" r="6" fill="#7c3aed"/>
+  <circle cx="82" cy="128" r="6" fill="#7c3aed"/>
+  <circle cx="82" cy="160" r="6" fill="#7c3aed"/>
+</svg>

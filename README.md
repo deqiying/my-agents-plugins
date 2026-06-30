@@ -49,6 +49,18 @@ Skills:
 - `workflows-output-formatting`: 将复杂技术回复整理成更容易阅读的结构，同时保留关键信息。
 - `workflows-sequential-thinking`: 用于复杂排障、权衡分析和多步骤执行的结构化思考。
 
+### Agent Utilities
+
+`agent-utilities` 提供本机开发环境检查、初始化、更新和工具清单维护相关的辅助技能。
+
+Skills:
+
+- `setup-dev-env`: 检查、安装和更新本地开发环境的主入口，按平台串联 Scoop、mise、Homebrew 和工具清单技能。
+- `manage-scoop`: Windows 专属，检查、安装和更新 Scoop，并作为 Windows 下 mise 的前置环境入口。
+- `manage-mise`: 检查、安装和更新 mise 管理的语言运行时和 agent 常用工具。
+- `manage-brew`: macOS 专属，检查、安装和更新 Homebrew 管理的开发工具。
+- `maintain-dev-tool-list`: 维护 agent 开发常用工具、语言运行时和环境管理器的共享工具清单。
+
 ### Awesome DESIGN.md
 
 `awesome-design-md` 打包 VoltAgent `awesome-design-md` 目录和辅助流程，用于选择并应用真实 `DESIGN.md` 设计参考。
