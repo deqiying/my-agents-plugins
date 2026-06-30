@@ -1,13 +1,15 @@
 ---
 name: mcp-fast-context-mcp
-description: 'Use the fast-context-mcp MCP for semantic/natural-language codebase discovery and code location in local repositories: implementation lookup, feature entrypoint discovery, plan/design-to-code mapping, call-path tracing, impact-area discovery, and narrowing unknown files before editing. Use when exact files, symbols, config keys, or error text are unknown and a conceptual query can reduce noisy local scans.'
+description: 'Use the fast-context-mcp MCP as the default early semantic locator for local repositories when Codex is finding context or locating code from natural-language intent. Use automatically before broad repo scans for unknown entrypoints, implementation lookup, plan/design-to-code mapping, architecture/request/data-flow/call-path analysis, impact-area discovery, and narrowing unknown files before editing. Prefer rg/direct reads only when exact files, symbols, config keys, packet names, error text, or narrow paths are already known.'
 ---
 
 # MCP: fast-context-mcp
 
 ## Routing Role
 
-fast-context-mcp is the MCP-backed semantic locator for local codebases. It is best for natural-language discovery such as "where is authentication handled", "find websocket reconnect logic", "which files implement rate limiting", or similar code-positioning tasks where the entrypoint is unknown.
+Treat fast-context-mcp as the first semantic context pass for local-code tasks where the user gives intent, behavior, symptoms, architecture, or a plan but the exact file or symbol is not yet known. It is best for natural-language discovery such as "where is authentication handled", "find websocket reconnect logic", "which files implement rate limiting", or similar code-positioning tasks where the entrypoint is unknown.
+
+Use it before broad local keyword scans for unknown-entrypoint work. A good default: if you are about to run a repo-wide `rg` query made from generic concepts or many OR terms, run `fast_context_search` first, then use `rg` to verify exact symbols and references.
 
 Use it for `semantic locate -> narrow -> read -> verify`:
 
@@ -18,9 +20,11 @@ Use it for `semantic locate -> narrow -> read -> verify`:
 
 ## Use Automatically When
 
+- You are locating code or gathering implementation context in a local repository and do not already know a narrow path, symbol, config key, or exact search string.
 - The user asks for semantic code search, natural-language code search, code location, implementation lookup, or "where is this implemented".
 - You do not know the exact files, classes, functions, config keys, packet names, error text, or log lines.
 - You need likely entrypoints before reading files or making edits.
+- The user asks to implement, fix, or analyze behavior from business intent, UI names, protocol concepts, workflow descriptions, symptoms, or architecture terms.
 - You are analyzing architecture, request flow, data flow, call paths, or cross-module implementation shape from a natural-language prompt.
 - The task is driven by a plan, design doc, summary, PR note, or implementation idea and you need to map it to code entrypoints.
 - Broad `rg` results would be noisy and a conceptual query can reduce the search space.
@@ -33,9 +37,11 @@ Use it for `semantic locate -> narrow -> read -> verify`:
 - You need known file content; read the file directly.
 - The task is about public GitHub repository architecture and the repo is not local; use `mcp-deepwiki`.
 - The task needs current public web or documentation lookup; use `mcp-tavily`, `mcp-exa`, `mcp-context7`, or the official OpenAI docs route as appropriate.
-- The repository contains secrets, customer data, or private material that should not be sent to a remote semantic-search service; stay with local-only tools unless the user explicitly accepts that risk.
+- The search would expose secrets, credential files, customer data, or explicitly restricted private material to a remote semantic-search service; stay with local-only tools unless the user explicitly accepts that risk. Do not use ordinary private source code in a trusted workspace as a blanket reason to skip this tool.
 
 ## Communication Discipline
+
+When this skill triggers for unknown-entrypoint work, make a real attempt to run `fast_context_search` before falling back. If the MCP namespace is not visible, use tool discovery when available to load `fast-context-mcp`/`fast_context_search`.
 
 Do not claim or imply that fast-context-mcp was used unless one of its MCP tools actually ran and returned or failed.
 
