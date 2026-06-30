@@ -1,7 +1,0 @@
-interface:
-  display_name: "Tool Onesearch"
-  short_description: "Source-backed web research through a local CLI"
-  icon_small: "./assets/icon.png"
-  icon_large: "./assets/icon.png"
-  brand_color: "#7C3AED"
-  default_prompt: "Use $tool-onesearch for source-backed web research through the local Onesearch CLI."

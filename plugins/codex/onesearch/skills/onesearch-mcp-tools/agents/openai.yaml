@@ -1,0 +1,7 @@
+interface:
+  display_name: "Onesearch MCP Tools"
+  short_description: "Map original MCP tools to Onesearch"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.png"
+  brand_color: "#64748B"
+  default_prompt: "Use $onesearch-mcp-tools to route original MCP tool names such as query_docs, web_search_exa, and tavily_search through Onesearch."

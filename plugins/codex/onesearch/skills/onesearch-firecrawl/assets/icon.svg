@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Onesearch Firecrawl bridge icon">
+  <rect width="64" height="64" rx="14" fill="#FFF7ED"/>
+  <circle cx="27" cy="28" r="14" fill="#FFFFFF" stroke="#EA580C" stroke-width="4"/>
+  <path d="M37 38l10 10" stroke="#EA580C" stroke-width="5" stroke-linecap="round"/>
+  <path d="M24 39c-5-5 2-9 0-14 6 3 5 8 9 11 2-6 6-8 8-12 5 10-1 19-10 20-3 0-5-1-7-5Z" fill="#F97316"/>
+  <text x="14" y="54" font-family="Arial, sans-serif" font-size="10" font-weight="700" fill="#EA580C">FIRE</text>
+</svg>

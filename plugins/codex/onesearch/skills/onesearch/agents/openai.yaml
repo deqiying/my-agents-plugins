@@ -1,0 +1,7 @@
+interface:
+  display_name: "Onesearch"
+  short_description: "Onesearch web, docs, fetch, and MCP routing"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.png"
+  brand_color: "#7C3AED"
+  default_prompt: "Use $onesearch for source-backed web research, provider routing, docs lookup, URL fetch, repo wiki, and original MCP tool-name replacement through the local Onesearch CLI."
