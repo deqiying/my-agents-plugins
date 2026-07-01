@@ -1,6 +1,6 @@
 {
   "name": "agent-workflows",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Personal workflow skills for agent task planning and execution.",
   "author": {
     "name": "Maintainer"
@@ -16,7 +16,7 @@
   "interface": {
     "displayName": "Agent Workflows",
     "shortDescription": "Personal workflow skills for agents.",
-    "longDescription": "A local skills-only plugin for reusable agent workflows such as structured planning, stepwise problem solving, coding guidelines, output formatting, Git operation discipline, plan stress-testing, and task execution discipline. It intentionally does not ship MCP servers.",
+    "longDescription": "A local skills-only plugin for reusable agent workflows such as structured planning, stepwise problem solving, coding guidelines, output formatting, Git initialization and operation discipline, plan stress-testing, and task execution discipline. It intentionally does not ship MCP servers.",
     "developerName": "Maintainer",
     "category": "Productivity",
     "capabilities": [
@@ -28,7 +28,7 @@
       "Break this ambiguous request into a validated plan.",
       "Apply workflows-output-formatting to any dense user-facing response so it keeps important details while becoming easier to read.",
       "Apply workflows-guidelines to keep non-trivial engineering edits simple, surgical, and verifiable.",
-      "Apply workflows-git-operations before creating branches, staging, committing, pulling, pushing, rolling back, or clearing stale Git index locks.",
+      "Apply workflows-git-operations before initializing repositories, creating branches, staging, committing, pulling, pushing, rolling back, or clearing stale Git index locks.",
       "Use Workflows Grill Me to stress-test this plan with focused questions."
     ],
     "brandColor": "#0F766E",

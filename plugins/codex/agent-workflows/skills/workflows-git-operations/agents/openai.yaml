@@ -1,10 +1,10 @@
 interface:
   display_name: "Workflow Git Operations"
-  short_description: "Disciplined Git branches, commits, pulls, pushes, and rollbacks"
+  short_description: "Disciplined Git init, branches, commits, pulls, pushes, and rollbacks"
   icon_small: "./assets/icon.png"
   icon_large: "./assets/icon.png"
   brand_color: "#16A34A"
-  default_prompt: "Use $workflows-git-operations to perform Git operations with scoped branches and staging, Chinese commit messages, safe lock handling, and explicit approval gates."
+  default_prompt: "Use $workflows-git-operations to initialize repositories with main as the default branch, perform scoped Git operations, write Chinese commit messages, handle safe locks, and enforce approval gates."
 
 policy:
   allow_implicit_invocation: true

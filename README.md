@@ -74,7 +74,7 @@ Skills:
 
 - `workflows-grill-me`: 对设计或方案进行逐步追问和压力测试。
 - `workflows-guidelines`: 约束非平凡工程改动保持简单、最小、可验证。
-- `workflows-git-operations`: 规范 Git 检查、分支创建、暂存、提交、拉取、推送、回滚和安全锁处理。
+- `workflows-git-operations`: 规范 Git 仓库初始化、分支创建、检查、暂存、提交、拉取、推送、回滚和安全锁处理。
 - `workflows-output-formatting`: 将复杂技术回复整理成更容易阅读的结构，同时保留关键信息。
 - `workflows-sequential-thinking`: 用于复杂排障、权衡分析和多步骤执行的结构化思考。
 

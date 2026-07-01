@@ -1,16 +1,16 @@
 ---
 name: workflows-git-operations
-description: Use when an agent needs to perform or plan Git operations such as status/diff review, scoped staging, branch creation or switching, commit message generation, commit, pull, push, rollback, revert, reset, stash, or safe stale index.lock handling, especially when explicit user approval and Chinese Conventional Commit-style messages are required.
+description: Use when an agent needs to perform or plan Git operations such as repository initialization, status/diff review, scoped staging, branch creation or switching, commit message generation, commit, pull, push, rollback, revert, reset, stash, or safe stale index.lock handling, especially when explicit user approval and Chinese Conventional Commit-style messages are required.
 ---
 
 # Git Operations Workflow
 
-Use this workflow whenever a task asks for Git state changes, commit message generation, or recovery from Git lock/index issues. Treat Git as a stateful collaboration surface: inspect first, scope precisely, and only mutate repository state inside the user's authorization boundary.
+Use this workflow whenever a task asks for repository initialization, Git state changes, commit message generation, or recovery from Git lock/index issues. Treat Git as a stateful collaboration surface: inspect first, scope precisely, and only mutate repository state inside the user's authorization boundary.
 
 ## Approval Boundary
 
 - Read-only inspection is allowed without extra approval: `git status`, `git diff`, `git log`, `git show`, `git branch --show-current`, and similar commands that do not change refs, the index, or the working tree.
-- State-changing operations require explicit user approval unless the current user request already grants it: `git add`, `git commit`, `git pull`, `git fetch`, `git push`, `git merge`, `git rebase`, `git cherry-pick`, `git revert`, `git reset`, `git restore`, `git checkout`, `git switch`, branch creation, tag creation/deletion, branch deletion, `git stash`, and lock deletion.
+- State-changing operations require explicit user approval unless the current user request already grants it: `git init`, `git add`, `git commit`, `git pull`, `git fetch`, `git push`, `git merge`, `git rebase`, `git cherry-pick`, `git revert`, `git reset`, `git restore`, `git checkout`, `git switch`, branch creation, tag creation/deletion, branch deletion, `git stash`, and lock deletion.
 - Treat approval as one-operation by default. Session-wide approval only exists when the user clearly says the current session may auto-commit, auto-push, or otherwise perform a named class of Git operation.
 - Do not let one approval imply another class of operation. Approval to commit does not imply approval to push. Approval to stage does not imply approval to commit. Approval to pull does not imply approval to resolve conflicts destructively.
 - For rollback-like work, ask for or confirm the target before changing state: exact file paths, commit hashes, branch names, or whether the user wants `revert`, `restore`, or `reset`.
@@ -23,6 +23,21 @@ Use this workflow whenever a task asks for Git state changes, commit message gen
 4. Stage with explicit paths whenever possible. Avoid `git add .` unless the user explicitly approved all current changes and the status was reviewed.
 5. Before commit, review `git diff --cached --name-only` and the staged diff. Ensure the commit message matches the staged scope.
 6. After commit, report the commit hash, subject, and remaining dirty/untracked state. After push, report branch and remote.
+
+## Repository Initialization
+
+- Repository initialization changes local state and requires approval unless the current user request explicitly asks to initialize the target directory as a Git repository.
+- Resolve the target directory before initializing. If it is already inside a Git repository, stop and report the existing repository root instead of creating a nested repository unless the user explicitly asks for nesting.
+- Default new repositories to `main` as the primary branch. Prefer `git init -b main`.
+- If `git init -b main` is unavailable on older Git, run `git init`, then immediately rename the unborn/current branch with `git branch -M main`, and verify with `git branch --show-current`.
+- After initialization, report the repository root and branch. Do not add a remote, stage files, commit, or push unless separately requested or approved.
+
+Examples:
+
+```powershell
+git init -b main
+git branch --show-current
+```
 
 ## Commit Messages
 
