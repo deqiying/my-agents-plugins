@@ -56,7 +56,7 @@
     {
       "name": "agent-utilities",
       "source": "./agent-utilities",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "description": "Utility skills for local developer environments.",
       "category": "Productivity",
       "author": {

@@ -1,6 +1,6 @@
 {
   "name": "agent-utilities",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Reusable local utility skills for developer environment maintenance, setup, package manager ownership, and agent tool registry workflows.",
   "author": {
     "name": "Maintainer"
@@ -27,7 +27,7 @@
       "Shell"
     ],
     "defaultPrompt": [
-      "Use maintain-dev-env when a task is blocked by missing tools, PATH issues, or project runtime version mismatches.",
+      "Use maintain-dev-env when a task is blocked or may be misled by missing tools, PATH/shim issues, package-manager ownership, project runtime requirements, or toolchain install/update/repair needs.",
       "Use setup-dev-env to inspect my local developer environment before installing anything.",
       "Use manage-scoop for Windows Scoop checks and updates.",
       "Use manage-mise for mise-managed runtimes and tools.",

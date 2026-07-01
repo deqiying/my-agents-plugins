@@ -4,6 +4,6 @@ interface:
   icon_small: "./assets/icon.png"
   icon_large: "./assets/icon.png"
   brand_color: "#0F766E"
-  default_prompt: "Use $maintain-dev-env to resolve local toolchain or project version mismatches before continuing."
+  default_prompt: "Use $maintain-dev-env when local developer environment blockers may affect a task: missing commands, PATH or shim issues, package-manager ownership, project-required tool versions, or toolchain install/update/repair before build, test, generate, or debug work."
 policy:
   allow_implicit_invocation: true
