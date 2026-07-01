@@ -127,6 +127,14 @@ Skills:
 - `opencli-autofix`: 在 OpenCLI 命令失败后诊断并修复 adapter。
 - `smart-search`: 将搜索和研究请求路由到合适的 OpenCLI 数据源。
 
+### Onesearch
+
+`onesearch` 提供 Onesearch CLI 的主路由技能，用于网页搜索、当前信息、URL 读取、官方文档、站点抓取和公开 GitHub 仓库上下文。插件只维护主技能，具体 provider 或 workflow 指南由本地 CLI 的 `onesearch skills list` / `onesearch skills show <route-id> --format content` 提供。
+
+Skill:
+
+- `onesearch`: 使用 Onesearch CLI 做 source-backed web research、fetch、docs、crawl、repo wiki 和 provider-specific workflows。
+
 ### Tool Skills
 
 `tool-skills` 提供本地 CLI 优先工作流说明。

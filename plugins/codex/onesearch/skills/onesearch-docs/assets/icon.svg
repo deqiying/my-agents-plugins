@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Onesearch docs bridge icon">
-  <rect width="64" height="64" rx="14" fill="#ECFEFF"/>
-  <path d="M18 13h20l8 8v25a5 5 0 0 1-5 5H18a5 5 0 0 1-5-5V18a5 5 0 0 1 5-5Z" fill="#FFFFFF" stroke="#0891B2" stroke-width="3.5" stroke-linejoin="round"/>
-  <path d="M38 13v8h8" fill="#CFFAFE"/>
-  <path d="M21 29h18M21 36h16M21 43h10" stroke="#0F766E" stroke-width="3" stroke-linecap="round"/>
-  <text x="16" y="59" font-family="Arial, sans-serif" font-size="9" font-weight="700" fill="#0891B2">DOCS</text>
-</svg>

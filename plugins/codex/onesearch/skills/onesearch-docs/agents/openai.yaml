@@ -1,7 +1,0 @@
-interface:
-  display_name: "Onesearch Docs"
-  short_description: "Documentation lookup workflows"
-  icon_small: "./assets/icon.png"
-  icon_large: "./assets/icon.png"
-  brand_color: "#0891B2"
-  default_prompt: "Use $onesearch-docs for API, SDK, package, framework, and official docs lookup through Onesearch."

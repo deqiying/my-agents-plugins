@@ -1,7 +1,0 @@
-interface:
-  display_name: "Onesearch Context7"
-  short_description: "Context7 library docs commands"
-  icon_small: "./assets/icon.png"
-  icon_large: "./assets/icon.png"
-  brand_color: "#2563EB"
-  default_prompt: "Use $onesearch-context7 for Context7 library resolution and focused API, SDK, package, or framework docs through Onesearch."

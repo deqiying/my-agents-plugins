@@ -1,7 +1,0 @@
-interface:
-  display_name: "Onesearch Zhipu"
-  short_description: "Chinese current and hot-search discovery"
-  icon_small: "./assets/icon.png"
-  icon_large: "./assets/icon.png"
-  brand_color: "#DC2626"
-  default_prompt: "Use $onesearch-zhipu for Chinese web search, China-specific current information, Chinese hot-search lists, and domain-filtered Chinese source discovery through Onesearch."

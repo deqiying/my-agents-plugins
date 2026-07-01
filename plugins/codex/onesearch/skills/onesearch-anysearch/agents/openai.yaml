@@ -1,7 +1,0 @@
-interface:
-  display_name: "Onesearch AnySearch"
-  short_description: "Explicit AnySearch vertical commands"
-  icon_small: "./assets/icon.png"
-  icon_large: "./assets/icon.png"
-  brand_color: "#64748B"
-  default_prompt: "Use $onesearch-anysearch for explicit AnySearch vertical search, domain discovery, extraction, or batch queries through Onesearch."

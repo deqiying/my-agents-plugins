@@ -1,7 +1,0 @@
-interface:
-  display_name: "Onesearch DeepWiki"
-  short_description: "DeepWiki repository context commands"
-  icon_small: "./assets/icon.png"
-  icon_large: "./assets/icon.png"
-  brand_color: "#4F46E5"
-  default_prompt: "Use $onesearch-deepwiki for repository wiki context and DeepWiki ask, structure, or contents commands through Onesearch."

@@ -1,7 +1,7 @@
 {
   "name": "onesearch",
-  "version": "0.2.3",
-  "description": "Onesearch CLI workflow and provider bridge skills for Codex workflows.",
+  "version": "0.3.0",
+  "description": "Main Onesearch CLI router skill for Codex workflows.",
   "author": {
     "name": "Maintainer"
   },
@@ -16,8 +16,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Onesearch",
-    "shortDescription": "Onesearch CLI and provider bridge skills.",
-    "longDescription": "A standalone local plugin for Onesearch CLI 0.2.3 workflows. It bundles the main Onesearch router skill plus workflow skills for current search, hot/trending lists, fetch, documentation lookup, and deep research, alongside provider skills for Context7, Exa, Tavily, Firecrawl, DeepWiki, AnySearch, and Zhipu.",
+    "shortDescription": "Main Onesearch CLI router skill.",
+    "longDescription": "A standalone local plugin for Onesearch CLI workflows. It intentionally bundles only the main Onesearch router skill; route-specific workflow and provider guidance is loaded from the installed CLI with `onesearch skills list` and `onesearch skills show <route-id> --format content`.",
     "developerName": "Maintainer",
     "category": "Productivity",
     "capabilities": [
@@ -25,9 +25,8 @@
       "Shell"
     ],
     "defaultPrompt": [
-      "Use $onesearch for web search, current/latest public information, hot/trending lists, and source-backed facts.",
-      "Use $onesearch-search or $onesearch-fetch for source and evidence workflows.",
-      "Use provider skills like $onesearch-exa, $onesearch-context7, or $onesearch-zhipu."
+      "Use $onesearch for web search, current/latest public information, hot/trending lists, source-backed facts, URL reading, docs lookup, site map/crawl, repo wiki context, and provider-specific Onesearch CLI workflows.",
+      "For route-specific guidance, run `onesearch skills list --format json` and `onesearch skills show <route-id> --format content`."
     ],
     "brandColor": "#7C3AED",
     "composerIcon": "./assets/icon.png",

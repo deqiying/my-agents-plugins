@@ -1,7 +1,0 @@
-interface:
-  display_name: "Onesearch Deep Research"
-  short_description: "Offline research planning workflow"
-  icon_small: "./assets/icon.png"
-  icon_large: "./assets/icon.png"
-  brand_color: "#4F46E5"
-  default_prompt: "Use $onesearch-deep-research to plan complex multi-step research before running Onesearch provider commands."

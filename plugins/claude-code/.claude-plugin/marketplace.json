@@ -46,7 +46,7 @@
     {
       "name": "tool-skills",
       "source": "./tool-skills",
-      "version": "0.2.0",
+      "version": "1.0.0",
       "description": "Skill routing notes for local CLI tools.",
       "category": "Productivity",
       "author": {
@@ -58,6 +58,16 @@
       "source": "./agent-utilities",
       "version": "0.2.0",
       "description": "Utility skills for local developer environments.",
+      "category": "Productivity",
+      "author": {
+        "name": "Maintainer"
+      }
+    },
+    {
+      "name": "onesearch",
+      "source": "./onesearch",
+      "version": "0.3.0",
+      "description": "Main Onesearch CLI router skill.",
       "category": "Productivity",
       "author": {
         "name": "Maintainer"
