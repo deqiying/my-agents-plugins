@@ -1,7 +1,7 @@
 {
   "name": "awesome-design-md",
-  "version": "0.2.0",
-  "description": "Bundle the VoltAgent awesome-design-md catalogue as a local Claude Code plugin, with an English skill and helper workflow for fetching real DESIGN.md files into projects.",
+  "version": "0.2.1",
+  "description": "Bundle the VoltAgent awesome-design-md catalogue as a local agent skill plugin, with an English skill and helper workflow for fetching real DESIGN.md files into projects.",
   "displayName": "Awesome DESIGN.md",
   "author": {
     "name": "VoltAgent",

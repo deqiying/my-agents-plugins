@@ -1,6 +1,6 @@
 ---
 name: maintain-dev-env
-description: 'Use as the broad main guidance when Codex encounters or anticipates local developer environment work during any task, not only when the user asks for setup. Use when commands, runtimes, package managers, PATH, shims, or tool versions may block work; when project-declared versions from go.mod, toolchain, mise.toml, .tool-versions, package.json engines/packageManager, .node-version, .nvmrc, pyproject.toml, or uv files differ from active Go, Node, Python, uv, pnpm, Codex CLI, mise, Scoop, Homebrew, or other tools; or when Codex needs to check, install, update, pin, repair, or temporarily run the required local toolchain before building, testing, generating, or debugging.'
+description: 'Use as the broad main guidance when an agent encounters or anticipates local developer environment work during any task, not only when the user asks for setup. Use when commands, runtimes, package managers, PATH, shims, or tool versions may block work; when project-declared versions from go.mod, toolchain, mise.toml, .tool-versions, package.json engines/packageManager, .node-version, .nvmrc, pyproject.toml, or uv files differ from active Go, Node, Python, uv, pnpm, Codex CLI, mise, Scoop, Homebrew, or other tools; or when an agent needs to check, install, update, pin, repair, or temporarily run the required local toolchain before building, testing, generating, or debugging.'
 ---
 
 # Maintain Dev Env

@@ -1,7 +1,7 @@
 {
   "name": "agent-workflows",
-  "version": "0.1.0",
-  "description": "Personal workflow skills for Codex task planning and execution.",
+  "version": "0.1.1",
+  "description": "Personal workflow skills for agent task planning and execution.",
   "author": {
     "name": "Maintainer"
   },
@@ -9,13 +9,13 @@
   "keywords": [
     "workflow",
     "planning",
-    "codex",
+    "agent",
     "skills"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "Agent Workflows",
-    "shortDescription": "Personal workflow skills for Codex.",
+    "shortDescription": "Personal workflow skills for agents.",
     "longDescription": "A local skills-only plugin for reusable agent workflows such as structured planning, stepwise problem solving, coding guidelines, output formatting, Git operation discipline, plan stress-testing, and task execution discipline. It intentionally does not ship MCP servers.",
     "developerName": "Maintainer",
     "category": "Productivity",

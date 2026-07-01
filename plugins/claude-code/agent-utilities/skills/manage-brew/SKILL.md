@@ -1,6 +1,6 @@
 ---
 name: manage-brew
-description: 'Use on macOS when Codex needs to check, install, update, or troubleshoot Homebrew and brew-managed developer tools. Use as the supporting skill for macOS developer environment setup when a tool is better maintained through brew than through mise.'
+description: 'Use on macOS when an agent needs to check, install, update, or troubleshoot Homebrew and brew-managed developer tools. Use as the supporting skill for macOS developer environment setup when a tool is better maintained through brew than through mise.'
 ---
 
 # Manage Brew

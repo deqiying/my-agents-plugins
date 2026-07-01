@@ -1,6 +1,6 @@
 ---
 name: workflows-git-operations
-description: Use when Codex needs to perform or plan Git operations such as status/diff review, scoped staging, branch creation or switching, commit message generation, commit, pull, push, rollback, revert, reset, stash, or safe stale index.lock handling, especially when explicit user approval and Chinese Conventional Commit-style messages are required.
+description: Use when an agent needs to perform or plan Git operations such as status/diff review, scoped staging, branch creation or switching, commit message generation, commit, pull, push, rollback, revert, reset, stash, or safe stale index.lock handling, especially when explicit user approval and Chinese Conventional Commit-style messages are required.
 ---
 
 # Git Operations Workflow

@@ -1,7 +1,7 @@
 {
   "name": "tool-skills",
-  "version": "1.0.0",
-  "description": "Local CLI tool skills for Codex workflows.",
+  "version": "1.0.1",
+  "description": "Local CLI tool skills for agent workflows.",
   "author": {
     "name": "Maintainer"
   },
@@ -10,13 +10,13 @@
     "tools",
     "cli",
     "skills",
-    "codex"
+    "agent"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "Tool Skills",
     "shortDescription": "Skill routing notes for local CLI tools.",
-    "longDescription": "A personal local plugin for CLI-first tool workflows. Each bundled skill explains when to use a local command-line tool, how to verify it, and when to fall back to native Codex file and shell tools.",
+    "longDescription": "A personal local plugin for CLI-first tool workflows. Each bundled skill explains when to use a local command-line tool, how to verify it, and when to fall back to the host agent's native file and shell tools.",
     "developerName": "Maintainer",
     "category": "Productivity",
     "capabilities": [

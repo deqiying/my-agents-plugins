@@ -7,7 +7,7 @@ description: Use the local officecli CLI when the user wants to create, inspect,
 
 ## Routing Role
 
-Use `officecli` as a CLI-first Office document tool for `.docx`, `.xlsx`, and `.pptx` work. It is best when Codex needs to read structure, extract text, make targeted edits, create documents, run batch mutations, validate OpenXML output, or render documents to HTML/PNG for visual verification.
+Use `officecli` as a CLI-first Office document tool for `.docx`, `.xlsx`, and `.pptx` work. It is best when an agent needs to read structure, extract text, make targeted edits, create documents, run batch mutations, validate OpenXML output, or render documents to HTML/PNG for visual verification.
 
 This skill intentionally favors `skill + CLI` over ad hoc Python libraries. OfficeCLI is designed for AI agents: commands can return `--json`, elements have stable paths, and edits can be verified with `validate`, `view issues`, and rendered previews.
 
@@ -143,5 +143,5 @@ If `officecli` fails, is missing, or returns irrelevant output:
 
 1. Run `Get-Command officecli -All` and `officecli --version` when setup is the likely issue.
 2. Run `officecli help` or format-specific help when syntax or property names are uncertain.
-3. Use specialized Codex document/spreadsheet/presentation skills or MCP tools when they better match the task.
+3. Use specialized document/spreadsheet/presentation skills or MCP tools when they better match the task.
 4. In the final answer, distinguish `officecli CLI succeeded`, `officecli was attempted but failed`, or `officecli was not used because another tool was more direct`.

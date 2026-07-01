@@ -1,6 +1,6 @@
 ---
 name: manage-scoop
-description: 'Use on Windows when Codex needs to check, install, update, or troubleshoot Scoop and Scoop-managed developer tools. Use as the supporting skill for Windows developer environment setup, especially when mise must be installed or updated through Scoop.'
+description: 'Use on Windows when an agent needs to check, install, update, or troubleshoot Scoop and Scoop-managed developer tools. Use as the supporting skill for Windows developer environment setup, especially when mise must be installed or updated through Scoop.'
 ---
 
 # Manage Scoop

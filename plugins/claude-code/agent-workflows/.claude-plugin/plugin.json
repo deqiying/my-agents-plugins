@@ -1,7 +1,7 @@
 {
   "name": "agent-workflows",
-  "version": "0.1.0",
-  "description": "Personal workflow skills for Claude Code task planning and execution.",
+  "version": "0.1.1",
+  "description": "Personal workflow skills for agent task planning and execution.",
   "displayName": "Agent Workflows",
   "author": {
     "name": "Maintainer"
@@ -10,8 +10,9 @@
   "keywords": [
     "workflow",
     "planning",
-    "claude-code",
-    "skills"
+    "agent",
+    "skills",
+    "claude-code"
   ],
   "skills": "./skills/"
 }

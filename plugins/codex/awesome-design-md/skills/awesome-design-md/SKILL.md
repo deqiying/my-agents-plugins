@@ -2,7 +2,7 @@
 name: awesome-design-md
 description: >
   Select, fetch, and apply brand-inspired DESIGN.md templates from VoltAgent/awesome-design-md and
-  getdesign.md. Use when Codex needs to choose a visual direction, recommend a brand aesthetic,
+  getdesign.md. Use when an agent needs to choose a visual direction, recommend a brand aesthetic,
   install a real DESIGN.md into a project, or implement frontend changes that must follow a chosen
   DESIGN.md.
 ---

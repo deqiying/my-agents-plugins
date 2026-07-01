@@ -1,6 +1,6 @@
 ---
 name: workflows-guidelines
-description: Karpathy-style engineering guardrails to reduce common LLM coding mistakes. Use for non-trivial implementation, bug fixes, code review, refactoring, config/scripts/CI/plugin/tooling edits, or feature work where Codex must avoid overcomplication, make surgical changes, surface assumptions, and define verifiable success criteria.
+description: Karpathy-style engineering guardrails to reduce common LLM coding mistakes. Use for non-trivial implementation, bug fixes, code review, refactoring, config/scripts/CI/plugin/tooling edits, or feature work where an agent must avoid overcomplication, make surgical changes, surface assumptions, and define verifiable success criteria.
 ---
 
 # Guidelines Workflow
@@ -14,7 +14,7 @@ This skill is adapted from the public `karpathy-guidelines` pattern. Keep its fo
 ## Use
 
 - Use for non-trivial code changes, bug fixes, feature implementation, refactors, and code review.
-- Use for engineering-adjacent edits that behave like code: config, scripts, CI workflows, Codex plugins, skills, local tooling, and generated glue.
+- Use for engineering-adjacent edits that behave like code: config, scripts, CI workflows, agent plugins, skills, local tooling, and generated glue.
 - Use when the request is easy to overbuild, touches existing behavior, risks unrelated churn, or needs a clear verification boundary.
 
 ## Avoid

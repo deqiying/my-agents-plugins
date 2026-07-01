@@ -1,6 +1,6 @@
 ---
 name: maintain-dev-tool-list
-description: 'Use when Codex needs to maintain the shared developer tool registry for agent work, including tools, runtimes, package manager ownership, version policies, check commands, and sanitized exports from mise, Scoop, or Homebrew.'
+description: 'Use when an agent needs to maintain the shared developer tool registry for agent work, including tools, runtimes, package manager ownership, version policies, check commands, and sanitized exports from mise, Scoop, or Homebrew.'
 ---
 
 # Maintain Dev Tool List

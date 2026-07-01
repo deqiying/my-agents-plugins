@@ -1,6 +1,6 @@
 ---
 name: workflows-sequential-thinking
-description: Use when Codex needs structured evidence-driven planning for complex, ambiguous, high-risk, multi-step work, debugging, local environment/config/plugin diagnostics, architecture decisions, tradeoff analysis, repeated failures, source/cache/runtime mismatches, or plan revision without requiring the SequentialThinking MCP.
+description: Use when an agent needs structured evidence-driven planning for complex, ambiguous, high-risk, multi-step work, debugging, local environment/config/plugin diagnostics, architecture decisions, tradeoff analysis, repeated failures, source/cache/runtime mismatches, or plan revision without requiring the SequentialThinking MCP.
 ---
 
 # Sequential Thinking Workflow

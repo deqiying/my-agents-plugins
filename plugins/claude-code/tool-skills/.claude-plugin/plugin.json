@@ -1,7 +1,7 @@
 {
   "name": "tool-skills",
-  "version": "1.0.0",
-  "description": "Local CLI tool skills for Claude Code workflows.",
+  "version": "1.0.1",
+  "description": "Local CLI tool skills for agent workflows.",
   "displayName": "Tool Skills",
   "author": {
     "name": "Maintainer"
@@ -11,6 +11,7 @@
     "tools",
     "cli",
     "skills",
+    "agent",
     "claude-code"
   ],
   "skills": "./skills/"

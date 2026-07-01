@@ -8,8 +8,8 @@
     {
       "name": "agent-workflows",
       "source": "./agent-workflows",
-      "version": "0.1.0",
-      "description": "Personal workflow skills for Claude Code.",
+      "version": "0.1.1",
+      "description": "Personal workflow skills for agents.",
       "category": "Productivity",
       "author": {
         "name": "Maintainer"
@@ -18,7 +18,7 @@
     {
       "name": "awesome-design-md",
       "source": "./awesome-design-md",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "description": "Select, fetch, and apply brand-inspired DESIGN.md templates for frontend work.",
       "category": "Productivity",
       "author": {
@@ -46,7 +46,7 @@
     {
       "name": "tool-skills",
       "source": "./tool-skills",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "description": "Skill routing notes for local CLI tools.",
       "category": "Productivity",
       "author": {
@@ -56,7 +56,7 @@
     {
       "name": "agent-utilities",
       "source": "./agent-utilities",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "description": "Utility skills for local developer environments.",
       "category": "Productivity",
       "author": {

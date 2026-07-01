@@ -1,6 +1,6 @@
 ---
 name: setup-dev-env
-description: 'Use when the user explicitly asks to initialize, audit, check, prepare, install, update, or repair a local developer environment for Codex and agent development across Windows, macOS, or Linux. Use for user-requested machine setup involving Node, Go, Python, uv, pnpm, Codex CLI, mise, Scoop, Homebrew, or common developer tools; for environment issues discovered while doing another task, prefer maintain-dev-env first.'
+description: 'Use when the user explicitly asks to initialize, audit, check, prepare, install, update, or repair a local developer environment for agent development across Windows, macOS, or Linux. Use for user-requested machine setup involving Node, Go, Python, uv, pnpm, Codex CLI, mise, Scoop, Homebrew, or common developer tools; for environment issues discovered while doing another task, prefer maintain-dev-env first.'
 ---
 
 # Setup Dev Env

@@ -9,7 +9,7 @@ description: Use the local codesearch CLI skill for semantic/natural-language co
 
 Use `codesearch` as a CLI-first semantic locator for local codebases. It is best for natural-language discovery such as "where is authentication handled", "find websocket reconnect logic", or "which files implement rate limiting".
 
-This skill intentionally favors `skill + CLI` over `skill + MCP` in Codex. Codex can run shell commands directly, parse JSON output, then read real files with native tools for verification.
+This skill intentionally favors `skill + CLI` over `skill + MCP` in shell-capable agent contexts. The host agent can run shell commands directly, parse JSON output, then read real files with native tools for verification.
 
 ## Routing Ladder
 
@@ -104,7 +104,7 @@ codesearch search "<narrower English query>" --json -m 10
 - The task benefits from `search -> narrow -> read`:
   1. `codesearch search`
   2. inspect top file paths, line numbers, scores
-  3. read the relevant files or exact ranges with native Codex tools
+  3. read the relevant files or exact ranges with native file-reading tools
 
 ## Prefer Other Tools When
 

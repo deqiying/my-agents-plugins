@@ -1,6 +1,6 @@
 ---
 name: manage-mise
-description: 'Use when Codex needs to check, install, update, pin, or troubleshoot mise-managed developer runtimes and tools such as Node, Go, Python, uv, pnpm, Codex CLI, codesearch, OfficeCLI, and doggo across Windows, macOS, or Linux.'
+description: 'Use when an agent needs to check, install, update, pin, or troubleshoot mise-managed developer runtimes and tools such as Node, Go, Python, uv, pnpm, Codex CLI, codesearch, OfficeCLI, and doggo across Windows, macOS, or Linux.'
 ---
 
 # Manage Mise
