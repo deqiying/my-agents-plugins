@@ -1,6 +1,6 @@
 {
   "name": "agent-utilities",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Reusable local utility skills for developer environment maintenance, setup, package manager ownership, and agent tool registry workflows.",
   "author": {
     "name": "Maintainer"

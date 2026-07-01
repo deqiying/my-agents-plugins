@@ -1,13 +1,13 @@
 ---
 name: mcp-fast-context-mcp
-description: 'Use the fast-context-mcp MCP as the default early semantic locator for local repositories when Codex is finding context or locating code from natural-language intent. Use automatically before broad repo scans for unknown entrypoints, implementation lookup, plan/design-to-code mapping, architecture/request/data-flow/call-path analysis, impact-area discovery, and narrowing unknown files before editing. Prefer rg/direct reads only when exact files, symbols, config keys, packet names, error text, or narrow paths are already known.'
+description: 'Use proactively when Agent needs to find local code context before editing or answering: natural-language codebase discovery, unknown entrypoints, implementation lookup, plan/design-to-code mapping, feature ownership, architecture/data-flow/call-path analysis, impact-area discovery, and narrowing which files to read. Run fast_context_search before broad conceptual rg scans. Prefer rg/direct reads only when an exact file, symbol, config key, packet name, error text, or narrow path is already known.'
 ---
 
 # MCP: fast-context-mcp
 
 ## Routing Role
 
-Treat fast-context-mcp as the first semantic context pass for local-code tasks where the user gives intent, behavior, symptoms, architecture, or a plan but the exact file or symbol is not yet known. It is best for natural-language discovery such as "where is authentication handled", "find websocket reconnect logic", "which files implement rate limiting", or similar code-positioning tasks where the entrypoint is unknown.
+Treat fast-context-mcp as the proactive first semantic context pass for local-code tasks where the user gives intent, behavior, symptoms, architecture, or a plan but the exact file or symbol is not yet known. The trigger is code-context location, not only the literal phrase "semantic search". It is best for natural-language discovery such as "where is authentication handled", "find websocket reconnect logic", "which files implement rate limiting", or similar code-positioning tasks where the entrypoint is unknown.
 
 Use it before broad local keyword scans for unknown-entrypoint work. A good default: if you are about to run a repo-wide `rg` query made from generic concepts or many OR terms, run `fast_context_search` first, then use `rg` to verify exact symbols and references.
 
@@ -20,7 +20,8 @@ Use it for `semantic locate -> narrow -> read -> verify`:
 
 ## Use Automatically When
 
-- You are locating code or gathering implementation context in a local repository and do not already know a narrow path, symbol, config key, or exact search string.
+- You are deciding which local files to inspect for a code task and do not already know a narrow path, symbol, config key, or exact search string.
+- You are locating code or gathering implementation context in a local repository from user intent, symptoms, feature names, architecture terms, UI text, protocol concepts, or a plan.
 - The user asks for semantic code search, natural-language code search, code location, implementation lookup, or "where is this implemented".
 - You do not know the exact files, classes, functions, config keys, packet names, error text, or log lines.
 - You need likely entrypoints before reading files or making edits.
@@ -35,8 +36,8 @@ Use it for `semantic locate -> narrow -> read -> verify`:
 - You already know the exact file, symbol, config key, packet name, error text, log message, or one narrow directory; use local deterministic tools such as `rg`, `rg --files`, or direct reads first.
 - You need exact exhaustive matches rather than semantic candidates; use `rg`.
 - You need known file content; read the file directly.
-- The task is about public GitHub repository architecture and the repo is not local; use `mcp-deepwiki`.
-- The task needs current public web or documentation lookup; use `mcp-tavily`, `mcp-exa`, `mcp-context7`, or the official OpenAI docs route as appropriate.
+- The task is about public GitHub repository architecture and the repo is not local; use `onesearch` repo-wiki or DeepWiki routes.
+- The task needs current public web, general documentation, or third-party library lookup; use `onesearch` or the official OpenAI docs route as appropriate.
 - The search would expose secrets, credential files, customer data, or explicitly restricted private material to a remote semantic-search service; stay with local-only tools unless the user explicitly accepts that risk. Do not use ordinary private source code in a trusted workspace as a blanket reason to skip this tool.
 
 ## Communication Discipline

@@ -1,8 +1,0 @@
-interface:
-  display_name: "MCP Firecrawl"
-  short_description: "Robust scraping and extraction MCP"
-  icon_small: "./assets/icon.png"
-  icon_large: "./assets/icon.png"
-  brand_color: "#EA580C"
-  default_prompt: "Use $mcp-firecrawl to scrape, crawl, or extract structured web content."
-

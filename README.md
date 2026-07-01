@@ -101,19 +101,12 @@ Skill:
 
 ### MCP Skills
 
-`mcp-skills` 提供 MCP 服务的路由说明。它们只说明何时使用某个 MCP 服务，不替代用户本机的 MCP server 配置。
+`mcp-skills` 提供仍保留在 Codex MCP 配置中的 MCP 服务路由说明。web search、第三方文档、站点抓取和公开仓库上下文已收敛到 `onesearch`。
 
 Skills:
 
-- `mcp-context7`: 查询当前第三方库、框架、SDK 文档。
-- `mcp-ddg-search`: 轻量网页检索和简单页面文本提取。
-- `mcp-deepwiki`: 理解公开 GitHub 仓库的架构、模块和 API 面。
-- `mcp-exa`: 按意图做语义网页发现和干净 markdown 提取。
 - `mcp-excel-tools`: 检查和编辑 Excel 原生工作簿。
 - `mcp-fast-context-mcp`: 用语义搜索定位本地代码库中的相关文件、入口点和影响范围。
-- `mcp-firecrawl`: 做稳健网页抓取、结构化抽取、站点映射、爬取和文档解析。
-- `mcp-freecrawl`: 做轻量公开搜索、简单抓取和小范围爬取。
-- `mcp-tavily`: 处理新闻、政策、产品变化和需要多源验证的当前信息。
 
 ### OpenCLI
 

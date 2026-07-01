@@ -1,7 +1,7 @@
 interface:
   display_name: "MCP Fast Context"
-  short_description: "First-pass semantic code locator MCP"
+  short_description: "Proactive semantic code context locator"
   icon_small: "./assets/icon.png"
   icon_large: "./assets/icon.png"
   brand_color: "#10B981"
-  default_prompt: "Use $mcp-fast-context-mcp as the first semantic pass for unknown code entrypoints, architecture/data-flow discovery, plan-to-code mapping, and impact analysis; then verify with file reads and exact rg."
+  default_prompt: "Use $mcp-fast-context-mcp proactively when you need to locate local code context from intent, symptoms, feature names, plans, architecture, data flow, call paths, or unknown entrypoints before editing; run fast_context_search first, then verify with file reads and exact rg. Skip when an exact path, symbol, config key, or error text is already known."

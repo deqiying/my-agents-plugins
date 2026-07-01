@@ -16,7 +16,7 @@ Do not put real machine-specific user directories into skill text, committed doc
 ## Supporting Skills
 
 - Use `$manage-scoop` for Windows Scoop checks, install, update, and Scoop-managed apps. On Windows, treat Scoop as the default prerequisite path for installing or updating `mise`.
-- Use `$manage-mise` for mise itself and mise-managed languages or tools such as Node, Go, Python, uv, pnpm, Codex CLI, `codesearch`, `officecli`, and `doggo`.
+- Use `$manage-mise` for mise itself and mise-managed languages or tools such as Node, Go, Python, uv, pnpm, Codex CLI, `codesearch`, `officecli`, `onesearch`, and `doggo`.
 - Use `$manage-brew` for macOS Homebrew checks, install, update, and brew-managed developer tools. On macOS, prefer Homebrew for tools that are more native or stable through brew than through mise.
 - Use `$maintain-dev-tool-list` before changing the shared tool set or when the user asks which tools should be checked, installed, pinned, or updated.
 

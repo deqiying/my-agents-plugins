@@ -1,8 +1,0 @@
-interface:
-  display_name: "MCP Tavily"
-  short_description: "Broad web research and recency MCP"
-  icon_small: "./assets/icon.png"
-  icon_large: "./assets/icon.png"
-  brand_color: "#0EA5E9"
-  default_prompt: "Use $mcp-tavily for current, multi-source web research on this task."
-

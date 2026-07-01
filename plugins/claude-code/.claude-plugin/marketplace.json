@@ -29,7 +29,7 @@
     {
       "name": "mcp-skills",
       "source": "./mcp-skills",
-      "version": "0.1.8",
+      "version": "0.2.0",
       "description": "Skill routing notes for local MCP services.",
       "category": "Productivity",
       "author": {
@@ -56,7 +56,7 @@
     {
       "name": "agent-utilities",
       "source": "./agent-utilities",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "description": "Utility skills for local developer environments.",
       "category": "Productivity",
       "author": {

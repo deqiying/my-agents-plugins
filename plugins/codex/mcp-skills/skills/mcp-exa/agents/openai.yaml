@@ -1,8 +1,0 @@
-interface:
-  display_name: "MCP Exa"
-  short_description: "Semantic web discovery MCP"
-  icon_small: "./assets/icon.png"
-  icon_large: "./assets/icon.png"
-  brand_color: "#06B6D4"
-  default_prompt: "Use $mcp-exa to find the best matching public web pages for this task."
-

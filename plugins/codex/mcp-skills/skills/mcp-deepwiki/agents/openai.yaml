@@ -1,8 +1,0 @@
-interface:
-  display_name: "MCP DeepWiki"
-  short_description: "Public repo architecture Q&A MCP"
-  icon_small: "./assets/icon.png"
-  icon_large: "./assets/icon.png"
-  brand_color: "#8B5CF6"
-  default_prompt: "Use $mcp-deepwiki to ask architecture questions about a public GitHub repository."
-

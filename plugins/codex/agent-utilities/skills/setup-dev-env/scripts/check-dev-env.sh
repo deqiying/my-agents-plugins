@@ -11,7 +11,7 @@ platform="$(uname -s)"
 echo "Platform: $platform"
 echo "Shell: ${SHELL:-unknown}"
 
-commands="brew mise node go python3 uv pnpm codex codesearch officecli doggo"
+commands="brew mise node go python3 uv pnpm codex codesearch officecli onesearch doggo"
 for name in $commands; do
   if command -v "$name" >/dev/null 2>&1; then
     printf 'FOUND %s: %s\n' "$name" "$(command -v "$name")"
