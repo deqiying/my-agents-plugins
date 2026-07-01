@@ -80,11 +80,12 @@ Skills:
 
 ### Agent Utilities
 
-`agent-utilities` 提供本机开发环境检查、初始化、更新和工具清单维护相关的辅助技能。
+`agent-utilities` 提供本机开发环境维护、检查、初始化、更新和工具清单维护相关的辅助技能。
 
 Skills:
 
-- `setup-dev-env`: 检查、安装和更新本地开发环境的主入口，按平台串联 Scoop、mise、Homebrew 和工具清单技能。
+- `maintain-dev-env`: 任务执行过程中遇到本地工具缺失、PATH 异常或项目声明版本与当前环境不一致时的主入口。
+- `setup-dev-env`: 用户主动要求检查、安装和更新本地开发环境时的主入口，按平台串联 Scoop、mise、Homebrew 和工具清单技能。
 - `manage-scoop`: Windows 专属，检查、安装和更新 Scoop，并作为 Windows 下 mise 的前置环境入口。
 - `manage-mise`: 检查、安装和更新 mise 管理的语言运行时和 agent 常用工具。
 - `manage-brew`: macOS 专属，检查、安装和更新 Homebrew 管理的开发工具。

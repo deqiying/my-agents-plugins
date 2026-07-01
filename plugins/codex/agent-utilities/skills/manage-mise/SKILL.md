@@ -37,6 +37,12 @@ Do not write real `mise` config or install paths into persistent text. Use `<GLO
 5. Apply install/update only after explicit user approval.
 6. Verify with `mise ls --current`, command resolution, and each target tool's version command.
 
+## Project Version Mismatches
+
+When `$maintain-dev-env` finds that a project requires a different runtime or tool version than the active global command, install or activate the project-required version precisely. For example, if the active Go command is `1.26.1` and the project requires `1.26.4`, prefer `mise install go@1.26.4` and verify with `mise exec go@1.26.4 -- go version` before rerunning the original command.
+
+If the repository already has `mise.toml` or `.tool-versions`, follow that project config. If it does not, avoid writing new project config until the target file and intent are clear; use install-only or temporary `mise exec` execution first.
+
 ## Script Actions
 
 ```powershell

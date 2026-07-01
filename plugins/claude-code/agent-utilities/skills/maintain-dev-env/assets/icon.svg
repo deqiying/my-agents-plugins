@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Maintain Dev Env icon">
+  <rect width="256" height="256" rx="56" fill="#0F766E"/>
+  <path d="M68 82h120a18 18 0 0 1 18 18v56a18 18 0 0 1-18 18H68a18 18 0 0 1-18-18v-56a18 18 0 0 1 18-18Z" fill="#ECFEFF"/>
+  <path d="M74 113h108M74 143h58" stroke="#0F766E" stroke-width="14" stroke-linecap="round"/>
+  <path d="M166 143l14 14 28-34" fill="none" stroke="#14B8A6" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M78 58h100M92 198h72" stroke="#A7F3D0" stroke-width="14" stroke-linecap="round"/>
+</svg>

@@ -7,7 +7,7 @@ description: 'Use when Codex needs to maintain the shared developer tool registr
 
 ## Role
 
-Use this skill to maintain the tool registry that `$setup-dev-env`, `$manage-scoop`, `$manage-mise`, and `$manage-brew` use when checking or preparing developer machines.
+Use this skill to maintain the tool registry that `$maintain-dev-env`, `$setup-dev-env`, `$manage-scoop`, `$manage-mise`, and `$manage-brew` use when checking, preparing, or repairing developer machines.
 
 The first registry seed is based on the active tools from `mise ls --current`, with all real local paths replaced by placeholders. Future updates may add Scoop or Homebrew tools, but manager ownership must be explicit.
 

@@ -1,13 +1,15 @@
 ---
 name: setup-dev-env
-description: 'Use as the main workflow for checking, installing, updating, or repairing a local developer environment for Codex and agent development. Use when users ask to initialize a machine, prepare Node, Go, Python, uv, pnpm, Codex CLI, mise, Scoop, Homebrew, or common developer tools across Windows, macOS, or Linux.'
+description: 'Use when the user explicitly asks to initialize, audit, check, prepare, install, update, or repair a local developer environment for Codex and agent development across Windows, macOS, or Linux. Use for user-requested machine setup involving Node, Go, Python, uv, pnpm, Codex CLI, mise, Scoop, Homebrew, or common developer tools; for environment issues discovered while doing another task, prefer maintain-dev-env first.'
 ---
 
 # Setup Dev Env
 
 ## Role
 
-Use this as the coordinator for local developer environment work. It should inspect the machine, choose the right supporting skill, and report a concrete plan before changing tools, PATH, shell profile files, or package manager state.
+Use this as the coordinator when the user intentionally asks for local developer environment setup or a full environment audit. It should inspect the machine, choose the right supporting skill, and report a concrete plan before changing tools, PATH, shell profile files, or package manager state.
+
+For incidental environment blockers discovered while building, testing, generating, or debugging another project, use `$maintain-dev-env` first.
 
 Do not put real machine-specific user directories into skill text, committed docs, examples, logs, or generated registry files. Use placeholders from `references/placeholders.md`, such as `<HOME>`, `<PROJECT_ROOT>`, `<GLOBAL_MISE_CONFIG>`, `<MISE_DATA_DIR>`, and `<SCOOP_ROOT>`.
 

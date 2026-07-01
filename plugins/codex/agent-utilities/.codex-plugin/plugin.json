@@ -1,7 +1,7 @@
 {
   "name": "agent-utilities",
-  "version": "0.1.0",
-  "description": "Reusable local utility skills for developer environment setup, package manager maintenance, and agent tool registry workflows.",
+  "version": "0.2.0",
+  "description": "Reusable local utility skills for developer environment maintenance, setup, package manager ownership, and agent tool registry workflows.",
   "author": {
     "name": "Maintainer"
   },
@@ -19,7 +19,7 @@
   "interface": {
     "displayName": "Agent Utilities",
     "shortDescription": "Utility skills for local developer environments.",
-    "longDescription": "A personal local plugin for reusable agent utility workflows. It coordinates developer environment checks, setup, updates, package managers such as Scoop, mise, and Homebrew, and a shared registry of agent development tools.",
+    "longDescription": "A personal local plugin for reusable agent utility workflows. It coordinates developer environment maintenance discovered during tasks, explicit setup requests, runtime and tool version mismatches, package managers such as Scoop, mise, and Homebrew, and a shared registry of agent development tools.",
     "developerName": "Maintainer",
     "category": "Productivity",
     "capabilities": [
@@ -27,6 +27,7 @@
       "Shell"
     ],
     "defaultPrompt": [
+      "Use maintain-dev-env when a task is blocked by missing tools, PATH issues, or project runtime version mismatches.",
       "Use setup-dev-env to inspect my local developer environment before installing anything.",
       "Use manage-scoop for Windows Scoop checks and updates.",
       "Use manage-mise for mise-managed runtimes and tools.",

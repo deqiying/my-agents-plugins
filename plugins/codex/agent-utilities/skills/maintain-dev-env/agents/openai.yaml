@@ -1,0 +1,9 @@
+interface:
+  display_name: "Maintain Dev Env"
+  short_description: "Maintain local developer toolchains"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.png"
+  brand_color: "#0F766E"
+  default_prompt: "Use $maintain-dev-env to resolve local toolchain or project version mismatches before continuing."
+policy:
+  allow_implicit_invocation: true
