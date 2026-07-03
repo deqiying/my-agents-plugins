@@ -1,6 +1,6 @@
 {
   "name": "mcp-skills",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Local skill pack that documents when to use each managed MCP service and its tools.",
   "author": {
     "name": "Maintainer"
@@ -25,7 +25,7 @@
     "defaultPrompt": [
       "Use the right MCP skill for this task.",
       "Show me which MCP tool fits this request.",
-      "Audit my MCP tool routing for this workflow."
+      "Use mcp-excel-tools for targeted Excel-native work and tool-officecli when workbook output would be too verbose."
     ],
     "brandColor": "#2563EB",
     "composerIcon": "./assets/icon.png",

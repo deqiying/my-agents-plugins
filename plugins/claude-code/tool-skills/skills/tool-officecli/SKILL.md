@@ -1,6 +1,6 @@
 ---
 name: tool-officecli
-description: Use the local officecli CLI when the user wants to create, inspect, validate, render, or modify Microsoft Office documents, including Word `.docx`, Excel `.xlsx`, and PowerPoint `.pptx` files. Use for agent-friendly Office document workflows that benefit from structured JSON output, path-based document edits, batch operations, or render-and-fix verification.
+description: Use the local officecli CLI when the user wants to create, inspect, validate, render, or modify Microsoft Office documents, including Word `.docx`, Excel `.xlsx`, and PowerPoint `.pptx` files. Use especially when Excel work needs precise targeted extraction, bounded output, structured JSON, path-based edits, batch operations, validation, or render-and-fix verification.
 ---
 
 # OfficeCLI CLI
@@ -8,6 +8,8 @@ description: Use the local officecli CLI when the user wants to create, inspect,
 ## Routing Role
 
 Use `officecli` as a CLI-first Office document tool for `.docx`, `.xlsx`, and `.pptx` work. It is best when an agent needs to read structure, extract text, make targeted edits, create documents, run batch mutations, validate OpenXML output, or render documents to HTML/PNG for visual verification.
+
+For Excel files, treat `officecli` as a strong default candidate instead of only a last resort. Prefer it when the task needs precise extraction from a large workbook, bounded command output, stable paths/selectors, structured JSON that is easy to post-process, validation, rendered previews, or cross-Office workflows. If another Excel MCP can read metadata but a full range dump would be too verbose to extract from accurately, pivot to `officecli` for narrower inspection.
 
 This skill intentionally favors `skill + CLI` over ad hoc Python libraries. OfficeCLI is designed for AI agents: commands can return `--json`, elements have stable paths, and edits can be verified with `validate`, `view issues`, and rendered previews.
 
@@ -34,13 +36,15 @@ Before changing a user document:
 - The user asks to create, inspect, validate, proofread, render, or modify Office files.
 - The task involves `.docx`, `.xlsx`, or `.pptx` and a CLI workflow is more direct than writing custom document-processing code.
 - The user needs structured extraction from Word, Excel, or PowerPoint.
+- The Excel task needs precise targeted extraction, bounded output, stable path/query addressing, or a safer alternative to verbose full-range dumps.
 - The user wants layout-aware Office work such as slide generation, chart placement, screenshots, live preview, issue detection, or render-and-fix loops.
 - The workflow benefits from stable path addressing such as `/body/p[3]`, `/slide[1]/shape[@id=...]`, or `/Sheet1/A1`.
 
 ## Prefer Other Tools When
 
 - The user explicitly asks to use another document pipeline or library.
-- The task is ordinary spreadsheet cell/range editing in an existing `.xlsx` and `excelTools` MCP is available and sufficient.
+- The Excel task is a simple workbook-native single-step operation and an Excel MCP can perform it directly with targeted, compact output.
+- The task depends on Excel MCP-specific operations such as formula syntax validation, data validation inspection, merged-cell inspection, or native table/chart/pivot manipulation, and no OfficeCLI validation or rendering workflow is needed.
 - The task is a polished Word/PPT/spreadsheet deliverable that must follow a higher-level artifact workflow already provided by a specialized skill.
 - `officecli` is not installed and the user has not approved installing or downloading binaries.
 - The document is open in Office/WPS/another editor and the edit may conflict with a file lock. Ask the user to close it or work on a copy.
@@ -134,6 +138,7 @@ Load one specialized skill when the task clearly matches it, then follow the pri
 - Paths are generally 1-based. `--index` is generally 0-based, except OfficeCLI may define format-specific exceptions; check help before relying on index behavior.
 - Stable IDs such as `shape[@id=...]` are safer than positional paths during multi-step edits because positions can shift after inserts or deletes.
 - For large files, limit output with command flags such as `--max-lines`, `--start`, `--end`, `--depth`, or targeted paths/selectors.
+- For Excel extraction, inspect workbook shape first and avoid whole-sheet or full-range dumps when a smaller path, selector, row window, or sheet-specific command can answer the question.
 - If a command returns a structured error such as `not_found`, `invalid_value`, or `unsupported_property`, use the suggestion and run `help`, `get`, or `query` to self-correct before retrying.
 - Do not install or update OfficeCLI from the network unless the user asked for it or approved it. If installation is required, explain the download source and request approval first.
 

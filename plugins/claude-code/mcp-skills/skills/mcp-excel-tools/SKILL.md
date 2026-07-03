@@ -1,13 +1,15 @@
 ---
 name: mcp-excel-tools
-description: Use this skill and the excelTools MCP first for Excel workbook work on `.xlsx` or `.xls` files, especially existing workbook inspection or edits, sheet/range/cell operations, row/column insertion or deletion, formatting preservation, formulas, data validation, tables, charts, pivots, merged cells, and workbook metadata. Use it automatically for Excel-native tasks before higher-level spreadsheet artifact workflows unless the user clearly asks to create a polished new workbook deliverable with rendering/export.
+description: Use this skill and the excelTools MCP for Excel-native workbook operations on `.xlsx` or `.xls` files, especially targeted sheet/range/cell edits, row/column insertion or deletion, formatting preservation, formulas, data validation, tables, charts, pivots, merged cells, and workbook metadata. Prefer `$tool-officecli` when Excel work needs precise extraction from large ranges, bounded output, path-addressed JSON, validation, rendering, or cross-Office workflows.
 ---
 
 # MCP: excelTools
 
 ## Routing Role
 
-excelTools is the preferred native workbook route for Excel files when worksheet/range/formula semantics matter. Default to this skill first for existing `.xlsx` or `.xls` inspection and edits, then pivot only when another route is clearly better for the requested deliverable.
+excelTools is the native workbook MCP route for Excel files when worksheet/range/formula semantics matter and the operation can be targeted cleanly. Use it for compact workbook metadata, focused range/cell edits, and Excel-specific structure operations.
+
+Do not treat excelTools as automatically better than OfficeCLI for every Excel task. If metadata inspection succeeds but reading a full range would produce output that is too long for precise extraction, or if the workflow needs bounded CLI output, stable path/query addressing, validation, rendering, or cross-Office handling, switch to `$tool-officecli` early.
 
 ## Use Automatically When
 
@@ -15,11 +17,13 @@ excelTools is the preferred native workbook route for Excel files when worksheet
 - The user asks to add, insert, delete, copy, move, resize, merge, unmerge, rename, or otherwise adjust cells, ranges, rows, columns, or worksheets in an Excel workbook.
 - The task needs workbook metadata, ranges, validation rules, merged cells, formulas, worksheets, tables, charts, or pivot tables.
 - The task should preserve Excel-native workbook semantics, formatting, formulas, validation, tables, charts, or layout instead of treating the file as plain tabular data.
-- The task is a lightweight or targeted Excel question/edit where using a full spreadsheet artifact build/render/export workflow would be unnecessary.
+- The task is a lightweight or targeted Excel question/edit where expected MCP output will stay compact and using a full spreadsheet artifact build/render/export workflow would be unnecessary.
 
 ## Prefer Other Tools When
 
 - The user clearly asks for a full new spreadsheet artifact workflow with presentation polish, dashboard/model construction, rendered previews, or final `.xlsx` export; use the Spreadsheets plugin skill as the primary route.
+- The user needs precise extraction from a large workbook/range, bounded output, path-addressed JSON, batch document edits, Office validation/rendering, or cross-Office workflows; use `$tool-officecli`.
+- excelTools metadata is useful but the next full range read would be too verbose to inspect accurately; use `$tool-officecli` for narrower extraction instead of repeatedly dumping large ranges.
 - The data is CSV/TSV only and no workbook-native semantics are needed; local tools or the Spreadsheets plugin may be enough.
 - The file is not available locally; ask for the file or locate it before using workbook tools.
 
@@ -33,7 +37,8 @@ If excelTools is skipped, attempted, or unavailable, state the status briefly:
 
 - `excelTools workbook operation succeeded`
 - `excelTools was attempted but failed; using fallback`
-- `excelTools was not used because local tabular processing was sufficient`
+- `excelTools metadata succeeded, but OfficeCLI was better for bounded extraction`
+- `excelTools was not used because OfficeCLI or local tabular processing was more direct`
 
 ## MCP Tools
 
@@ -46,7 +51,7 @@ If excelTools is skipped, attempted, or unavailable, state the status briefly:
 - `rename_worksheet`: Rename a worksheet.
 - `copy_worksheet`: Duplicate a worksheet.
 
-Use these when changing workbook structure or confirming workbook layout.
+Use these when changing workbook structure or confirming workbook layout. Treat large dimensions as a signal to target the next read carefully or switch to OfficeCLI for bounded extraction.
 
 ### Data Read And Write Tools
 
@@ -100,4 +105,4 @@ Use these when the user wants workbook-native analysis rather than only raw data
 
 ## Failure And Fallback
 
-If a workbook operation fails because the file, sheet, or range is invalid, inspect workbook metadata and validation rules before retrying. If excelTools is unavailable, use the Spreadsheet plugin or local libraries only after saying the MCP path was not used.
+If a workbook operation fails because the file, sheet, or range is invalid, inspect workbook metadata and validation rules before retrying. If metadata succeeds but the precise data read would require a noisy full-range dump, use `$tool-officecli` for bounded inspection/extraction. If excelTools is unavailable, use OfficeCLI, the Spreadsheet plugin, or local libraries only after saying the MCP path was not used.

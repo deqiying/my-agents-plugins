@@ -29,7 +29,7 @@
     {
       "name": "mcp-skills",
       "source": "./mcp-skills",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "description": "Skill routing notes for local MCP services.",
       "category": "Productivity",
       "author": {
@@ -46,7 +46,7 @@
     {
       "name": "tool-skills",
       "source": "./tool-skills",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "description": "Skill routing notes for local CLI tools.",
       "category": "Productivity",
       "author": {
