@@ -41,7 +41,7 @@ Each registry entry should include:
 - `command`: command expected on PATH.
 - `manager`: `scoop`, `mise`, or `brew`.
 - `category`: `runtime`, `agent-tool`, `package-manager`, or `utility`.
-- `version_policy`: use `latest` for shared/global tools. Project-specific exact versions should come from repository files such as `mise.toml`, `.tool-versions`, `go.mod`, `package.json`, or `pyproject.toml`.
+- `version_policy`: use `latest` for shared/global tools. Project-specific exact versions should come from repository files such as `mise.toml`, `.tool-versions`, `go.mod`, `rust-toolchain.toml`, `Cargo.toml`, `package.json`, or `pyproject.toml`.
 - `check`: short command list for verification.
 - `notes`: only durable notes; no machine-local paths.
 

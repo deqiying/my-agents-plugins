@@ -31,7 +31,7 @@ tools:
     check:
       - "officecli --version"
       - "officecli help"
-    notes: "Office document inspection, editing, validation, and rendering CLI."
+    notes: "Office document inspection, editing, validation, and rendering CLI. Canonical command is lowercase officecli; on Windows, treat case-only OfficeCLI.exe shim noise as healthy when officecli resolves to the mise-managed install and passes checks."
   - id: "npm:onesearch"
     command: "onesearch"
     manager: "mise"
@@ -50,6 +50,15 @@ tools:
     check:
       - "go version"
     notes: "Go runtime and toolchain."
+  - id: "rust"
+    command: "rustc"
+    manager: "mise"
+    category: "runtime"
+    version_policy: "latest"
+    check:
+      - "rustc --version"
+      - "cargo --version"
+    notes: "Rust compiler and Cargo toolchain; manage shared/global Rust through mise rather than rustup."
   - id: "node"
     command: "node"
     manager: "mise"

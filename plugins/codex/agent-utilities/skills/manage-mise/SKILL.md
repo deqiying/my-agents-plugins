@@ -1,6 +1,6 @@
 ---
 name: manage-mise
-description: 'Use when an agent needs to check, install, update, pin, or troubleshoot mise-managed developer runtimes and tools such as Node, Go, Python, uv, pnpm, Codex CLI, codesearch, OfficeCLI, and doggo across Windows, macOS, or Linux.'
+description: 'Use when an agent needs to check, install, update, pin, or troubleshoot mise-managed developer runtimes and tools such as Node, Go, Rust, Python, uv, pnpm, Codex CLI, codesearch, OfficeCLI, and doggo across Windows, macOS, or Linux.'
 ---
 
 # Manage Mise
@@ -17,6 +17,8 @@ Do not write real `mise` config or install paths into persistent text. Use `<GLO
 - macOS: if Homebrew owns `mise`, update `mise` through `$manage-brew`; otherwise follow the user's existing install source.
 - Linux: use Bash checks and confirm the install source before running a remote installer.
 - Tools already listed in `$maintain-dev-tool-list` should stay with their declared manager unless the user approves migration.
+- Rust should be managed by mise for shared/global agent environments. If `rustc` or `cargo` resolves to rustup or `<HOME>/.cargo/bin`, treat it as a manager mismatch unless a project explicitly requires rustup.
+- OfficeCLI's canonical command is lowercase `officecli`. On Windows, if `officecli --version` resolves to the mise-managed install or shim, treat case-only `OfficeCLI.exe`/`officecli.exe` shim diagnostics as noise; do not install a second OfficeCLI copy through another manager.
 
 ## Default Workflow
 

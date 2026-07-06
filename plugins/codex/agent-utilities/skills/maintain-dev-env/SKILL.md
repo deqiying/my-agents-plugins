@@ -1,6 +1,6 @@
 ---
 name: maintain-dev-env
-description: 'Use as the broad main guidance when an agent encounters or anticipates local developer environment work during any task, not only when the user asks for setup. Use when commands, runtimes, package managers, PATH, shims, or tool versions may block work; when project-declared versions from go.mod, toolchain, mise.toml, .tool-versions, package.json engines/packageManager, .node-version, .nvmrc, pyproject.toml, or uv files differ from active Go, Node, Python, uv, pnpm, Codex CLI, mise, Scoop, Homebrew, or other tools; or when an agent needs to check, install, update, pin, repair, or temporarily run the required local toolchain before building, testing, generating, or debugging.'
+description: 'Use as the broad main guidance when an agent encounters or anticipates local developer environment work during any task, not only when the user asks for setup. Use when commands, runtimes, package managers, PATH, shims, or tool versions may block work; when project-declared versions from go.mod, toolchain, mise.toml, .tool-versions, package.json engines/packageManager, .node-version, .nvmrc, rust-toolchain, rust-toolchain.toml, Cargo.toml rust-version, pyproject.toml, or uv files differ from active Go, Rust, Node, Python, uv, pnpm, Codex CLI, mise, Scoop, Homebrew, or other tools; or when an agent needs to check, install, update, pin, repair, or temporarily run the required local toolchain before building, testing, generating, or debugging.'
 ---
 
 # Maintain Dev Env
@@ -19,6 +19,7 @@ For user-requested machine setup, full environment audits, or "prepare this mach
    - The project declares a tool version that differs from the active command version.
 2. Read project version evidence before trusting global tools:
    - Go: `go.mod` `go` and `toolchain` directives, plus repository `mise.toml` or `.tool-versions`.
+   - Rust: `rust-toolchain`, `rust-toolchain.toml`, `Cargo.toml` `rust-version`, plus repository `mise.toml` or `.tool-versions`.
    - Node: `package.json` `engines` and `packageManager`, `.node-version`, `.nvmrc`, `mise.toml`, `.tool-versions`.
    - Python: `pyproject.toml` `requires-python`, `.python-version`, `uv.lock`, `mise.toml`, `.tool-versions`.
    - Other tools: repository docs, lockfiles, CI configs, and checked-in tool manager files.
@@ -28,6 +29,7 @@ For user-requested machine setup, full environment audits, or "prepare this mach
 4. Compare required and active versions. Report the exact source of the requirement and the active command path or version.
 5. Choose the smallest corrective path:
    - If `mise` should manage the runtime or tool, use `$manage-mise`.
+   - If shared/global Rust commands resolve to rustup or `<HOME>/.cargo/bin`, report a manager mismatch and prefer migrating Rust to mise management before treating it as healthy.
    - On Windows, if `mise` is missing or Scoop owns it, use `$manage-scoop`.
    - On macOS, if Homebrew owns the tool or is the better native manager, use `$manage-brew`.
    - If the shared desired tool set is wrong or missing an entry, use `$maintain-dev-tool-list`.
