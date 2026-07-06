@@ -34,6 +34,7 @@ For user-requested machine setup, full environment audits, or "prepare this mach
 6. Prefer task-local or project-aware execution before changing global state:
    - If the project already has `mise.toml` or `.tool-versions`, install the required version and let the project config select it.
    - If no project config exists, prefer an install-only or temporary execution path such as `mise install <tool>@<version>` followed by `mise exec <tool>@<version> -- <command>`.
+   - For shared/global tool maintenance, use the latest available version by default. Do not turn a project-required version into a global pin unless the user explicitly asks for that machine policy.
    - Do not write `mise.toml`, `.tool-versions`, shell profile files, or PATH changes unless the target file and intent are clear.
 7. After any change, verify the manager state, command resolution, target tool version, and the original failed or blocked project command.
 
@@ -42,6 +43,8 @@ For user-requested machine setup, full environment audits, or "prepare this mach
 When the active tool and project requirement differ, treat the project requirement as the default target for that project. For example, if `go version` reports `1.26.1` but `go.mod` or `toolchain` requires `1.26.4`, plan a precise install or activation such as `mise install go@1.26.4`, then verify with `mise exec go@1.26.4 -- go version` before rerunning the original Go command.
 
 Do not "fix" the project by downgrading its declared version to match the global machine. Only propose changing project requirements when the user asked for a compatibility decision or the repository evidence clearly shows the declaration is wrong.
+
+This project-specific precision does not change shared/global version policy: global language runtimes and agent tools should use the latest available version unless the user explicitly requests a fixed global version.
 
 ## Safety Rules
 

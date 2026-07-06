@@ -28,9 +28,9 @@ Do not write real `mise` config or install paths into persistent text. Use `<GLO
    - `mise ls --current --json`
    - `mise ls --installed`
 3. For missing tools, decide whether to write global config or project config:
-   - Global: `mise use --global <tool>@<version>`
-   - Project: `mise use <tool>@<version>` from `<PROJECT_ROOT>`
-   - Install-only: `mise install <tool>@<version>`
+   - Global: `mise use --global <tool>@latest`
+   - Project: `mise use <tool>@<project-version>` from `<PROJECT_ROOT>`
+   - Install-only: `mise install <tool>@latest` for shared/global tools, or `mise install <tool>@<project-version>` for a project requirement.
 4. For updates, prefer dry-run first:
    - `mise upgrade --dry-run`
    - `mise outdated --json`
@@ -43,17 +43,19 @@ When `$maintain-dev-env` finds that a project requires a different runtime or to
 
 If the repository already has `mise.toml` or `.tool-versions`, follow that project config. If it does not, avoid writing new project config until the target file and intent are clear; use install-only or temporary `mise exec` execution first.
 
+For global language and agent-tool configuration, use `latest` by default. Use exact versions only when they come from project-level configuration or an explicit user request to pin a global tool.
+
 ## Script Actions
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/manage-mise.ps1 -Action check
-powershell -ExecutionPolicy Bypass -File scripts/manage-mise.ps1 -Action install -Tools node@latest,go@1.26.1 -Global -Apply
+powershell -ExecutionPolicy Bypass -File scripts/manage-mise.ps1 -Action install -Tools node@latest,go@latest -Global -Apply
 powershell -ExecutionPolicy Bypass -File scripts/manage-mise.ps1 -Action update -Tools node,python -Apply
 ```
 
 ```bash
 bash scripts/manage-mise.sh check
-bash scripts/manage-mise.sh install --global --apply node@latest go@1.26.1
+bash scripts/manage-mise.sh install --global --apply node@latest go@latest
 bash scripts/manage-mise.sh update --apply node python
 ```
 

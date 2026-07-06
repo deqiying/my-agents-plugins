@@ -46,7 +46,7 @@ tools:
     command: "go"
     manager: "mise"
     category: "runtime"
-    version_policy: "1.26.1"
+    version_policy: "latest"
     check:
       - "go version"
     notes: "Go runtime and toolchain."
@@ -63,7 +63,7 @@ tools:
     command: "codex"
     manager: "mise"
     category: "agent-tool"
-    version_policy: "0.120.0"
+    version_policy: "latest"
     check:
       - "codex --version"
     notes: "Codex CLI installed through mise npm backend."
