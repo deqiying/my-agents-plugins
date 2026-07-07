@@ -8,7 +8,7 @@
     {
       "name": "agent-workflows",
       "source": "./agent-workflows",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "description": "Personal workflow skills for agents.",
       "category": "Productivity",
       "author": {
