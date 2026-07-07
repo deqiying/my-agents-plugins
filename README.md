@@ -105,7 +105,7 @@ Skill:
 
 Skills:
 
-- `mcp-excel-tools`: 检查和编辑 Excel 原生工作簿。
+- `mcp-excel-tools`: 处理 Excel 原生工作簿操作；普通读取和提取优先走 `tool-officecli`。
 - `mcp-fast-context-mcp`: 用语义搜索定位本地代码库中的相关文件、入口点和影响范围。
 
 ### OpenCLI
@@ -135,7 +135,7 @@ Skill:
 Skill:
 
 - `tool-codesearch`: 使用本地 `codesearch` CLI 在编辑前做语义代码库发现。
-- `tool-officecli`: 使用本地 `officecli` CLI 创建、检查、修改、验证和渲染 Office 文档。
+- `tool-officecli`: 优先使用本地 `officecli` CLI 读取、提取、检查、修改、验证和渲染 Office 文档。
 
 ## 可移植性约定
 

@@ -1,26 +1,27 @@
 ---
 name: mcp-excel-tools
-description: Use this skill and the excelTools MCP for Excel-native workbook operations on `.xlsx` or `.xls` files, especially targeted sheet/range/cell edits, row/column insertion or deletion, formatting preservation, formulas, data validation, tables, charts, pivots, merged cells, and workbook metadata. Prefer `$tool-officecli` when Excel work needs precise extraction from large ranges, bounded output, path-addressed JSON, validation, rendering, or cross-Office workflows.
+description: Use this skill and the excelTools MCP for Excel-native workbook operations on `.xlsx` or `.xls` files after deciding `$tool-officecli` is not the better first route for ordinary Excel reading or extraction. Use for targeted sheet/range/cell edits, row/column operations, formatting preservation, formulas, data validation, tables, charts, pivots, merged cells, and workbook metadata. Prefer `$tool-officecli` for read-only inspection, config or workbook extraction, large ranges, bounded output, path-addressed JSON, validation, rendering, or cross-Office workflows.
 ---
 
 # MCP: excelTools
 
 ## Routing Role
 
-excelTools is the native workbook MCP route for Excel files when worksheet/range/formula semantics matter and the operation can be targeted cleanly. Use it for compact workbook metadata, focused range/cell edits, and Excel-specific structure operations.
+excelTools is the native workbook MCP route for Excel files when worksheet/range/formula semantics matter and the operation can be targeted cleanly. Use it for compact workbook metadata, focused range/cell edits, and Excel-specific structure operations after considering whether `$tool-officecli` should handle ordinary read/extract work first.
 
-Do not treat excelTools as automatically better than OfficeCLI for every Excel task. If metadata inspection succeeds but reading a full range would produce output that is too long for precise extraction, or if the workflow needs bounded CLI output, stable path/query addressing, validation, rendering, or cross-Office handling, switch to `$tool-officecli` early.
+Do not treat excelTools as automatically better than OfficeCLI for every Excel task, and do not choose it solely because a file has an `.xlsx` or `.xls` extension. If the task is read-only workbook inspection, config/key-value extraction, or sheet text/range extraction, use `$tool-officecli` first unless native workbook semantics are the main requirement. If metadata inspection succeeds but reading a full range would produce output that is too long for precise extraction, or if the workflow needs bounded CLI output, stable path/query addressing, validation, rendering, or cross-Office handling, switch to `$tool-officecli` early.
 
 ## Use Automatically When
 
-- The user asks to inspect, read, create, edit, validate, format, compare, clean up, or analyze `.xlsx` or `.xls` files and workbook-native semantics may matter.
+- The user asks to create, edit, validate, format, compare, clean up, or analyze `.xlsx` or `.xls` files and workbook-native semantics matter more than generic extraction.
 - The user asks to add, insert, delete, copy, move, resize, merge, unmerge, rename, or otherwise adjust cells, ranges, rows, columns, or worksheets in an Excel workbook.
-- The task needs workbook metadata, ranges, validation rules, merged cells, formulas, worksheets, tables, charts, or pivot tables.
+- The task needs targeted workbook metadata, ranges, validation rules, merged cells, formulas, worksheets, tables, charts, or pivot tables, and the expected MCP output will stay compact.
 - The task should preserve Excel-native workbook semantics, formatting, formulas, validation, tables, charts, or layout instead of treating the file as plain tabular data.
 - The task is a lightweight or targeted Excel question/edit where expected MCP output will stay compact and using a full spreadsheet artifact build/render/export workflow would be unnecessary.
 
 ## Prefer Other Tools When
 
+- The task is ordinary read-only Excel inspection or extraction, especially a local resource/config workbook or key/value lookup; use `$tool-officecli` first.
 - The user clearly asks for a full new spreadsheet artifact workflow with presentation polish, dashboard/model construction, rendered previews, or final `.xlsx` export; use the Spreadsheets plugin skill as the primary route.
 - The user needs precise extraction from a large workbook/range, bounded output, path-addressed JSON, batch document edits, Office validation/rendering, or cross-Office workflows; use `$tool-officecli`.
 - excelTools metadata is useful but the next full range read would be too verbose to inspect accurately; use `$tool-officecli` for narrower extraction instead of repeatedly dumping large ranges.
@@ -33,8 +34,11 @@ Do not claim or imply that excelTools was used unless an excelTools MCP tool act
 
 Before writing, confirm or infer the target file, sheet, and range from local context. Read-only inspection usually does not require an extra question when the file path is clear.
 
+If this skill loads for an ordinary read-only Excel task, consider `$tool-officecli` before calling excelTools MCP tools. Use excelTools only when it is clearly the better native workbook operation or when OfficeCLI is unavailable or insufficient.
+
 If excelTools is skipped, attempted, or unavailable, state the status briefly:
 
+- `Excel read/extraction was routed to OfficeCLI first`
 - `excelTools workbook operation succeeded`
 - `excelTools was attempted but failed; using fallback`
 - `excelTools metadata succeeded, but OfficeCLI was better for bounded extraction`

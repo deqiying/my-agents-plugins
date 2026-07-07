@@ -1,6 +1,6 @@
 ---
 name: tool-officecli
-description: Use the local officecli CLI when the user wants to create, inspect, validate, render, or modify Microsoft Office documents, including Word `.docx`, Excel `.xlsx`, and PowerPoint `.pptx` files. Use especially when Excel work needs precise targeted extraction, bounded output, structured JSON, path-based edits, batch operations, validation, or render-and-fix verification.
+description: Use the local `officecli` CLI as the preferred first route for reading, inspecting, extracting, validating, rendering, or modifying Microsoft Office documents, including Word `.docx`, Excel `.xlsx`, and PowerPoint `.pptx` files. Use especially for Excel file reads, config or workbook inspection, precise targeted extraction, bounded output, structured JSON, path-based edits, batch operations, validation, or render-and-fix verification before ad hoc Python/openpyxl or generic spreadsheet parsing.
 ---
 
 # OfficeCLI CLI
@@ -9,7 +9,9 @@ description: Use the local officecli CLI when the user wants to create, inspect,
 
 Use `officecli` as a CLI-first Office document tool for `.docx`, `.xlsx`, and `.pptx` work. It is best when an agent needs to read structure, extract text, make targeted edits, create documents, run batch mutations, validate OpenXML output, or render documents to HTML/PNG for visual verification.
 
-For Excel files, treat `officecli` as a strong default candidate instead of only a last resort. Prefer it when the task needs precise extraction from a large workbook, bounded command output, stable paths/selectors, structured JSON that is easy to post-process, validation, rendered previews, or cross-Office workflows. If another Excel MCP can read metadata but a full range dump would be too verbose to extract from accurately, pivot to `officecli` for narrower inspection.
+For Excel read, inspect, and extract tasks, use `officecli` first after locating the workbook unless the task clearly requires Excel MCP-native semantics. This includes one-off checks of resource/config workbooks, key/value tables, sheet text, workbook shape, and targeted row/range extraction. Prefer it when the task needs precise extraction from a large workbook, bounded command output, stable paths/selectors, structured JSON that is easy to post-process, validation, rendered previews, or cross-Office workflows.
+
+Do not reach for ad hoc Python, `openpyxl`, ZIP/XML parsing, or generic spreadsheet libraries before considering this skill for local `.xlsx` files. If an Excel MCP can read metadata but a full range dump would be too verbose to extract from accurately, pivot to `officecli` for narrower inspection.
 
 This skill intentionally favors `skill + CLI` over ad hoc Python libraries. OfficeCLI is designed for AI agents: commands can return `--json`, elements have stable paths, and edits can be verified with `validate`, `view issues`, and rendered previews.
 
@@ -34,17 +36,19 @@ Before changing a user document:
 ## Use Automatically When
 
 - The user asks to create, inspect, validate, proofread, render, or modify Office files.
+- The task asks to read, inspect, extract, or verify contents from an Excel `.xlsx` workbook, including local resource/config spreadsheets, even when no edit is needed.
 - The task involves `.docx`, `.xlsx`, or `.pptx` and a CLI workflow is more direct than writing custom document-processing code.
 - The user needs structured extraction from Word, Excel, or PowerPoint.
 - The Excel task needs precise targeted extraction, bounded output, stable path/query addressing, or a safer alternative to verbose full-range dumps.
+- You would otherwise write temporary Python or use `openpyxl` only to inspect workbook contents.
 - The user wants layout-aware Office work such as slide generation, chart placement, screenshots, live preview, issue detection, or render-and-fix loops.
 - The workflow benefits from stable path addressing such as `/body/p[3]`, `/slide[1]/shape[@id=...]`, or `/Sheet1/A1`.
 
 ## Prefer Other Tools When
 
 - The user explicitly asks to use another document pipeline or library.
-- The Excel task is a simple workbook-native single-step operation and an Excel MCP can perform it directly with targeted, compact output.
-- The task depends on Excel MCP-specific operations such as formula syntax validation, data validation inspection, merged-cell inspection, or native table/chart/pivot manipulation, and no OfficeCLI validation or rendering workflow is needed.
+- The Excel task is primarily a workbook-native edit or semantic inspection that depends on Excel MCP-specific operations such as formula syntax validation, data validation inspection, merged-cell inspection, native table/chart/pivot manipulation, or style-preserving row/column changes, and the MCP output will stay targeted and compact.
+- `officecli` has been tried or inspected and cannot expose the needed workbook-native detail as directly as an available Excel MCP.
 - The task is a polished Word/PPT/spreadsheet deliverable that must follow a higher-level artifact workflow already provided by a specialized skill.
 - `officecli` is not installed and the user has not approved installing or downloading binaries.
 - The document is open in Office/WPS/another editor and the edit may conflict with a file lock. Ask the user to close it or work on a copy.
@@ -148,5 +152,5 @@ If `officecli` fails, is missing, or returns irrelevant output:
 
 1. Run `Get-Command officecli -All` and `officecli --version` when setup is the likely issue.
 2. Run `officecli help` or format-specific help when syntax or property names are uncertain.
-3. Use specialized document/spreadsheet/presentation skills or MCP tools when they better match the task.
+3. For Excel files, use `$mcp-excel-tools` before ad hoc Python when workbook-native MCP operations better match the task or `officecli` is unavailable.
 4. In the final answer, distinguish `officecli CLI succeeded`, `officecli was attempted but failed`, or `officecli was not used because another tool was more direct`.
