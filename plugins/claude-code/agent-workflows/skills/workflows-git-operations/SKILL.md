@@ -1,6 +1,6 @@
 ---
 name: workflows-git-operations
-description: Use when an agent needs to perform or plan Git operations such as repository initialization, status/diff review, scoped staging, branch creation or switching, commit message generation, commit author identity checks, pull, push, rollback, revert, reset, stash, or safe stale index.lock handling, especially when explicit user approval and Chinese Conventional Commit-style messages are required.
+description: Use when an agent needs to perform or plan Git operations such as repository initialization, status/diff review, scoped staging, branch creation or switching, commit message generation, commit author identity error handling, pull, push, rollback, revert, reset, stash, or safe stale index.lock handling, especially when explicit user approval and Chinese Conventional Commit-style messages are required.
 ---
 
 # Git Operations Workflow
@@ -22,15 +22,14 @@ Use this workflow whenever a task asks for repository initialization, Git state 
 2. Run `git status --short --branch` and inspect the relevant diff before proposing or executing Git changes.
 3. Separate task changes from unrelated dirty files. Do not stage untracked or modified files merely because they exist.
 4. Stage with explicit paths whenever possible. Avoid `git add .` unless the user explicitly approved all current changes and the status was reviewed.
-5. Before commit or any operation that may create a commit, follow the User Identity section below.
-6. Before commit, review `git diff --cached --name-only` and the staged diff. Ensure the commit message matches the staged scope.
-7. After commit, report the commit hash, subject, and remaining dirty/untracked state. After push, report branch and remote.
+5. Before commit, review `git diff --cached --name-only` and the staged diff. Ensure the commit message matches the staged scope.
+6. After commit, report the commit hash, subject, and remaining dirty/untracked state. After push, report branch and remote.
 
-## User Identity
+## User Identity Errors
 
-Use this section before `git commit`, `git commit --amend`, `git merge --continue`, `git rebase --continue`, `git cherry-pick --continue`, annotated or signed tags, and any other Git operation that needs `user.name` and `user.email`.
+Do not inspect Git identity before every commit or other identity-bearing operation. Use this section only when Git reports an identity configuration error, such as `Author identity unknown`, `Please tell me who you are`, or `unable to auto-detect email address`.
 
-- Inspect repository-local and global identity before the operation:
+- When an identity error occurs, inspect repository-local and global identity:
 
 ```powershell
 git config --local --get user.name
@@ -39,10 +38,10 @@ git config --global --get user.name
 git config --global --get user.email
 ```
 
-- If repository-local `user.name` and `user.email` are both set, proceed with that project identity even when global identity is absent.
-- If repository-local identity is incomplete but global `user.name` and `user.email` are both set, proceed with the effective global identity unless the user asked to use a different project identity.
-- If global identity is absent and repository-local identity is incomplete, stop before the operation and ask whether to set project-level identity for this repository. Ask for or confirm both the username and email; do not infer them from the OS account, remote URL, prior commits, or placeholders.
-- If the user approves project-level identity, set only local config and verify it:
+- If repository-local `user.name` and `user.email` are both set, report that the project identity exists and retry the same Git operation once if no other error explains the failure.
+- If repository-local identity is incomplete but global `user.name` and `user.email` are both set, report the effective global identity and retry the same Git operation once unless the user asked to use a different project identity.
+- If global identity is absent and repository-local identity is incomplete, stop and ask whether to set project-level identity for this repository. Ask for or confirm both the username and email; do not infer them from the OS account, remote URL, prior commits, or placeholders.
+- If the user approves project-level identity, set only local config, verify it, and retry the same Git operation once:
 
 ```powershell
 git config --local user.name '<name>'
@@ -52,7 +51,7 @@ git config --local --get user.email
 ```
 
 - Do not run `git config --global user.name` or `git config --global user.email` unless the user explicitly asks for or approves global Git identity changes.
-- If Git fails with identity errors such as `Please tell me who you are` or `unable to auto-detect email address`, treat it as an identity approval boundary. Do not repair it by setting global config automatically.
+- Treat identity repair as an approval boundary. Do not repair identity errors by setting global config automatically.
 
 ## Repository Initialization
 
