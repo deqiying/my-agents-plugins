@@ -1,6 +1,6 @@
 ---
 name: workflows-git-operations
-description: Use when an agent needs to perform or plan Git operations such as repository initialization, status/diff review, scoped staging, branch creation or switching, commit message generation, commit author identity error handling, pull, push, rollback, revert, reset, stash, or safe stale index.lock handling, especially when explicit user approval and Chinese Conventional Commit-style messages are required.
+description: Use when an agent needs to perform or plan Git operations such as repository initialization, status/diff and index review, conditional scoped staging, branch creation or switching, commit message generation, commit author identity error handling, pull, push, rollback, revert, reset, stash, or safe stale index.lock handling, especially when explicit user approval and Chinese Conventional Commit-style messages are required.
 ---
 
 # Git Operations Workflow
@@ -19,11 +19,33 @@ Use this workflow whenever a task asks for repository initialization, Git state 
 ## Standard Workflow
 
 1. Identify the repository root and branch. If nested repos or submodules are involved, inspect each repo separately.
-2. Run `git status --short --branch` and inspect the relevant diff before proposing or executing Git changes.
+2. Run `git status --short --branch` and inspect staged and unstaged task changes separately before proposing or executing Git changes.
 3. Separate task changes from unrelated dirty files. Do not stage untracked or modified files merely because they exist.
-4. Stage with explicit paths whenever possible. Avoid `git add .` unless the user explicitly approved all current changes and the status was reviewed.
+4. Apply `Conditional Staging Before Commit`. Treat `git add` as optional, not as a mandatory commit step.
 5. Before commit, review `git diff --cached --name-only` and the staged diff. Ensure the commit message matches the staged scope.
 6. After commit, report the commit hash, subject, and remaining dirty/untracked state. After push, report branch and remote.
+
+## Conditional Staging Before Commit
+
+When the user asks to commit the current changes, first determine which task-scoped changes are already staged and which are still missing from the index. Do not run `git add` merely because a commit was requested.
+
+Inspect the index, worktree, and untracked task paths separately:
+
+```powershell
+git diff --cached --name-status -- <paths>
+git diff --name-status -- <paths>
+git ls-files --others --exclude-standard -- <paths>
+```
+
+In `git status --short`, the first status column describes the index and the second describes the worktree. For example, `M ` is staged, ` M` is unstaged, `MM` has both staged and unstaged changes, and `??` is untracked.
+
+- If the index already contains the complete intended commit and no additional task-scoped worktree or untracked changes belong in it, skip `git add`.
+- If only some intended changes are missing from the index, stage only those missing paths or hunks. Prefer explicit paths and avoid `git add .` unless the user explicitly approved every current change after status review.
+- If a path has both staged and unstaged changes, inspect both diffs before acting. Do not run whole-path `git add` unless every unstaged hunk in that path belongs in the commit.
+- If the index, tracked worktree diff, and untracked task paths contain no task-scoped changes, do not run `git add` or create an empty commit; report that there is nothing to commit.
+- If the index contains unrelated changes, do not include or unstage them silently. Report the scope conflict and obtain direction before changing the index or committing.
+
+After staging or intentionally skipping it, review `git diff --cached --name-status` and `git diff --cached` again. Commit only when the staged diff exactly matches the intended scope.
 
 ## User Identity Errors
 
@@ -164,4 +186,4 @@ Do not delete other lock files by analogy, such as `config.lock`, `packed-refs.l
 
 ## Final Report
 
-Report what changed, which branch was created or switched when relevant, what was committed or pushed, the commit hash when available, any lock deletion performed, the validation run, and any remaining untracked or unrelated files. Clearly separate verified facts from assumptions.
+Report what changed, which branch was created or switched when relevant, whether `git add` ran or was intentionally skipped and why, what was committed or pushed, the commit hash when available, any lock deletion performed, the validation run, and any remaining untracked or unrelated files. Clearly separate verified facts from assumptions.
