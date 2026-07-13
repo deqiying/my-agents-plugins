@@ -68,11 +68,12 @@ claude plugin install agent-workflows@my-agents-plugins
 
 ### Agent Workflows
 
-`agent-workflows` 提供规划、工程约束、Git 操作纪律、密集输出整理、证据驱动思考和方案拷问相关的 workflow skills。
+`agent-workflows` 提供规划、工程约束、Git 操作纪律、密集输出整理、证据驱动思考和可沉淀文档的方案拷问相关的 workflow skills。
 
 Skills:
 
-- `workflows-grill-me`: 对设计或方案进行逐步追问和压力测试。
+- `workflows-grill-with-docs`: 自适应地逐题深挖或分批追问设计与方案，并在目标仓库中按需沉淀术语表与 ADR。
+- `workflows-grill-me`: 仅追问和压力测试的兼容入口；不需要文档沉淀时使用。
 - `workflows-guidelines`: 约束非平凡工程改动保持简单、最小、可验证。
 - `workflows-git-operations`: 规范 Git 仓库初始化、分支创建、检查、暂存、提交、拉取、推送、回滚和安全锁处理。
 - `workflows-output-formatting`: 将复杂技术回复整理成更容易阅读的结构，同时保留关键信息。

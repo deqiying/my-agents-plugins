@@ -1,6 +1,6 @@
 {
   "name": "agent-workflows",
-  "version": "0.1.5",
+  "version": "0.2.1",
   "description": "Personal workflow skills for agent task planning and execution.",
   "author": {
     "name": "Maintainer"
@@ -16,7 +16,7 @@
   "interface": {
     "displayName": "Agent Workflows",
     "shortDescription": "Personal workflow skills for agents.",
-    "longDescription": "A local skills-only plugin for reusable agent workflows such as structured planning, stepwise problem solving, coding guidelines, output formatting, Git initialization and operation discipline with conditional staging and author identity error handling, plan stress-testing, and task execution discipline. It intentionally does not ship MCP servers.",
+    "longDescription": "A local skills-only plugin for reusable agent workflows such as structured planning, stepwise problem solving, coding guidelines, output formatting, Git initialization and operation discipline with conditional staging and author identity error handling, adaptive documentation-backed plan stress-testing, and task execution discipline. It intentionally does not ship MCP servers.",
     "developerName": "Maintainer",
     "category": "Productivity",
     "capabilities": [
@@ -29,7 +29,7 @@
       "Apply workflows-output-formatting to any dense user-facing response so it keeps important details while becoming easier to read.",
       "Apply workflows-guidelines to keep non-trivial engineering edits simple, surgical, and verifiable.",
       "Apply workflows-git-operations before initializing repositories, creating branches, conditionally staging after separate index and worktree inspection, committing, handling Git author identity errors, pulling, pushing, rolling back, or clearing stale Git index locks.",
-      "Use Workflows Grill Me to stress-test this plan with focused questions."
+      "Use Workflows Grill With Docs to adaptively stress-test a plan and capture settled terminology or durable decisions in the target repository."
     ],
     "brandColor": "#0F766E",
     "composerIcon": "./assets/icon.png",

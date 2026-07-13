@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Grill With Docs workflow icon">
+  <rect width="64" height="64" rx="14" fill="#FFF1F2"/>
+  <circle cx="25" cy="27" r="15" fill="#BE123C" opacity=".13"/>
+  <path d="M17 27c0-5 4-9 9-9 5 0 9 3 9 8 0 3-2 5-5 7-2 2-3 3-3 6" fill="none" stroke="#BE123C" stroke-width="3.7" stroke-linecap="round"/>
+  <circle cx="27" cy="43" r="2.4" fill="#BE123C"/>
+  <path d="M35 17h11a4 4 0 0 1 4 4v24a4 4 0 0 1-4 4H35a4 4 0 0 1-4-4V21a4 4 0 0 1 4-4z" fill="#FFFFFF" stroke="#881337" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M37 27h8M37 33h8M37 39h5" stroke="#BE123C" stroke-width="2.8" stroke-linecap="round"/>
+  <path d="M15 49l-3 4M34 14l3-4" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
+</svg>
