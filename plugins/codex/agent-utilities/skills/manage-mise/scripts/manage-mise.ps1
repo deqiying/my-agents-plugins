@@ -3,6 +3,7 @@ param(
     [string]$Action = "check",
     [string[]]$Tools = @(),
     [switch]$Global,
+    [switch]$AllowBackend,
     [switch]$Apply
 )
 
@@ -25,6 +26,33 @@ function Invoke-Or-Plan {
     }
 }
 
+function Assert-AllowedToolSpec {
+    param([string]$Tool)
+    if ($Tool -match "^npm:" -and -not $AllowBackend) {
+        throw "npm backend specs are disabled by default. Use npm as the direct manager, or pass -AllowBackend only after an explicit migration and duplicate-installation check."
+    }
+}
+
+function Show-NpmGlobalState {
+    if (-not (Get-Command npm -ErrorAction SilentlyContinue)) {
+        return
+    }
+
+    Write-Host ""
+    Write-Host "Active Node npm global prefix:"
+    npm prefix --global
+    if ($LASTEXITCODE -ne 0) {
+        Write-Warning "npm prefix --global failed with exit code $LASTEXITCODE."
+    }
+
+    Write-Host ""
+    Write-Host "Active Node npm global packages:"
+    npm list --global --depth=0
+    if ($LASTEXITCODE -ne 0) {
+        Write-Warning "npm list --global --depth=0 reported exit code $LASTEXITCODE."
+    }
+}
+
 switch ($Action) {
     "check" {
         Require-Mise
@@ -35,6 +63,7 @@ switch ($Action) {
         Write-Host ""
         Write-Host "Installed mise tools:"
         mise ls --installed
+        Show-NpmGlobalState
     }
     "install" {
         Require-Mise
@@ -42,6 +71,7 @@ switch ($Action) {
             throw "Install requires at least one tool, for example node@latest."
         }
         foreach ($tool in $Tools) {
+            Assert-AllowedToolSpec $tool
             if ($Global) {
                 Invoke-Or-Plan @("mise", "use", "--global", $tool)
             } else {
@@ -56,6 +86,7 @@ switch ($Action) {
             return
         }
         foreach ($tool in $Tools) {
+            Assert-AllowedToolSpec $tool
             Invoke-Or-Plan @("mise", "upgrade", $tool)
         }
     }

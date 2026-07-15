@@ -1,5 +1,5 @@
-schema_version: 1
-source: "Seeded from sanitized mise active tools; real install and config paths are represented with placeholders."
+schema_version: 2
+source: "Curated from manager-specific inventories; real install and config paths are represented with placeholders."
 placeholders:
   home: "<HOME>"
   global_mise_config: "<GLOBAL_MISE_CONFIG>"
@@ -8,7 +8,10 @@ placeholders:
 tools:
   - id: "doggo"
     command: "doggo"
-    manager: "mise"
+    manager_chain:
+      - "mise"
+    install_strategy: "mise"
+    update_owner: "mise"
     category: "utility"
     version_policy: "latest"
     check:
@@ -16,35 +19,51 @@ tools:
     notes: "DNS lookup utility used for quick network diagnostics."
   - id: "github:flupkede/codesearch"
     command: "codesearch"
-    manager: "mise"
+    manager_chain:
+      - "mise"
+    install_strategy: "mise"
+    update_owner: "mise"
     category: "agent-tool"
     version_policy: "latest"
     check:
       - "codesearch --version"
       - "codesearch doctor"
     notes: "Semantic local code search CLI for agent codebase discovery."
-  - id: "github:iOfficeAI/OfficeCLI"
+  - id: "officecli"
     command: "officecli"
-    manager: "mise"
+    package: "@officecli/officecli"
+    manager_chain:
+      - "npm"
+      - "mise"
+    install_strategy: "npm-global"
+    update_owner: "npm"
     category: "agent-tool"
     version_policy: "latest"
     check:
       - "officecli --version"
       - "officecli help"
-    notes: "Office document inspection, editing, validation, and rendering CLI. Canonical command is lowercase officecli; on Windows, treat case-only OfficeCLI.exe shim noise as healthy when officecli resolves to the mise-managed install and passes checks."
-  - id: "npm:onesearch"
+    notes: "Office document inspection, editing, validation, and rendering CLI distributed as @officecli/officecli, whose npm postinstall fetches the native binary. Canonical command is lowercase officecli. Install and update through npm under mise-managed Node; do not combine that copy with a mise GitHub backend installation or an independent auto-update owner."
+  - id: "onesearch"
     command: "onesearch"
-    manager: "mise"
+    package: "onesearch"
+    manager_chain:
+      - "npm"
+      - "mise"
+    install_strategy: "npm-global"
+    update_owner: "npm"
     category: "agent-tool"
     version_policy: "latest"
     check:
       - "onesearch --version"
       - "onesearch doctor --format json"
       - "onesearch skills list --format json"
-    notes: "Onesearch CLI for source-backed web research, docs lookup, URL fetch, site crawl, and public repo context; install through the mise npm backend when missing for the Onesearch skill."
+    notes: "Onesearch npm package for source-backed web research. Install or update with npm in the active mise-managed Node global prefix. Reinstall it through the Node postinstall policy when a new Node version is installed."
   - id: "go"
     command: "go"
-    manager: "mise"
+    manager_chain:
+      - "mise"
+    install_strategy: "mise"
+    update_owner: "mise"
     category: "runtime"
     version_policy: "latest"
     check:
@@ -52,7 +71,10 @@ tools:
     notes: "Go runtime and toolchain."
   - id: "rust"
     command: "rustc"
-    manager: "mise"
+    manager_chain:
+      - "mise"
+    install_strategy: "mise"
+    update_owner: "mise"
     category: "runtime"
     version_policy: "latest"
     check:
@@ -61,24 +83,48 @@ tools:
     notes: "Rust compiler and Cargo toolchain; manage shared/global Rust through mise rather than rustup."
   - id: "node"
     command: "node"
-    manager: "mise"
+    manager_chain:
+      - "mise"
+    install_strategy: "mise"
+    update_owner: "mise"
     category: "runtime"
     version_policy: "latest"
     check:
       - "node --version"
       - "npm --version"
     notes: "Node.js runtime used by frontend, CLI, and agent tooling."
-  - id: "npm:@openai/codex"
+  - id: "npm"
+    command: "npm"
+    manager_chain:
+      - "mise"
+    install_strategy: "node-bundled"
+    update_owner: "mise"
+    category: "package-manager"
+    version_policy: "latest"
+    check:
+      - "npm --version"
+      - "npm prefix --global"
+      - "npm list --global --depth=0"
+    notes: "Node package manager supplied by the active mise-managed Node unless separately pinned through mise. Its global prefix changes when the active Node version changes."
+  - id: "codex"
     command: "codex"
-    manager: "mise"
+    package: "@openai/codex"
+    manager_chain:
+      - "npm"
+      - "mise"
+    install_strategy: "npm-global"
+    update_owner: "npm"
     category: "agent-tool"
     version_policy: "latest"
     check:
       - "codex --version"
-    notes: "Codex CLI installed through mise npm backend."
+    notes: "Codex CLI npm package. Keep npm as the lifecycle owner so npm-based built-in updates target the active installation. Reinstall it through the Node postinstall policy when a new Node version is installed."
   - id: "pnpm"
     command: "pnpm"
-    manager: "mise"
+    manager_chain:
+      - "mise"
+    install_strategy: "mise"
+    update_owner: "mise"
     category: "package-manager"
     version_policy: "latest"
     check:
@@ -86,7 +132,10 @@ tools:
     notes: "Node package manager."
   - id: "python"
     command: "python"
-    manager: "mise"
+    manager_chain:
+      - "mise"
+    install_strategy: "mise"
+    update_owner: "mise"
     category: "runtime"
     version_policy: "latest"
     check:
@@ -94,7 +143,10 @@ tools:
     notes: "Python runtime for scripts and local automation."
   - id: "uv"
     command: "uv"
-    manager: "mise"
+    manager_chain:
+      - "mise"
+    install_strategy: "mise"
+    update_owner: "mise"
     category: "package-manager"
     version_policy: "latest"
     check:
@@ -106,7 +158,10 @@ manager_notes:
     role: "Windows package manager and prerequisite path for mise."
   mise:
     platform: "windows-macos-linux"
-    role: "Cross-platform runtime and agent tool manager."
+    role: "Cross-platform runtime/version manager and optional outer lifecycle manager for backend-provisioned tools."
+  npm:
+    platform: "windows-macos-linux"
+    role: "Direct package manager or ecosystem owner for npm packages; the active npm runtime can be supplied by mise-managed Node."
   brew:
     platform: "macos"
     role: "macOS package manager for tools better managed through Homebrew."

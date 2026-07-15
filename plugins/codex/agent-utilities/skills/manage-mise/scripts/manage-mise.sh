@@ -6,6 +6,7 @@ shift || true
 
 apply="false"
 global="false"
+allow_backend="false"
 tools=""
 
 while [ $# -gt 0 ]; do
@@ -16,6 +17,10 @@ while [ $# -gt 0 ]; do
       ;;
     --global)
       global="true"
+      shift
+      ;;
+    --allow-backend)
+      allow_backend="true"
       shift
       ;;
     *)
@@ -34,12 +39,43 @@ require_mise() {
 
 run_or_plan() {
   if [ "$apply" = "true" ]; then
-    printf 'Running: %q ' "$@"
+    printf 'Running:'
+    printf ' %s' "$@"
     echo
     "$@"
   else
-    printf 'Would run: %q ' "$@"
+    printf 'Would run:'
+    printf ' %s' "$@"
     echo
+  fi
+}
+
+assert_allowed_tool_spec() {
+  case "$1" in
+    npm:*)
+      if [ "$allow_backend" != "true" ]; then
+        echo "npm backend specs are disabled by default. Use npm directly, or pass --allow-backend only after an explicit migration and duplicate-installation check." >&2
+        exit 2
+      fi
+      ;;
+  esac
+}
+
+show_npm_global_state() {
+  if ! command -v npm >/dev/null 2>&1; then
+    return
+  fi
+
+  echo
+  echo "Active Node npm global prefix:"
+  if ! npm prefix --global; then
+    echo "npm prefix --global failed." >&2
+  fi
+
+  echo
+  echo "Active Node npm global packages:"
+  if ! npm list --global --depth=0; then
+    echo "npm list --global --depth=0 reported an error." >&2
   fi
 }
 
@@ -53,6 +89,7 @@ case "$action" in
     echo
     echo "Installed mise tools:"
     mise ls --installed
+    show_npm_global_state
     ;;
   install)
     require_mise
@@ -61,6 +98,7 @@ case "$action" in
       exit 2
     fi
     for tool in $tools; do
+      assert_allowed_tool_spec "$tool"
       if [ "$global" = "true" ]; then
         run_or_plan mise use --global "$tool"
       else
@@ -74,6 +112,7 @@ case "$action" in
       run_or_plan mise upgrade
     else
       for tool in $tools; do
+        assert_allowed_tool_spec "$tool"
         run_or_plan mise upgrade "$tool"
       done
     fi

@@ -17,7 +17,7 @@ In this plugin, Windows `mise` ownership is Scoop-first: if `mise` is installed 
 2. Run check mode first:
    - `powershell -ExecutionPolicy Bypass -File scripts/manage-scoop.ps1 -Action check`
 3. If Scoop is missing, read `references/scoop.md` and prepare an install plan. Do not run the remote installer until the user explicitly approves.
-4. If the user asks to install apps, show the app list and manager ownership first. Avoid installing tools through Scoop if `$maintain-dev-tool-list` says they are owned by mise.
+4. If the user asks to install apps, show the app list and full manager chain first. Use Scoop only when it is the declared direct owner; an outer `mise` entry does not make a native-manager tool Scoop-owned.
 5. If the user asks to update, run status first, then update only the requested scope.
 6. Verify `Get-Command scoop -All`, `scoop --version`, `scoop list`, and any installed app command.
 
@@ -39,3 +39,4 @@ powershell -ExecutionPolicy Bypass -File scripts/manage-scoop.ps1 -Action update
 - Do not commit or write real Scoop roots. Use `<SCOOP_ROOT>` and `<SCOOP_GLOBAL>` in persistent text.
 - Do not run `scoop update *` unless the user explicitly approved updating all apps.
 - Prefer app-scoped updates such as `scoop update mise` when only one dependency is needed.
+- Do not use Scoop to create a second copy of a tool whose declared direct owner is npm, brew, mise, or another native manager.
