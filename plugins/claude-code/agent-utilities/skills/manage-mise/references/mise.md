@@ -48,7 +48,7 @@ Before upgrading Node:
 ```powershell
 npm prefix --global
 npm list --global --depth=0
-Get-Command onesearch,codex,officecli -All
+Get-Command onesearch,codex,officecli,opencli -All
 ```
 
 After explicit approval, restore any missing package in the current active Node prefix with its direct manager:
@@ -63,7 +63,7 @@ For curated CLIs that should remain npm-owned, use the Node tool-level `postinst
 
 ```toml
 [tools]
-node = { version = "latest", postinstall = "npm install --global onesearch@latest @openai/codex@latest @officecli/officecli@latest" }
+node = { version = "latest", postinstall = "npm install --global onesearch@latest @openai/codex@latest @officecli/officecli@latest @jackwener/opencli@latest" }
 ```
 
 Merge `postinstall` into the existing `node` declaration and preserve any existing Node options. Do not add a second `node` key or replace project-specific settings blindly.
@@ -75,10 +75,11 @@ After upgrading Node:
 ```powershell
 npm prefix --global
 npm list --global --depth=0
-Get-Command onesearch,codex,officecli -All
+Get-Command onesearch,codex,officecli,opencli -All
 onesearch --version
 codex --version
 officecli --version
+opencli --version
 ```
 
 Treat multiple mutable global copies as a manager conflict. A lower-precedence product-bundled fallback may coexist when it is not the selected update target; classify it explicitly instead of deleting it. Keep the declared npm-global copy and remove or migrate another mutable copy only after explicit approval.

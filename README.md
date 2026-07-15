@@ -91,7 +91,7 @@ Skills:
 - `manage-scoop`: Windows 专属，检查、安装和更新 Scoop，并作为 Windows 下 mise 的前置环境入口。
 - `manage-mise`: 检查、安装和更新 mise 管理的语言运行时和 agent 常用工具。
 - `manage-brew`: macOS 专属，检查、安装和更新 Homebrew 管理的开发工具。
-- `maintain-dev-tool-list`: 维护 agent 开发常用工具、语言运行时和环境管理器的共享工具清单。
+- `maintain-dev-tool-list`: 维护 agent 开发常用工具、语言运行时和环境管理器的共享工具清单，包括 OpenCLI 等 npm 全局 CLI 的直接与外层管理器关系。
 
 ### Awesome DESIGN.md
 

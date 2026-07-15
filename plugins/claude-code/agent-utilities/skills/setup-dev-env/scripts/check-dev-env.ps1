@@ -29,7 +29,7 @@ function Test-Command {
 Write-Host "Platform: Windows"
 Write-Host "PowerShell: $($PSVersionTable.PSVersion)"
 
-$commands = @("scoop", "mise", "node", "npm", "go", "rustc", "cargo", "python", "uv", "pnpm", "codex", "codesearch", "officecli", "onesearch", "doggo")
+$commands = @("scoop", "mise", "node", "npm", "go", "rustc", "cargo", "python", "uv", "pnpm", "codex", "codesearch", "officecli", "opencli", "onesearch", "doggo")
 foreach ($name in $commands) {
     foreach ($result in @(Test-Command $name)) {
         if ($result.Found) {

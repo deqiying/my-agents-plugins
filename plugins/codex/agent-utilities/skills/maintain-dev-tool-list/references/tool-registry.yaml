@@ -58,6 +58,20 @@ tools:
       - "onesearch doctor --format json"
       - "onesearch skills list --format json"
     notes: "Onesearch npm package for source-backed web research. Install or update with npm in the active mise-managed Node global prefix. Reinstall it through the Node postinstall policy when a new Node version is installed."
+  - id: "opencli"
+    command: "opencli"
+    package: "@jackwener/opencli"
+    manager_chain:
+      - "npm"
+      - "mise"
+    install_strategy: "npm-global"
+    update_owner: "npm"
+    category: "agent-tool"
+    version_policy: "latest"
+    check:
+      - "opencli --version"
+      - "opencli list -f json"
+    notes: "OpenCLI command and adapter workflow CLI distributed as @jackwener/opencli and requiring Node.js >= 20. Install or update with npm in the active mise-managed Node global prefix, and reinstall it through the Node postinstall policy when a new Node version is installed. Use opencli doctor only for browser-bridge diagnostics, not as the base installation check."
   - id: "go"
     command: "go"
     manager_chain:

@@ -17,7 +17,7 @@ Do not put real machine-specific user directories into skill text, committed doc
 
 - Use `$manage-scoop` for Windows Scoop checks, install, update, and Scoop-managed apps. On Windows, treat Scoop as the default prerequisite path for installing or updating `mise`.
 - Use `$manage-mise` for mise itself, directly mise-managed languages or tools such as Node, Go, Rust, Python, uv, pnpm, `codesearch`, and `doggo`, and the outer runtime layer for nested manager chains.
-- For npm-owned CLIs such as `onesearch`, Codex CLI, and `officecli`, use npm as the direct install/update owner when the registry says `install_strategy: npm-global`; use `$manage-mise` only for the Node/runtime and reinstall policy.
+- For npm-owned CLIs such as `onesearch`, Codex CLI, `officecli`, and `opencli`, use npm as the direct install/update owner when the registry says `install_strategy: npm-global`; use `$manage-mise` only for the Node/runtime and reinstall policy.
 - Use `$manage-brew` for macOS Homebrew checks, install, update, and brew-managed developer tools. On macOS, prefer Homebrew for tools that are more native or stable through brew than through mise.
 - Use `$maintain-dev-tool-list` before changing the shared tool set or when the user asks which tools should be checked, installed, pinned, or updated.
 
