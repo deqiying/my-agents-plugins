@@ -1,19 +1,25 @@
 ---
 name: tool-codesearch
-description: Use the local codesearch CLI skill for semantic/natural-language codebase discovery, implementation lookup, feature entrypoint discovery, plan-or-design guided development, call-path tracing, impact-area discovery, and narrowing unknown files before editing.
+description: Use the local codesearch CLI as a secondary semantic-search fallback when fast-context-mcp is unavailable because of network, authentication, or MCP-service failures, or when the task explicitly requires local CLI search. Use it after fast-context-mcp for unknown-entrypoint discovery; use local deterministic tools for exact lookups.
 ---
 
 # Codesearch CLI
 
 ## Routing Role
 
-Use `codesearch` as a CLI-first semantic locator for local codebases. It is best for natural-language discovery such as "where is authentication handled", "find websocket reconnect logic", or "which files implement rate limiting".
+Use `codesearch` as a local CLI semantic-search fallback for local codebases. It is best for natural-language discovery such as "where is authentication handled", "find websocket reconnect logic", or "which files implement rate limiting".
 
-This skill intentionally favors `skill + CLI` over `skill + MCP` in shell-capable agent contexts. The host agent can run shell commands directly, parse JSON output, then read real files with native tools for verification.
+For unknown-entrypoint tasks, `$mcp-fast-context-mcp` has higher priority because it can locate context without a potentially long local index build. Enter this skill after `fast_context_search` fails because of network, DNS, TLS, authentication, remote-service, or MCP-tool availability failures, or when the user explicitly requires local CLI search. The host agent can run shell commands directly, parse JSON output, then read real files with native tools for verification.
 
 ## Routing Ladder
 
-Use this skill before broad local keyword scans when the task asks where a feature is implemented, asks to implement from a plan/design, asks for architecture/data-flow analysis, or gives business intent without exact files.
+For semantic discovery, use this routing order:
+
+1. If an exact path, symbol, packet name, config key, error text, log line, or one narrow directory is known, use `fd`, `rg`, or direct file reads.
+2. Otherwise, run `$mcp-fast-context-mcp` first.
+3. Use this skill only when fast-context is unavailable for the documented network or service reasons, or when the user explicitly requests `codesearch`.
+
+When this skill is the fallback, use it before broad local keyword scans when the task asks where a feature is implemented, asks to implement from a plan/design, asks for architecture/data-flow analysis, or gives business intent without exact files.
 
 Do not use this skill as a reflex for simple exact lookups. If the user provides a known path, symbol, packet name, config key, error text, log line, or one narrow directory, use `fd`, `rg`, or direct file reads first.
 
@@ -21,17 +27,17 @@ This skill is for `semantic locate -> narrow -> read -> verify`:
 
 1. Translate the user's intent into a concise English behavior query with a few domain terms.
 2. Check `codesearch stats` before the first repository search.
-3. Run `codesearch search` to get candidate files and snippets when an index is available.
+3. Run `codesearch search` only when a usable index is already available; otherwise start indexing in the background and continue the current task with deterministic local tools.
 4. Read the actual source or artifact files with local tools.
 5. Verify conclusions with exact `rg`, tests, builds, or command output.
 
 ## First Action Contract
 
-When this skill triggers for an unknown-entrypoint task, the first repository-search command must be `codesearch stats`.
+When this skill enters the fallback route for an unknown-entrypoint task, the first repository-search command must be `codesearch stats`.
 
 Unknown-entrypoint tasks include architecture or data-flow analysis, "where is this implemented", plan/design-to-code mapping, broad feature discovery, call-path tracing, impact-area discovery, and business-intent requests without exact files or symbols.
 
-Do not start with broad full-repo `rg` patterns such as `response|websocket|OpenAI|ws`, `login|auth|token`, or other generic OR queries. Use `rg` after `codesearch` to verify exact symbols, inspect known directories, or recover from a documented `codesearch` failure/no-index path.
+Do not start with a bare `codesearch search` when an index might be missing: its default `--create-index` behavior can make the current task block on indexing. Do not start with broad full-repo `rg` patterns such as `response|websocket|OpenAI|ws`, `login|auth|token`, or other generic OR queries when a ready index is available. Use `rg` after `codesearch` to verify exact symbols, inspect known directories, or complete the current task while a documented background index build is running.
 
 ## Artifact Context Discovery
 
@@ -70,32 +76,46 @@ codesearch search "where task score reward claim is handled and rewards are gran
 
 Keep Chinese words only as supplemental terms when the repository itself uses Chinese comments, config sheet names, or user-facing strings that are likely indexed. Avoid using a pure Chinese query as the only semantic signal unless the codebase is mostly Chinese.
 
-## Index Freshness Before Search
+## Background Indexing And Freshness
 
-Before querying a repository, make sure the Codesearch index exists and is current enough for the task:
+Before querying a repository, check index state with `codesearch stats`. Index creation and incremental refresh can take a long time, so they must not block the active task.
 
-1. Check index state with `codesearch stats` when entering a repo or when you are unsure whether the repo has been indexed.
-2. If there is no database, run `codesearch index` from the repository root before searching.
-3. If an index exists but files may have changed, run the first search with `--sync` to incrementally update changed files before retrieval.
-4. For repeated exploratory searches in the same turn, one initial `--sync` is usually enough; subsequent searches can omit `--sync` unless files were edited or generated after the sync.
+1. If there is no usable database, start a new index in the background from the repository root.
+2. If an index exists but needs freshness, start a normal `codesearch index` in the background without `--force`; reserve `--force` for intentional full re-indexes.
+3. Do not use `codesearch search --sync` during an active task: `--sync` performs its incremental indexing synchronously.
+4. A background index helps later searches. Do not wait for it; use `rg` and direct reads to complete the current task, then check `codesearch stats` before using the refreshed index.
+
+On Windows PowerShell, launch the normal new or incremental index without waiting:
+
+```powershell
+$codesearchExe = Get-Command codesearch -CommandType Application |
+  Select-Object -First 1 -ExpandProperty Source
+$indexProcess = Start-Process -FilePath $codesearchExe `
+  -ArgumentList @('index') `
+  -WorkingDirectory (Get-Location).Path `
+  -WindowStyle Hidden `
+  -PassThru
+$indexProcess.Id
+```
 
 `codesearch index` creates `.codesearch.db/` at the git root. Treat it as a reusable local cache, not a disposable temporary artifact. Ensure `.codesearch.db/` is ignored by git, and do not delete it after indexing unless the user explicitly asks, the index is corrupt, it was created in the wrong repository, or cleanup is necessary and confirmed.
 
-Preferred first-query pattern:
+When `codesearch stats` confirms a usable index, prevent search from starting a foreground build:
 
 ```powershell
-codesearch search "<English behavior description>. Domain terms: <module/feature words>" --sync --json -m 10
+codesearch search "<English behavior description>. Domain terms: <module/feature words>" --create-index=false --json -m 10
 ```
 
 Then continue with faster follow-up queries:
 
 ```powershell
-codesearch search "<narrower English query>" --json -m 10
+codesearch search "<narrower English query>" --create-index=false --json -m 10
 ```
 
 ## Use Automatically When
 
-- The user asks for natural-language code search, semantic code search, or "like ace" local retrieval.
+- `fast_context_search` was attempted but cannot run because of network, authentication, or MCP-service availability failures.
+- The user explicitly asks for natural-language local CLI search, semantic code search with `codesearch`, or "like ace" local retrieval.
 - You do not know the exact files, classes, functions, config keys, or error text.
 - You need likely entry points before reading files.
 - You are analyzing architecture, request flow, data flow, or cross-module implementation shape from a natural-language prompt.
@@ -112,13 +132,13 @@ codesearch search "<narrower English query>" --json -m 10
 - You need exact exhaustive matches. Use `rg`.
 - You need known file content. Read the file directly.
 - You need IDE/LSP symbol refactoring or precise reference edits. Prefer Serena or the IDE/LSP route if available.
-- `codesearch` is not installed, not on `PATH`, returns stale results, or has no ready index.
+- `codesearch` is not installed, not on `PATH`, returns stale results, or has no ready index. Start a background index when appropriate, then use deterministic local tools for the current task.
 
 ## Safety And Verification
 
 - Do not treat semantic search output as final truth. Use it to locate candidate files, then read the actual source.
-- Before relying on results in a repo, check index state with `codesearch stats` or a targeted search with `--sync` when freshness matters.
-- If the index is missing, run `codesearch index` only when indexing the current repo is appropriate. This creates `.codesearch.db/` at the git root by default.
+- Before relying on results in a repo, check index state with `codesearch stats`. Do not use `--sync`, because it indexes synchronously.
+- If the index is missing or stale, start `codesearch index` in the background only when indexing the current repo is appropriate. This creates `.codesearch.db/` at the git root by default.
 - Keep `.codesearch.db/` ignored and do not delete it after indexing unless one of the explicit cleanup conditions above applies.
 - Do not commit `.codesearchignore` unless the user asks or the repo convention requires it.
 - If a command fails because `codesearch` is not found, check the shim/PATH with `Get-Command codesearch -All` on Windows.
@@ -133,34 +153,38 @@ codesearch --version
 codesearch doctor
 ```
 
-Create or refresh the index from the project root:
+Start a new or incremental index from the project root without blocking:
 
 ```powershell
-codesearch index
+$codesearchExe = Get-Command codesearch -CommandType Application |
+  Select-Object -First 1 -ExpandProperty Source
+Start-Process -FilePath $codesearchExe -ArgumentList @('index') -WorkingDirectory (Get-Location).Path -WindowStyle Hidden
 ```
 
 Run semantic search with machine-readable output:
 
 ```powershell
-codesearch search "where is authentication handled" --json -m 10
+codesearch search "where is authentication handled" --create-index=false --json -m 10
 ```
 
 For Chinese user requests, translate to English first and add code-domain terms:
 
 ```powershell
-codesearch search "where mystery shop goods purchase validates goods, consumes cost items, and grants rewards. Domain terms: mystery shop buy goods reward" --sync --json -m 10
+codesearch search "where mystery shop goods purchase validates goods, consumes cost items, and grants rewards. Domain terms: mystery shop buy goods reward" --create-index=false --json -m 10
 ```
 
 Restrict search to a path:
 
 ```powershell
-codesearch search "websocket reconnect logic" --filter-path src --json -m 20
+codesearch search "websocket reconnect logic" --create-index=false --filter-path src --json -m 20
 ```
 
-Search and sync changed files first:
+Start an incremental refresh in the background, then use it only after `codesearch stats` reports a usable index:
 
 ```powershell
-codesearch search "database connection pooling" --sync --json -m 10
+$codesearchExe = Get-Command codesearch -CommandType Application |
+  Select-Object -First 1 -ExpandProperty Source
+Start-Process -FilePath $codesearchExe -ArgumentList @('index') -WorkingDirectory (Get-Location).Path -WindowStyle Hidden
 ```
 
 Inspect index status:
@@ -178,11 +202,13 @@ Prefer `--json` when using results programmatically. After a semantic search:
 - Read the relevant files before drawing code conclusions.
 - If the result set looks weak, retry once with a narrower query or better domain terms.
 - Then fall back to `rg`, `fd`, and direct code reading if semantic search remains noisy.
+- If an index was started or refreshed in the background, state that the current task continued with deterministic local inspection rather than waiting for indexing.
 
 ## Failure And Fallback
 
-If `codesearch` fails, is missing, or returns irrelevant results:
+If `codesearch` fails, is missing, has no ready index, or returns irrelevant results:
 
 1. Run `Get-Command codesearch -All` and `codesearch doctor` if setup is the likely issue.
-2. Use `rg`, `fd`, and direct reads for the immediate task.
-3. In the final answer, distinguish `codesearch CLI search succeeded`, `codesearch was unavailable/no-index and the task was downgraded to exact local search`, `codesearch was attempted but failed`, or `codesearch was not used because exact local search was more direct`.
+2. If the index is missing or stale, start the normal `codesearch index` command in the background; do not use `--sync` or wait for it.
+3. Use `rg`, `fd`, and direct reads for the immediate task.
+4. In the final answer, distinguish `codesearch CLI search succeeded`, `codesearch index started in the background and the task used local deterministic search`, `codesearch was attempted but failed`, or `codesearch was not used because exact local search was more direct`.

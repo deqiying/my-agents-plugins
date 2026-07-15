@@ -1,6 +1,6 @@
 ---
 name: mcp-fast-context-mcp
-description: 'Use proactively when Agent needs to find local code context before editing or answering: natural-language codebase discovery, unknown entrypoints, implementation lookup, plan/design-to-code mapping, feature ownership, architecture/data-flow/call-path analysis, impact-area discovery, and narrowing which files to read. Run fast_context_search before broad conceptual rg scans. Prefer rg/direct reads only when an exact file, symbol, config key, packet name, error text, or narrow path is already known.'
+description: 'Use proactively when an agent needs to find local code context before editing or answering: natural-language codebase discovery, unknown entrypoints, implementation lookup, plan/design-to-code mapping, feature ownership, architecture/data-flow/call-path analysis, impact-area discovery, and narrowing which files to read. Use fast_context_search before tool-codesearch for unknown-entrypoint work. Prefer rg/direct reads only when an exact file, symbol, config key, packet name, error text, or narrow path is already known.'
 ---
 
 # MCP: fast-context-mcp
@@ -9,7 +9,7 @@ description: 'Use proactively when Agent needs to find local code context before
 
 Treat fast-context-mcp as the proactive first semantic context pass for local-code tasks where the user gives intent, behavior, symptoms, architecture, or a plan but the exact file or symbol is not yet known. The trigger is code-context location, not only the literal phrase "semantic search". It is best for natural-language discovery such as "where is authentication handled", "find websocket reconnect logic", "which files implement rate limiting", or similar code-positioning tasks where the entrypoint is unknown.
 
-Use it before broad local keyword scans for unknown-entrypoint work. A good default: if you are about to run a repo-wide `rg` query made from generic concepts or many OR terms, run `fast_context_search` first, then use `rg` to verify exact symbols and references.
+Use it before `tool-codesearch` and broad local keyword scans for unknown-entrypoint work. `codesearch` can need a long local index build, so it is the fallback when this MCP cannot be used because of network, authentication, or MCP-service availability failures. A good default: if you are about to run a repo-wide `rg` query made from generic concepts or many OR terms, run `fast_context_search` first, then use `rg` to verify exact symbols and references.
 
 Use it for `semantic locate -> narrow -> read -> verify`:
 
@@ -17,6 +17,16 @@ Use it for `semantic locate -> narrow -> read -> verify`:
 2. Run `fast_context_search` to get candidate files, line ranges, and follow-up grep keywords.
 3. Read the actual source files with local tools.
 4. Verify conclusions with exact `rg`, tests, builds, or command output.
+
+## Semantic Search Priority
+
+For unknown-entrypoint local-code work, choose tools in this order:
+
+1. Run `fast_context_search` first.
+2. If it cannot run because of network, DNS, TLS, authentication, remote-service, or MCP-tool availability failures, load `$tool-codesearch` as the semantic fallback.
+3. If the fallback has no ready index, let `$tool-codesearch` start or refresh the index in the background and use `rg` plus direct reads for the current task. Do not wait for indexing to finish.
+
+An explicit request to use the local `codesearch` CLI may enter the fallback route directly. Exact path, symbol, config-key, packet-name, error-text, and narrow-directory lookups continue to use deterministic local tools first.
 
 ## Use Automatically When
 
@@ -49,7 +59,7 @@ Do not claim or imply that fast-context-mcp was used unless one of its MCP tools
 If fast-context-mcp is skipped, attempted, or unavailable, state the status briefly:
 
 - `fast-context semantic search succeeded`
-- `fast-context was attempted but failed; using fallback`
+- `fast-context was attempted but failed; using codesearch fallback`
 - `fast-context was not used because local deterministic search was more direct`
 
 ## MCP Tools
@@ -70,4 +80,8 @@ If fast-context-mcp is skipped, attempted, or unavailable, state the status brie
 
 ## Failure And Fallback
 
-If semantic search returns broad or irrelevant results, narrow the natural-language query once with module names, domain terms, or suspected file areas. Then switch to local deterministic inspection with `rg`, direct reads, and tests or build commands. If authentication fails, use `extract_windsurf_key` only when it is appropriate for the current task and report credential status without revealing secrets.
+If semantic search returns broad or irrelevant results, narrow the natural-language query once with module names, domain terms, or suspected file areas. Then switch to local deterministic inspection with `rg`, direct reads, and tests or build commands.
+
+If `fast_context_search` cannot run because of network, DNS, TLS, authentication, remote-service, or MCP-tool availability failures, report the failure briefly and load `$tool-codesearch`. Follow its `codesearch stats` and background-index guidance: use a ready local index when one exists, but do not make the current task wait for a new or incremental index build. If `codesearch` is also unavailable or has no ready index, continue with `rg`, direct reads, and tests or build commands.
+
+Use `extract_windsurf_key` only when authentication is the blocker and the user wants to use the local Windsurf-backed MCP. Do not print the extracted key.

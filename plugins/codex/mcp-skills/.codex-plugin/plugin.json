@@ -1,6 +1,6 @@
 {
   "name": "mcp-skills",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Local skill pack that documents when to use each managed MCP service and its tools.",
   "author": {
     "name": "Maintainer"
@@ -25,6 +25,7 @@
     "defaultPrompt": [
       "Use the right MCP skill for this task.",
       "Show me which MCP tool fits this request.",
+      "Use mcp-fast-context-mcp as the first semantic locator for unknown local code entrypoints; if it is unavailable because of network, authentication, or MCP service failures, use tool-codesearch as the local fallback.",
       "Use mcp-excel-tools for targeted Excel-native workbook operations after preferring tool-officecli for ordinary Excel reading and extraction."
     ],
     "brandColor": "#2563EB",

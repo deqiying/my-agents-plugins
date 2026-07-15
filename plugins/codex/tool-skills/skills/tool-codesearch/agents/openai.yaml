@@ -4,4 +4,4 @@ interface:
   icon_small: "./assets/icon.png"
   icon_large: "./assets/icon.png"
   brand_color: "#0F766E"
-  default_prompt: "Use $tool-codesearch for unknown-entrypoint architecture, feature, or data-flow discovery: check codesearch stats first, search semantically, then verify by reading actual files."
+  default_prompt: "Use $tool-codesearch only after $mcp-fast-context-mcp cannot run because of network, authentication, or MCP-service availability failures, or when local CLI search is explicitly requested. Check codesearch stats first; if an index must be created or refreshed, launch codesearch index in the background and complete the current task with rg and direct reads. Never use synchronous --sync indexing in the active task."
