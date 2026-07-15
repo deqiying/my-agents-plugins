@@ -1,9 +1,9 @@
 interface:
   display_name: "Maintain Dev Tool List"
-  short_description: "Maintain layered developer tool ownership"
+  short_description: "Maintain tool ownership and npm recovery"
   icon_small: "./assets/icon.png"
   icon_large: "./assets/icon.png"
   brand_color: "#7C3AED"
-  default_prompt: "Use $maintain-dev-tool-list to review my tool registry, manager chains, install strategies, and update owners."
+  default_prompt: "Use $maintain-dev-tool-list to review my tool registry, manager chains, install strategies, update owners, and synchronized mise Node postinstall recovery."
 policy:
   allow_implicit_invocation: true
