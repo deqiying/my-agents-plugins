@@ -39,8 +39,8 @@
     {
       "name": "opencli",
       "source": "./opencli",
-      "version": "1.7.19",
-      "description": "Browser-backed CLI adapters for Claude Code.",
+      "version": "1.8.6",
+      "description": "Skills for the npm-installed OpenCLI CLI.",
       "category": "Productivity"
     },
     {

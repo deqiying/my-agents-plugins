@@ -32,7 +32,7 @@
 ### v2ex
 
 - 适用：中文技术社区
-- 使用前先运行：`opencli linux-do
+- 使用前先运行：`opencli v2ex -h`
 
 ## 路由提示
 

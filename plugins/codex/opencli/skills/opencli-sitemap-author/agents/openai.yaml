@@ -1,0 +1,7 @@
+interface:
+  display_name: "OpenCLI Sitemap Author"
+  short_description: "Create and maintain OpenCLI sitemaps"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.png"
+  brand_color: "#7C3AED"
+  default_prompt: "Use $opencli-sitemap-author to create or update an OpenCLI site sitemap from verified browser evidence."

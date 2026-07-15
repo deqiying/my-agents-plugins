@@ -111,12 +111,14 @@ Skills:
 
 ### OpenCLI
 
-`opencli` 提供浏览器后端 CLI adapter 和登录态页面工作流相关技能。
+`opencli` 只打包 OpenCLI 工作流技能和界面元数据，不再内置上游源码或二进制；本地缺少 CLI 时，由 `opencli-usage` 引导通过 `npm install -g @jackwener/opencli@latest` 安装。
 
 Skills:
 
-- `opencli-usage`: OpenCLI 顶层说明和命令发现入口。
+- `opencli-usage`: 检测或安装 OpenCLI，并作为顶层说明和命令发现入口。
 - `opencli-browser`: 通过 OpenCLI 做临时浏览器自动化。
+- `opencli-browser-sitemap`: 在浏览器任务中按需使用 OpenCLI sitemap 导航和恢复上下文。
+- `opencli-sitemap-author`: 创建、维护和验证 OpenCLI 站点 sitemap。
 - `opencli-adapter-author`: 编写或扩展 OpenCLI 站点 adapter。
 - `opencli-autofix`: 在 OpenCLI 命令失败后诊断并修复 adapter。
 - `smart-search`: 将搜索和研究请求路由到合适的 OpenCLI 数据源。

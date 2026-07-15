@@ -1,7 +1,7 @@
 ---
 name: opencli-usage
-description: Use at the start of any OpenCLI session — this is the top-level map of what `opencli` can do, how to discover adapters, what flags and output formats are universal, and which specialized skill to load next. Point here when an agent asks "what can opencli do?" or "how do I find the right command?".
-allowed-tools: Bash(opencli:*), Read
+description: Use at the start of any OpenCLI session — this is the top-level map of what `opencli` can do, how to install the npm package when the CLI is missing, how to discover adapters, what flags and output formats are universal, and which specialized skill to load next. Point here when an agent asks "what can opencli do?", "how do I install opencli?", or "how do I find the right command?".
+allowed-tools: Bash(node:*), Bash(npm:*), Bash(opencli:*), Read
 ---
 
 # opencli-usage
@@ -15,20 +15,27 @@ OpenCLI turns any website, Electron desktop app, or external CLI into a uniform 
 - **Current-tab binding** — `opencli browser <session> bind` attaches the Chrome tab the user already opened/logged into to that browser session. Follow-up commands use `opencli browser <session> ...`. See `opencli-browser` before using it; bound sessions still block tab mutation.
 - **External CLI passthrough** — `opencli gh`, `opencli docker`, `opencli vercel`, etc. Managed via `opencli external install <name>` (auto-install from `external-clis.yaml`) or `opencli external register <name>` (bring your own).
 
-## Install
+## Ensure the CLI is available
+
+Before the first OpenCLI command in a task, run `opencli --version`. Treat a missing command, broken shim, or version command failure as "not installed".
+
+If OpenCLI is unavailable:
+
+1. Run `node --version` and require Node.js >= 20.
+2. Ask before changing global machine state unless the user already requested installation or environment setup.
+3. Install the published npm package; do not clone or build the upstream source as the default installation path:
 
 ```bash
-# npm global
-npm install -g @jackwener/opencli          # binary: opencli, requires Node >= 21
-opencli doctor                              # run before browser-dependent work (see below)
-
-# From source
-git clone git@github.com:jackwener/OpenCLI.git
-cd OpenCLI && npm install
-npx tsx src/main.ts <command>               # same surface, no global install
+npm install -g @jackwener/opencli@latest
 ```
 
-`opencli doctor` prints a structured `DoctorReport` — daemon status, extension connection, version checks, and a live browser connectivity probe. Scope is narrow: it diagnoses the **browser bridge** (daemon + extension + Chrome wiring). `PUBLIC` / `LOCAL` adapters, `opencli list`, `validate`, `verify`, plugin commands, and external-CLI passthrough don't need it to be green — only `COOKIE` / `INTERCEPT` / `UI` adapters and the `opencli browser *` subcommands do. Flag: `-v` (verbose).
+4. Verify the resolved installation with `opencli --version` and `opencli list -f json`.
+
+If Node.js or npm is unavailable, use the environment/toolchain workflow appropriate to the current agent and platform instead of inventing a second OpenCLI installation method. Do not use `sudo` or modify PATH blindly when a managed runtime, shim, or package-manager policy is already present.
+
+Run `opencli doctor` before browser-dependent work; it is not required for `PUBLIC` / `LOCAL` adapters, registry discovery, validation, plugin management, or external-CLI passthrough.
+
+`opencli doctor` prints a structured `DoctorReport` — daemon status, extension connection, version checks, and a live browser connectivity probe. Scope is narrow: it diagnoses the **browser bridge** (daemon + extension + Chrome wiring). Only `COOKIE` / `INTERCEPT` / `UI` adapters and the `opencli browser *` subcommands need it to be green. Flag: `-v` (verbose).
 
 ## Prerequisites by command type
 
@@ -40,7 +47,7 @@ npx tsx src/main.ts <command>               # same surface, no global install
 | `UI` | Same as COOKIE, full DOM interaction. |
 | `LOCAL` | No browser; talks to a local/dev endpoint. |
 
-Electron desktop apps (cursor, codex, chatwise, notion, discord-app, doubao-app, antigravity, chatgpt-app) route through CDP against the running app — same cookie-less flow as a logged-in browser. Make sure the app is running before invoking.
+Electron desktop apps (cursor, codex, chatwise, discord-app, doubao-app, antigravity, chatgpt-app) route through CDP against the running app — same cookie-less flow as a logged-in browser. Make sure the app is running before invoking.
 
 ## Discover what's installed — don't read this file, run a command
 
@@ -53,6 +60,8 @@ opencli <site> <command> --help # see positional args and command-specific flags
 ```
 
 Do not hard-code adapter lists — there are 100+ sites and the count moves every week. `opencli list -f json` is the source of truth; it emits one entry per command with `{site, name, aliases, description, strategy, browser, args, columns, ...}`. For an agent, that is always better than grepping a doc.
+
+Before falling back to raw `opencli browser` commands on high-change authenticated sites, check whether a site adapter already exposes the workflow. For example, ChatGPT web has higher-level commands for conversation reads and Deep Research result extraction; discover the current surface with `opencli chatgpt --help` or `opencli list -f json`.
 
 ## Universal flags (work on every adapter command)
 
@@ -77,8 +86,7 @@ A few commands override the default via `cmd.defaultFormat` (e.g. chat commands 
 
 | variable | default | purpose |
 |----------|---------|---------|
-| `OPENCLI_DAEMON_PORT` | `19825` | Daemon ↔ extension bridge port. |
-| `OPENCLI_BROWSER_CONNECT_TIMEOUT` | `30` | Seconds to wait for the browser bridge. |
+| `OPENCLI_BROWSER_CONNECT_TIMEOUT` | `45` | Seconds to wait for the browser bridge. |
 | `OPENCLI_BROWSER_COMMAND_TIMEOUT` | `60` | Per-command timeout. |
 | `OPENCLI_CDP_ENDPOINT` | — | Manual CDP endpoint override (dev / remote Chrome / Electron). |
 | `OPENCLI_CACHE_DIR` | `~/.opencli/cache` | Network capture + browser-state cache. |
@@ -134,7 +142,9 @@ opencli gh pr list --limit 5   # passthrough; stdio is inherited, exit code prop
 opencli docker ps
 ```
 
-Built-in entries live in `src/external-clis.yaml`; user overrides and additions in `~/.opencli/external-clis.yaml`. Commonly shipped: `gh`, `docker`, `vercel`, `lark-cli`, `dws`, `wecom-cli`, `obsidian`, `tg-cli`, `discord-cli`, `wx-cli`.
+Built-in entries live in `src/external-clis.yaml`; user overrides and additions in `~/.opencli/external-clis.yaml`. Commonly shipped: `gh`, `docker`, `vercel`, `lark-cli`, `longbridge`, `dws`, `wecom-cli`, `obsidian`, `ntn`, `tg(tg-cli)`, `discord(discord-cli)`, `wx(wx-cli)`.
+
+Some official CLIs use shell-script installers instead of a shell-free package-manager command. Entries without an `install` config, such as `ntn`, must be installed manually from their homepage before passthrough use.
 
 ## Shell completion
 

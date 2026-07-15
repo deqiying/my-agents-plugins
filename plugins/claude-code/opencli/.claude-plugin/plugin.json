@@ -1,10 +1,13 @@
 {
   "name": "opencli",
-  "version": "1.7.19",
-  "description": "OpenCLI skills for using logged-in browser-backed site and tool adapters from Claude Code.",
+  "version": "1.8.6",
+  "description": "OpenCLI workflow skills for using the npm-installed CLI from Claude Code.",
   "displayName": "OpenCLI",
   "author": {
     "name": "Maintainer"
   },
+  "homepage": "https://github.com/jackwener/OpenCLI",
+  "repository": "https://github.com/jackwener/OpenCLI",
+  "license": "Apache-2.0",
   "skills": "./skills/"
 }

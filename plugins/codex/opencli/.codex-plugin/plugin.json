@@ -1,12 +1,15 @@
 {
   "name": "opencli",
-  "version": "1.7.19",
-  "description": "OpenCLI skills for using logged-in browser-backed site and tool adapters from Codex.",
+  "version": "1.8.6",
+  "description": "OpenCLI workflow skills for using the npm-installed CLI from Codex.",
+  "homepage": "https://github.com/jackwener/OpenCLI",
+  "repository": "https://github.com/jackwener/OpenCLI",
+  "license": "Apache-2.0",
   "skills": "./skills/",
   "interface": {
     "displayName": "OpenCLI",
-    "shortDescription": "Browser-backed CLI adapters for Codex.",
-    "longDescription": "OpenCLI skills for using logged-in browser-backed site and tool adapters from Codex.",
+    "shortDescription": "Skills for the npm-installed OpenCLI CLI.",
+    "longDescription": "OpenCLI workflow skills for adapters, browser automation, site sitemaps, and installation of the npm-distributed CLI.",
     "developerName": "Maintainer",
     "category": "Productivity",
     "capabilities": [
@@ -14,9 +17,9 @@
       "Write"
     ],
     "defaultPrompt": [
-      "Use OpenCLI to inspect this logged-in page.",
-      "Search this site through OpenCLI.",
-      "Use browser-backed extraction for this page."
+      "Use OpenCLI to inspect or automate this logged-in site.",
+      "Use an OpenCLI adapter to query this site with structured output.",
+      "Use OpenCLI sitemap context to navigate or document this site."
     ],
     "brandColor": "#111827",
     "composerIcon": "./assets/icon.png",
