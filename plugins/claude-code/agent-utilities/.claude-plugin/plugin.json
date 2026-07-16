@@ -1,6 +1,6 @@
 {
   "name": "agent-utilities",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Reusable local utility skills for agent environments, tool ownership, memory curation, configuration, and persistent-state maintenance.",
   "displayName": "Agent Utilities",
   "author": {
