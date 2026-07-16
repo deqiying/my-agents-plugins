@@ -52,6 +52,8 @@ python scripts/sync-claude-code-plugins.py --check
 
 同步时会保留 `SKILL.md`、`references/`、`scripts/`、`assets/` 等 skill 内容，但不会复制 `agents/openai.yaml`，因为它是 Codex/OpenAI 专用的 UI metadata。不要直接手工维护 `plugins/claude-code/<plugin-name>/`，需要变更时先改 `plugins/codex/`，再重新运行同步脚本。
 
+不适用于 Claude Code 的内容在 `scripts/claude-code-sync.json` 中声明：`excludePlugins` 排除整个插件，`excludeSkills` 按插件名排除单个 skill。同步会从既有镜像删除已排除的受管文件；配置中引用不存在的插件或 skill 会报错，避免拼写错误被静默忽略。可通过 `--config <path>` 为临时或验证场景指定其他配置文件。
+
 在 Claude Code 中添加本地 marketplace：
 
 ```powershell

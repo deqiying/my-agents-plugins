@@ -1,0 +1,8 @@
+{
+  "excludePlugins": [],
+  "excludeSkills": {
+    "agent-utilities": [
+      "curate-codex-memory"
+    ]
+  }
+}

@@ -20,6 +20,7 @@ CODEX_MARKETPLACE = ".agents/plugins/marketplace.json"
 CODEX_PLUGIN_MANIFEST = ".codex-plugin/plugin.json"
 CLAUDE_MARKETPLACE = ".claude-plugin/marketplace.json"
 CLAUDE_PLUGIN_MANIFEST = ".claude-plugin/plugin.json"
+DEFAULT_SYNC_CONFIG = "scripts/claude-code-sync.json"
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -56,7 +57,44 @@ def adapt_keywords(values: Any) -> list[str]:
     return result
 
 
-def add_skill_tree(files: dict[str, bytes], source: Path, target: Path) -> None:
+def load_exclusions(config_path: Path) -> tuple[set[str], dict[str, set[str]]]:
+    config = load_json(config_path)
+    if not isinstance(config, dict):
+        raise SystemExit(f"{config_path} must contain a JSON object")
+    allowed_keys = {"excludePlugins", "excludeSkills"}
+    unexpected_keys = set(config) - allowed_keys
+    if unexpected_keys:
+        names = ", ".join(sorted(unexpected_keys))
+        raise SystemExit(f"{config_path} has unsupported keys: {names}")
+
+    def parse_names(value: Any, field: str) -> set[str]:
+        if not isinstance(value, list) or any(
+            not isinstance(name, str) or not name for name in value
+        ):
+            raise SystemExit(f"{config_path}: {field} must be an array of non-empty strings")
+        names = set(value)
+        if len(names) != len(value):
+            raise SystemExit(f"{config_path}: {field} must not contain duplicates")
+        return names
+
+    excluded_plugins = parse_names(config.get("excludePlugins", []), "excludePlugins")
+    raw_excluded_skills = config.get("excludeSkills", {})
+    if not isinstance(raw_excluded_skills, dict):
+        raise SystemExit(f"{config_path}: excludeSkills must be an object")
+
+    excluded_skills: dict[str, set[str]] = {}
+    for plugin_name, skills in raw_excluded_skills.items():
+        if not isinstance(plugin_name, str) or not plugin_name:
+            raise SystemExit(f"{config_path}: excludeSkills keys must be non-empty strings")
+        excluded_skills[plugin_name] = parse_names(
+            skills, f"excludeSkills.{plugin_name}"
+        )
+    return excluded_plugins, excluded_skills
+
+
+def add_skill_tree(
+    files: dict[str, bytes], source: Path, target: Path, excluded_skills: set[str]
+) -> None:
     if not source.is_dir():
         raise SystemExit(f"missing skills directory: {source}")
 
@@ -70,7 +108,9 @@ def add_skill_tree(files: dict[str, bytes], source: Path, target: Path) -> None:
     }
     for path in source.rglob("*"):
         rel = path.relative_to(source)
-        if any(part in ignored_names for part in rel.parts):
+        if any(part in ignored_names for part in rel.parts) or (
+            rel.parts and rel.parts[0] in excluded_skills
+        ):
             continue
         if path.is_file() and not path.name.endswith(".pyc"):
             files[relative_posix(target / rel)] = path.read_bytes()
@@ -163,11 +203,14 @@ def collect_files(root: Path) -> dict[str, Path]:
     }
 
 
-def render_claude_files(codex_root: Path) -> tuple[dict[str, bytes], list[str]]:
+def render_claude_files(
+    codex_root: Path, excluded_plugins: set[str], excluded_skills: dict[str, set[str]]
+) -> tuple[dict[str, bytes], list[str]]:
     entries = codex_plugin_entries(codex_root)
     files: dict[str, bytes] = {}
     plugin_names: list[str] = []
     marketplace_plugins: list[dict[str, Any]] = []
+    entry_by_name: dict[str, dict[str, Any]] = {}
 
     for entry in entries:
         if not isinstance(entry, dict):
@@ -178,6 +221,22 @@ def render_claude_files(codex_root: Path) -> tuple[dict[str, bytes], list[str]]:
             raise SystemExit("Codex marketplace plugin entry is missing name")
         if not isinstance(source, dict) or not isinstance(source.get("path"), str):
             raise SystemExit(f"Codex marketplace plugin {plugin_name} is missing source.path")
+        if plugin_name in entry_by_name:
+            raise SystemExit(f"Codex marketplace contains duplicate plugin name: {plugin_name}")
+        entry_by_name[plugin_name] = entry
+
+    unknown_plugins = (excluded_plugins | set(excluded_skills)) - set(entry_by_name)
+    if unknown_plugins:
+        names = ", ".join(sorted(unknown_plugins))
+        raise SystemExit(f"sync exclusions reference plugins not in the Codex marketplace: {names}")
+
+    for entry in entries:
+        plugin_name = entry.get("name")
+        source = entry.get("source")
+        assert isinstance(plugin_name, str)
+        assert isinstance(source, dict)
+        if plugin_name in excluded_plugins:
+            continue
 
         codex_plugin_root = (codex_root / source["path"]).resolve()
         codex_manifest_path = codex_plugin_root / CODEX_PLUGIN_MANIFEST
@@ -192,10 +251,30 @@ def render_claude_files(codex_root: Path) -> tuple[dict[str, bytes], list[str]]:
         if not isinstance(skills_path, str) or not skills_path:
             raise SystemExit(f"{codex_manifest_path} must contain a skills path")
 
+        skills_root = codex_plugin_root / skills_path
+        if not skills_root.is_dir():
+            raise SystemExit(f"missing skills directory: {skills_root}")
+
+        excluded_plugin_skills = excluded_skills.get(plugin_name, set())
+        available_skills = {
+            path.name for path in skills_root.iterdir() if path.is_dir()
+        }
+        unknown_skills = excluded_plugin_skills - available_skills
+        if unknown_skills:
+            names = ", ".join(sorted(unknown_skills))
+            raise SystemExit(
+                f"sync exclusions reference skills not in {plugin_name}: {names}"
+            )
+
         files[relative_posix(Path(plugin_name) / CLAUDE_PLUGIN_MANIFEST)] = json_bytes(
             build_plugin_manifest(codex_manifest)
         )
-        add_skill_tree(files, codex_plugin_root / skills_path, Path(plugin_name) / "skills")
+        add_skill_tree(
+            files,
+            skills_root,
+            Path(plugin_name) / "skills",
+            excluded_plugin_skills,
+        )
 
         marketplace_plugins.append(
             build_marketplace_entry(plugin_name, codex_manifest, f"./{plugin_name}")
@@ -281,9 +360,33 @@ def compare_generated(target_root: Path, generated_files: dict[str, bytes], gene
     return diffs
 
 
+def remove_stale_files(
+    target_root: Path,
+    generated_files: dict[str, bytes],
+    generated_paths: set[str],
+    state: dict[str, Any] | None,
+) -> None:
+    previous_paths = existing_managed_paths(state)
+    managed_roots = previous_paths | generated_paths
+    for rel, path in collect_files(target_root).items():
+        if rel in generated_files or not any(
+            rel == root or rel.startswith(f"{root}/") for root in managed_roots
+        ):
+            continue
+        path.unlink()
+        parent = path.parent
+        while parent != target_root:
+            try:
+                parent.rmdir()
+            except OSError:
+                break
+            parent = parent.parent
+
+
 def sync_to_target(target_root: Path, generated_files: dict[str, bytes], generated_paths: set[str], state: dict[str, Any] | None) -> None:
     target_root.mkdir(parents=True, exist_ok=True)
     guard_initial_conflicts(target_root, generated_paths, state)
+    remove_stale_files(target_root, generated_files, generated_paths, state)
 
     for rel, content in sorted(generated_files.items()):
         target = target_root / rel
@@ -311,6 +414,12 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         help="Claude Code marketplace root. Defaults to plugins/claude-code.",
     )
     parser.add_argument(
+        "--config",
+        type=Path,
+        default=repo_root / DEFAULT_SYNC_CONFIG,
+        help="Sync exclusions JSON. Defaults to scripts/claude-code-sync.json.",
+    )
+    parser.add_argument(
         "--check",
         action="store_true",
         help="Fail if the Claude Code marketplace is not up to date.",
@@ -327,9 +436,12 @@ def main(argv: list[str]) -> int:
     args = parse_args(argv)
     codex_root = args.codex_root.resolve()
     claude_root = args.claude_root.resolve()
+    excluded_plugins, excluded_skills = load_exclusions(args.config.resolve())
     state = load_state(claude_root)
 
-    generated_files, managed_path_list = render_claude_files(codex_root)
+    generated_files, managed_path_list = render_claude_files(
+        codex_root, excluded_plugins, excluded_skills
+    )
     managed_paths = set(managed_path_list)
     diffs = compare_generated(claude_root, generated_files, managed_paths, state)
 
