@@ -3,7 +3,7 @@ param(
     [ValidateSet("Json", "Markdown")]
     [string]$Format = "Json",
     [int]$LongLineChars = 600,
-    [int]$StaleAfterDays = 180,
+    [int]$StaleAfterDays = 30,
     [int]$MaxGroupLines = 400
 )
 

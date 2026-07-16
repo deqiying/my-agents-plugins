@@ -223,7 +223,7 @@ def audit_memory(
     memory_path: Path,
     *,
     long_line_chars: int = 600,
-    stale_after_days: int = 180,
+    stale_after_days: int = 30,
     max_group_lines: int = 400,
     today: date | None = None,
 ) -> dict[str, object]:
@@ -580,7 +580,7 @@ def _build_parser() -> argparse.ArgumentParser:
     )
     audit_parser.add_argument("--format", choices=("json", "markdown"), default="json")
     audit_parser.add_argument("--long-line-chars", type=int, default=600)
-    audit_parser.add_argument("--stale-after-days", type=int, default=180)
+    audit_parser.add_argument("--stale-after-days", type=int, default=30)
     audit_parser.add_argument("--max-group-lines", type=int, default=400)
 
     note_parser = subparsers.add_parser(

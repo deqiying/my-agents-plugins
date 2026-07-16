@@ -12,3 +12,7 @@ Thumbs.db
 
 .ace-tool
 .codesearch.db/
+
+# Python caches
+__pycache__/
+*.py[cod]

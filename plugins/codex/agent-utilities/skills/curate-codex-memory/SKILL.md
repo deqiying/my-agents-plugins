@@ -39,7 +39,7 @@ Linux or macOS:
 bash "<skill-dir>/scripts/audit_memory.sh" --format markdown
 ```
 
-Use `--stale-after-days`, `--long-line-chars`, or `--max-group-lines` only when the task needs different thresholds. The audit is advisory and must remain read-only. It checks scoped duplicate headings, inherited revalidation, duplicate bullets and evidence pointers, missing rollout summaries, stale snapshots, oversized groups, long lines, and likely unredacted secrets.
+The default stale snapshot window is 30 days. Use `--stale-after-days`, `--long-line-chars`, or `--max-group-lines` only when the task needs different thresholds. The audit is advisory and must remain read-only. It checks scoped duplicate headings, inherited revalidation, duplicate bullets and evidence pointers, missing rollout summaries, stale snapshots, oversized groups, long lines, and likely unredacted secrets.
 
 Do not auto-delete semantically similar entries. Treat similarity as a review candidate and confirm supersession with evidence.
 

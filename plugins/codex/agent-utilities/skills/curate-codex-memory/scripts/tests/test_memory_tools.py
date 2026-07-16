@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import sys
 import unittest
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from pathlib import Path
 
 
@@ -15,6 +15,19 @@ from memory_tools import audit_memory, create_ad_hoc_note  # noqa: E402
 
 
 class AuditMemoryTests(unittest.TestCase):
+    def test_default_snapshot_threshold_is_30_days(self) -> None:
+        report = audit_memory(
+            FIXTURES_DIR / "snapshots" / "MEMORY.md",
+            today=date(2026, 7, 16),
+        )
+        stale_findings = [
+            item
+            for item in report["findings"]
+            if item["kind"] == "stale-snapshot-candidate"
+        ]
+        self.assertEqual(1, len(stale_findings))
+        self.assertIn("older than 30 days", stale_findings[0]["detail"])
+
     def test_valid_fixture_uses_scoped_headings_and_inherited_revalidation(self) -> None:
         report = audit_memory(
             FIXTURES_DIR / "valid" / "MEMORY.md",
