@@ -1,7 +1,7 @@
 {
   "name": "agent-utilities",
-  "version": "0.3.2",
-  "description": "Reusable local utility skills for developer environment maintenance, layered package manager ownership, and agent tool registry workflows.",
+  "version": "0.4.0",
+  "description": "Reusable local utility skills for agent environments, tool ownership, memory curation, configuration, and persistent-state maintenance.",
   "displayName": "Agent Utilities",
   "author": {
     "name": "Maintainer"
@@ -14,6 +14,8 @@
     "mise",
     "npm",
     "brew",
+    "memory",
+    "configuration",
     "skills",
     "agent",
     "claude-code"

@@ -3,8 +3,10 @@
   <rect x="36" y="36" width="168" height="168" rx="36" fill="#0f766e"/>
   <path d="M78 100h84a14 14 0 0 1 14 14v56a14 14 0 0 1-14 14H78a14 14 0 0 1-14-14v-56a14 14 0 0 1 14-14Z" fill="#ecfeff"/>
   <path d="M98 100V84a13 13 0 0 1 13-13h18a13 13 0 0 1 13 13v16" fill="none" stroke="#ecfeff" stroke-width="10" stroke-linecap="round"/>
-  <path d="m92 126 18 15-18 15" fill="none" stroke="#0f766e" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M124 156h28" fill="none" stroke="#0f766e" stroke-width="9" stroke-linecap="round"/>
+  <path d="m82 126 15 13-15 13" fill="none" stroke="#0f766e" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <ellipse cx="124" cy="126" rx="16" ry="7" fill="none" stroke="#0f766e" stroke-width="7"/>
+  <path d="M108 126v22c0 5 7 8 16 8s16-3 16-8v-22M108 137c0 5 7 8 16 8s16-3 16-8" fill="none" stroke="#0f766e" stroke-width="7" stroke-linecap="round"/>
+  <path d="m152 138 8 8 16-19" fill="none" stroke="#14b8a6" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
   <text x="236" y="112" font-family="Segoe UI, Arial, sans-serif" font-size="46" font-weight="700" fill="#0f172a">Agent Utilities</text>
-  <text x="238" y="158" font-family="Segoe UI, Arial, sans-serif" font-size="25" fill="#334155">Dev environment workflows</text>
+  <text x="238" y="158" font-family="Segoe UI, Arial, sans-serif" font-size="25" fill="#334155">Local agent utility workflows</text>
 </svg>

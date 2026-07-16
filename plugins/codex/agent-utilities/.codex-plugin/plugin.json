@@ -1,7 +1,7 @@
 {
   "name": "agent-utilities",
-  "version": "0.3.2",
-  "description": "Reusable local utility skills for developer environment maintenance, layered package manager ownership, and agent tool registry workflows.",
+  "version": "0.4.0",
+  "description": "Reusable local utility skills for agent environments, tool ownership, memory curation, configuration, and persistent-state maintenance.",
   "author": {
     "name": "Maintainer"
   },
@@ -13,14 +13,16 @@
     "mise",
     "npm",
     "brew",
+    "memory",
+    "configuration",
     "skills",
     "agent"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "Agent Utilities",
-    "shortDescription": "Utility skills for local developer environments.",
-    "longDescription": "A personal local plugin for reusable agent utility workflows. It coordinates developer environment maintenance, explicit setup requests, runtime and tool version mismatches, direct-to-outer package manager chains such as npm over mise-managed Node, synchronized Node postinstall recovery, and a shared registry of agent development tools including npm-distributed CLIs such as OpenCLI.",
+    "shortDescription": "Utilities for local agent environments and state.",
+    "longDescription": "A personal local plugin for reusable agent utility workflows. It coordinates developer environment maintenance, runtime and tool ownership, shared tool registries, structure-aware Codex memory audits, and safe ad-hoc memory change requests without directly modifying generated memory state.",
     "developerName": "Maintainer",
     "category": "Productivity",
     "capabilities": [
@@ -32,7 +34,8 @@
       "Use setup-dev-env to inspect my local developer environment before installing anything.",
       "Use manage-scoop for Windows Scoop checks and updates.",
       "Use manage-mise for directly managed runtimes and tools, outer runtime layers, and Node/npm global-prefix diagnostics.",
-      "Use maintain-dev-tool-list to update the shared developer tool registry, including npm-global tools such as OpenCLI, without flattening nested manager ownership, and keep mise-managed Node postinstall recovery synchronized."
+      "Use maintain-dev-tool-list to update the shared developer tool registry, including npm-global tools such as OpenCLI, without flattening nested manager ownership, and keep mise-managed Node postinstall recovery synchronized.",
+      "Use curate-codex-memory to audit generated Codex memory state, review noisy or unsafe entries, and preview authorized ad-hoc change notes without directly editing generated memory files."
     ],
     "brandColor": "#0F766E",
     "composerIcon": "./assets/icon.png",

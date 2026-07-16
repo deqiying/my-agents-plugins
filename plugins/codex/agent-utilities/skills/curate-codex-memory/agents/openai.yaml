@@ -1,0 +1,9 @@
+interface:
+  display_name: "Curate Codex Memory"
+  short_description: "Audit and safely curate Codex memories"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.png"
+  brand_color: "#0F766E"
+  default_prompt: "Use $curate-codex-memory to run a structure-aware read-only audit of Codex memory and preview an ad-hoc change note without modifying generated memory files."
+policy:
+  allow_implicit_invocation: true
