@@ -1,6 +1,6 @@
 ---
 name: workflows-guidelines
-description: Karpathy-style engineering guardrails for non-trivial code, config, script, CI, plugin, or tooling changes. Use when an agent needs to control scope, avoid unsupported complexity, and choose verification proportional to risk; do not use for factual queries or simple known-file edits.
+description: Engineering guardrails for non-trivial code, config, script, CI, plugin, or tooling changes. Use when an agent needs to control scope, avoid unsupported complexity, and choose verification proportional to risk; do not use for factual queries or simple known-file edits.
 ---
 
 # Guidelines Workflow
