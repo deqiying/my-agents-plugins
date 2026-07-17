@@ -47,6 +47,6 @@ description: 当 Agent 需要以严格确认门完成非简单的软件改动时
 
 ## 路由
 
-- 证据收集、诊断或计划修订需要结构化多步骤分析时，使用 `$workflows-sequential-thinking`。
+- 出现重复失败、证据冲突、source/generated/runtime 状态不一致，或高回滚风险需要显式诊断时，使用 `$workflows-evidence-diagnostics`。
 - 计划、验收结果或诊断报告包含多个决策或证据项时，使用 `$workflows-output-formatting`。
-- 除非用户还要求访谈式设计讨论，否则不使用 `$workflows-grill-me` 或 `$workflows-grill-with-docs`。
+- 除非用户还要求访谈式设计讨论并希望沉淀术语或 ADR，否则不使用 `$workflows-grill-with-docs`。

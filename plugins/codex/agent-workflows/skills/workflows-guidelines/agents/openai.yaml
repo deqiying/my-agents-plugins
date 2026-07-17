@@ -4,4 +4,4 @@ interface:
   icon_small: "./assets/icon.png"
   icon_large: "./assets/icon.png"
   brand_color: "#F97316"
-  default_prompt: "Use $workflows-guidelines to keep non-trivial code, config, script, CI, plugin, or tooling edits simple, surgical, and verifiable."
+  default_prompt: "Use $workflows-guidelines to keep this non-trivial engineering change minimal, focused, and verifiable."

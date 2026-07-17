@@ -1,89 +1,53 @@
 ---
 name: workflows-guidelines
-description: Karpathy-style engineering guardrails to reduce common LLM coding mistakes. Use for non-trivial implementation, bug fixes, code review, refactoring, config/scripts/CI/plugin/tooling edits, or feature work where an agent must avoid overcomplication, make surgical changes, surface assumptions, and define verifiable success criteria.
+description: Karpathy-style engineering guardrails for non-trivial code, config, script, CI, plugin, or tooling changes. Use when an agent needs to control scope, avoid unsupported complexity, and choose verification proportional to risk; do not use for factual queries or simple known-file edits.
 ---
 
 # Guidelines Workflow
 
-Karpathy-style behavioral guidelines to reduce common LLM coding mistakes.
+Use these lightweight guardrails to reduce common engineering mistakes. They are not a mandatory thinking process or an architecture-design workflow.
 
-This skill is adapted from the public `karpathy-guidelines` pattern. Keep its four core principles intact: think before coding, simplicity first, surgical changes, and goal-driven execution.
+Keep four principles: verify before deciding, simplicity first, surgical changes, and goal-driven verification.
 
-**Tradeoff:** These guidelines bias toward caution over speed. For trivial tasks, use judgment.
+For small changes with a clear scope and obvious success criteria, act directly.
 
 ## Use
 
-- Use for non-trivial code changes, bug fixes, feature implementation, refactors, and code review.
-- Use for engineering-adjacent edits that behave like code: config, scripts, CI workflows, agent plugins, skills, local tooling, and generated glue.
-- Use when the request is easy to overbuild, touches existing behavior, risks unrelated churn, or needs a clear verification boundary.
+- Non-trivial code changes, bug fixes, feature implementation, refactors, and code review.
+- Engineering-adjacent changes to config, scripts, CI workflows, agent plugins, skills, local tooling, and generated glue.
+- Work that is easy to overbuild, touches existing behavior, risks unrelated churn, or needs a clear verification boundary.
 
 ## Avoid
 
-- Do not use for one-line factual answers, simple command output, pure writing/editing with no engineering behavior, or tiny known-file edits with obvious success criteria.
-- Do not use as an architecture process. For broad design, tradeoff analysis, repeated failures, or evidence-driven diagnostics, use `$workflows-sequential-thinking` first.
-- Do not override project-specific rules, user instructions, or specialized skills. Apply the stricter and more specific instruction when rules overlap.
+- One-line factual answers, simple command output, writing without engineering behavior, or tiny known-file edits with obvious success criteria.
+- Architecture decisions, repeated failures, or evidence-driven diagnostics; use `$workflows-evidence-diagnostics` or the appropriate specialized skill instead.
+- Do not override project rules, user instructions, or specialized skills. Apply the more specific rule when they overlap.
 
-## 1. Think Before Coding
+## 1. Verify Before Deciding
 
-**Don't assume. Don't hide confusion. Surface tradeoffs.**
-
-Before implementing:
-- State your assumptions explicitly. If uncertain, ask.
-- If multiple interpretations exist, present them - don't pick silently.
-- If a simpler approach exists, say so. Push back when warranted.
-- If something is unclear, stop. Name what's confusing. Ask.
 - Read the relevant source, config, logs, docs, or command output before treating a guess as fact.
+- For low-risk ambiguity, state the concrete assumption and proceed. Ask the user only when the answer changes scope, compatibility, cost, or reversibility.
+- Surface alternatives and tradeoffs only when they materially change the result; do not interrupt execution for irrelevant details.
 
 ## 2. Simplicity First
 
-**Minimum code that solves the problem. Nothing speculative.**
-
-- No features beyond what was asked.
-- No abstractions for single-use code.
-- No "flexibility" or "configurability" that wasn't requested.
-- No error handling for impossible scenarios.
-- If you write 200 lines and it could be 50, rewrite it.
-- Prefer existing project helpers, patterns, and dependencies over introducing new ones.
-
-Ask yourself: "Would a senior engineer say this is overcomplicated?" If yes, simplify.
+- Implement only the requested behavior. Do not add single-use abstractions, speculative configuration, or unneeded extension points.
+- Do not add complex branches for unsupported hypothetical scenarios, but preserve known boundaries and real error handling.
+- Prefer existing project helpers, patterns, and dependencies. Explain why a new long-term dependency is necessary.
 
 ## 3. Surgical Changes
 
-**Touch only what you must. Clean up only your own mess.**
+- Each change must trace to the user goal, a required generated artifact, or verification. Preserve unrelated worktree changes.
+- Do not opportunistically refactor, remove pre-existing dead code, or reformat adjacent code. Update formatter output, lockfiles, or generated files only when directly caused by this change.
+- Remove unused imports, variables, or functions created by this change; leave pre-existing cleanup alone.
 
-When editing existing code:
-- Don't "improve" adjacent code, comments, or formatting.
-- Don't refactor things that aren't broken.
-- Match existing style, even if you'd do it differently.
-- If you notice unrelated dead code, mention it - don't delete it.
-- Preserve user changes and unrelated worktree state. Work with unexpected changes instead of reverting them.
+## 4. Goal-Driven Verification
 
-When your changes create orphans:
-- Remove imports/variables/functions that YOUR changes made unused.
-- Don't remove pre-existing dead code unless asked.
-
-The test: Every changed line should trace directly to the user's request.
-
-## 4. Goal-Driven Execution
-
-**Define success criteria. Loop until verified.**
-
-Transform tasks into verifiable goals:
-- "Add validation" -> "Write tests for invalid inputs, then make them pass"
-- "Fix the bug" -> "Write a test that reproduces it, then make it pass"
-- "Refactor X" -> "Ensure tests pass before and after"
-- "Update a plugin skill" -> "Update source and installed cache, then compare hashes or diff"
-- "Fix a config issue" -> "Read the active config, apply the smallest change, then run the command that proves it is loaded"
-
-For multi-step tasks, state a brief plan:
-```text
-1. [Step] -> verify: [check]
-2. [Step] -> verify: [check]
-3. [Step] -> verify: [check]
-```
-
-Strong success criteria let you loop independently. Weak criteria ("make it work") require constant clarification.
+- Define the smallest success criterion proportional to risk, then choose tests, lint, build, runtime checks, diff inspection, or manual review.
+- Add or run tests when the behavior risk warrants them and the project has a suitable test foundation. Do not invent a test framework or expand scope for formality.
+- When updating a plugin or skill, update the source and declared generated mirror. Do not refresh installed caches or marketplaces unless the user explicitly asks for installation verification.
+- Inspect the diff, run the smallest sufficient validation, and report remaining unverified boundaries.
 
 ## 5. Reader-Facing Output
 
-When a user-facing update or answer includes multiple decisions, files, risks, verification steps, or implementation details, apply `$workflows-output-formatting`. Keep simple answers simple, but make dense answers easy to scan without dropping important facts.
+When a user-facing update or answer includes multiple decisions, files, risks, verification steps, or implementation details, apply `$workflows-output-formatting`. Keep simple answers simple.

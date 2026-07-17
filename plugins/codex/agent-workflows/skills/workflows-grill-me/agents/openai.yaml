@@ -1,7 +1,0 @@
-interface:
-  display_name: "Grill Me"
-  short_description: "No-docs plan stress testing"
-  icon_small: "./assets/icon.png"
-  icon_large: "./assets/icon.png"
-  brand_color: "#DC2626"
-  default_prompt: "Use $workflows-grill-me to interview me about this plan, without creating design records."
