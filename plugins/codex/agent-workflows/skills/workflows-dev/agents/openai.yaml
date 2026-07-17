@@ -1,0 +1,10 @@
+interface:
+  display_name: "开发工作流"
+  short_description: "先计划确认、后实施验收的开发工作流"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.png"
+  brand_color: "#7C3AED"
+  default_prompt: "使用 $workflows-dev 先研究并制定计划，等待我的确认后实施和验证此项改动。"
+
+policy:
+  allow_implicit_invocation: false
