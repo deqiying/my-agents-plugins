@@ -8,6 +8,7 @@ Use this workflow for mise itself, directly mise-managed runtimes or tools, proj
 - [Default Workflow](#default-workflow)
 - [Path Placeholders](#path-placeholders)
 - [Read-Only Checks](#read-only-checks)
+- [Java, Maven, And mvnd](#java-maven-and-mvnd)
 - [Manager And Update Ownership](#manager-and-update-ownership)
 - [Preserve npm CLIs Across Node Upgrades](#preserve-npm-clis-across-node-upgrades)
 - [mise npm Backend Exception](#mise-npm-backend-exception)
@@ -23,6 +24,7 @@ Use this workflow for mise itself, directly mise-managed runtimes or tools, proj
 - Read `tool-registry.yaml` before changing a registered tool. Keep `manager_chain`, `install_strategy`, and `update_owner` distinct.
 - Use mise commands directly only for entries whose manager chain begins with `mise`.
 - For `[npm, mise]`, use npm for `npm-global`; use a mise npm backend only after an explicit strategy decision and duplicate check.
+- Treat registered `java`, `maven`, and `mvnd` as separate direct mise-managed tools. The Maven registry id is `maven`, while its primary command is `mvn`.
 - Treat shared/global Rust as mise-managed. If `rustc` or `cargo` resolves to rustup or `<HOME>/.cargo/bin`, report a manager mismatch unless a project explicitly requires rustup.
 - Use lowercase `officecli` as the canonical command. If it resolves to a different strategy than the registry declares, report the mismatch before installing another copy.
 
@@ -73,6 +75,42 @@ Get-Command <CLI> -All
 On macOS or Linux, replace `Get-Command <CLI> -All` with `command -v -a <CLI>` when supported, or `type -a <CLI>`.
 
 `mise ls --current` confirms the active Node runtime and any explicitly declared mise backend tools. It does not list every package inside the active Node npm global prefix. Do not use `mise which <CLI>` as the primary test for an `npm-global` installation.
+
+## Java, Maven, And mvnd
+
+Read the Java/Maven project declarations listed in `SKILL.md` before using the global defaults. Treat a Maven wrapper as project-owned: do not replace its declared distribution merely to match global `maven`.
+
+Build global install or update specs from `tool-registry.yaml`. Before changing these tools, verify their live registry mappings, the Java shorthand vendor, active versions, and every resolved copy:
+
+```powershell
+mise registry java
+mise registry maven
+mise registry mvnd
+mise settings get java.shorthand_vendor
+mise ls java --json
+mise ls maven --json
+mise ls mvnd --json
+Get-Command java,javac,mvn,mvnd -All
+```
+
+- `java@latest` and `java@<major>` are shorthands whose vendor comes from `java.shorthand_vendor`; they are not equivalent to `temurin-<major>`, `zulu-<major>`, or another vendor-qualified spec. The shared/global registry intentionally allows `latest` to change the Java major, but preserve the configured vendor and report patch-stream freshness concerns instead of switching vendors silently.
+- `maven` and `mvnd` are independent mise tools. Verify both `mvn` and `mvnd`; do not assume the mvnd distribution replaces the selected standalone Maven command.
+- An activated mise shell should select the mise shims and update `JAVA_HOME`. On Windows, compare `JAVA_HOME`, `MAVEN_HOME`, and `MVND` at Process, User, and Machine scopes because a current process can retain stale values after persistent configuration changes. On macOS/Linux, inspect the current environment and shell startup files. Do not delete old installations or edit persistent environment variables without explicit approval.
+- `mvn --version` must report the intended Java runtime, not merely a healthy Maven binary. Verify it after activation or with `mise exec`.
+- `mvnd --version` can initialize daemon state and may hang or emit no captured stdout in a restricted non-interactive shell. Use a bounded timeout. If the probe cannot provide output, preserve its exit status and verify `mise ls mvnd --json`, `mise which mvnd`, and the installed executable; rerun in an ordinary interactive shell when runtime output is required.
+
+After an authorized change, verify the complete runtime combination:
+
+```powershell
+mise which java
+mise which javac
+mise which mvn
+mise which mvnd
+java -version
+javac -version
+mvn --version
+mvnd --version
+```
 
 ## Manager And Update Ownership
 
@@ -161,6 +199,7 @@ Run only after explicit approval:
 ```powershell
 mise use --global node@latest
 mise use --global go@latest
+mise use --global java@latest maven@latest mvnd@latest
 mise install
 mise upgrade --dry-run
 mise upgrade node
@@ -173,12 +212,14 @@ Use `mise use --global` for user-wide defaults and `mise use` from `<PROJECT_ROO
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/manage-mise.ps1 -Action check
 powershell -ExecutionPolicy Bypass -File scripts/manage-mise.ps1 -Action install -Tools node@latest,go@latest -Global -Apply
+powershell -ExecutionPolicy Bypass -File scripts/manage-mise.ps1 -Action install -Tools java@latest,maven@latest,mvnd@latest -Global -Apply
 powershell -ExecutionPolicy Bypass -File scripts/manage-mise.ps1 -Action update -Tools node,python -Apply
 ```
 
 ```bash
 bash scripts/manage-mise.sh check
 bash scripts/manage-mise.sh install --global --apply node@latest go@latest
+bash scripts/manage-mise.sh install --global --apply java@latest maven@latest mvnd@latest
 bash scripts/manage-mise.sh update --apply node python
 ```
 

@@ -26,10 +26,22 @@ function Test-Command {
     }
 }
 
+function Show-ScopedEnvironmentVariable {
+    param([string]$Name)
+
+    foreach ($scope in @("Process", "User", "Machine")) {
+        $value = [Environment]::GetEnvironmentVariable($Name, $scope)
+        if ([string]::IsNullOrWhiteSpace($value)) {
+            $value = "<unset>"
+        }
+        Write-Host ("{0} {1}: {2}" -f $Name, $scope, $value)
+    }
+}
+
 Write-Host "Platform: Windows"
 Write-Host "PowerShell: $($PSVersionTable.PSVersion)"
 
-$commands = @("scoop", "mise", "node", "npm", "go", "rustc", "cargo", "python", "uv", "pnpm", "codex", "codesearch", "officecli", "opencli", "onesearch", "doggo")
+$commands = @("scoop", "mise", "java", "javac", "mvn", "mvnd", "node", "npm", "go", "rustc", "cargo", "python", "uv", "pnpm", "codex", "codesearch", "officecli", "opencli", "onesearch", "doggo")
 foreach ($name in $commands) {
     foreach ($result in @(Test-Command $name)) {
         if ($result.Found) {
@@ -38,6 +50,12 @@ foreach ($name in $commands) {
             Write-Host ("MISSING {0}" -f $result.Name)
         }
     }
+}
+
+Write-Host ""
+Write-Host "Java/Maven environment variables:"
+foreach ($name in @("JAVA_HOME", "MAVEN_HOME", "MVND")) {
+    Show-ScopedEnvironmentVariable $name
 }
 
 if (Get-Command mise -ErrorAction SilentlyContinue) {

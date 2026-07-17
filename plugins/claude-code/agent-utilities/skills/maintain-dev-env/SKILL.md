@@ -1,6 +1,6 @@
 ---
 name: maintain-dev-env
-description: Use as the single developer-environment skill when an agent needs to audit, set up, repair, update, or troubleshoot local toolchains on Windows, macOS, or Linux. Use for missing commands, PATH or shim issues, Scoop, mise, Homebrew, nested manager ownership, duplicate CLI copies, Node npm globals, shared tool registries, project/runtime mismatches, and tool installation or repair before building, testing, generating, or debugging.
+description: Use as the single developer-environment skill when an agent needs to audit, set up, repair, update, or troubleshoot local toolchains on Windows, macOS, or Linux. Use for missing commands, PATH or shim issues, Scoop, mise, Homebrew, Java or JDK, Maven or mvnd, nested manager ownership, duplicate CLI copies, Node npm globals, shared tool registries, project/runtime mismatches, and tool installation or repair before building, testing, generating, or debugging.
 ---
 
 # Maintain Dev Env
@@ -24,12 +24,13 @@ Read only the references required for the current step. These are supporting wor
 3. Read project toolchain declarations before trusting global commands:
    - Go: `go.mod`, `toolchain`, `mise.toml`, `.tool-versions`.
    - Rust: `rust-toolchain.toml`, `Cargo.toml` `rust-version`, `mise.toml`, `.tool-versions`.
+   - Java/Maven: `pom.xml` compiler or toolchain settings, `.mvn/jvm.config`, `.mvn/maven.config`, `.mvn/wrapper/maven-wrapper.properties`, `.java-version`, `mise.toml`, `.tool-versions`.
    - Node: `package.json` `engines` and `packageManager`, `.node-version`, `.nvmrc`, `mise.toml`, `.tool-versions`.
    - Python: `pyproject.toml` `requires-python`, `.python-version`, `uv.lock`, `mise.toml`, `.tool-versions`.
 4. Run read-only inspection first. For a broad audit, use:
    - Windows: `powershell -ExecutionPolicy Bypass -File scripts/check-dev-env.ps1 -Action check`
    - macOS/Linux: `bash scripts/check-dev-env.sh check`
-5. Resolve every affected command and inspect its actual version. For npm globals, use `npm prefix --global`, `npm list --global --depth=0`, and direct command resolution before mise-specific lookup.
+5. Resolve every affected command and inspect its actual version. For Java/Maven, resolve `java`, `javac`, `mvn`, and `mvnd`, then verify `JAVA_HOME` and Maven's reported Java runtime after mise activation. For npm globals, use `npm prefix --global`, `npm list --global --depth=0`, and direct command resolution before mise-specific lookup.
 6. Determine the direct-to-outer `manager_chain`, `install_strategy`, and `update_owner`. Use the registry as desired state, not proof of installation.
 7. Load the relevant reference and choose the smallest corrective action. Prefer project-aware or temporary execution before changing shared/global state.
 8. After an authorized change, verify manager state, all resolved command paths, the target version, and the original blocked command.

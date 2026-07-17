@@ -9,6 +9,21 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+function Expand-ToolSpecs {
+    param([string[]]$Specs)
+
+    foreach ($spec in $Specs) {
+        foreach ($part in $spec.Split(",")) {
+            $tool = $part.Trim()
+            if ($tool) {
+                $tool
+            }
+        }
+    }
+}
+
+$Tools = @(Expand-ToolSpecs $Tools)
+
 function Require-Mise {
     if (-not (Get-Command mise -ErrorAction SilentlyContinue)) {
         throw "mise is missing. On Windows, use manage-scoop to install mise first."

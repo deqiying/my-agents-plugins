@@ -83,6 +83,47 @@ tools:
     check:
       - "go version"
     notes: "Go runtime and toolchain."
+  - id: "java"
+    command: "java"
+    manager_chain:
+      - "mise"
+    install_strategy: "mise"
+    update_owner: "mise"
+    category: "runtime"
+    version_policy: "latest"
+    check:
+      - "mise ls java --json"
+      - "mise which java"
+      - "mise settings get java.shorthand_vendor"
+      - "java -version"
+      - "javac -version"
+    notes: "Shared/global Java follows the latest release selected by mise. java@latest uses mise's java.shorthand_vendor, which should be verified as openjdk before applying or reporting this policy. Preserve the vendor unless the user requests a change. An activated mise shell should own JAVA_HOME; report stale manual JDK copies or environment variables instead of deleting them."
+  - id: "maven"
+    command: "mvn"
+    manager_chain:
+      - "mise"
+    install_strategy: "mise"
+    update_owner: "mise"
+    category: "utility"
+    version_policy: "latest"
+    check:
+      - "mise ls maven --json"
+      - "mise which mvn"
+      - "mvn --version"
+    notes: "Standalone Maven build tool managed directly by mise. Confirm that mvn --version reports the intended mise-managed Java runtime, and respect a project's Maven wrapper or toolchain requirements before changing project state."
+  - id: "mvnd"
+    command: "mvnd"
+    manager_chain:
+      - "mise"
+    install_strategy: "mise"
+    update_owner: "mise"
+    category: "utility"
+    version_policy: "latest"
+    check:
+      - "mise ls mvnd --json"
+      - "mise which mvnd"
+      - "mvnd --version"
+    notes: "Maven Daemon managed directly by mise and maintained separately from standalone Maven. A runtime version probe can initialize daemon state or fail to emit captured output in restricted non-interactive shells; use a bounded timeout and retain mise inventory plus command-resolution evidence."
   - id: "rust"
     command: "rustc"
     manager_chain:

@@ -1,6 +1,6 @@
 {
   "name": "agent-utilities",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Reusable local utility skills for routed developer-environment maintenance, tool ownership, memory curation, configuration, and persistent-state maintenance.",
   "author": {
     "name": "Maintainer"
@@ -11,6 +11,9 @@
     "developer-environment",
     "scoop",
     "mise",
+    "java",
+    "maven",
+    "mvnd",
     "npm",
     "brew",
     "memory",
@@ -22,7 +25,7 @@
   "interface": {
     "displayName": "Agent Utilities",
     "shortDescription": "Utilities for local agent environments and state.",
-    "longDescription": "A personal local plugin for reusable agent utility workflows. It uses maintain-dev-env as the single developer-environment skill and loads platform, runtime, or tool-registry workflows from that skill's bundled references only when needed. It also supports structure-aware Codex memory audits and safe ad-hoc memory change requests without directly modifying generated memory state.",
+    "longDescription": "A personal local plugin for reusable agent utility workflows. It uses maintain-dev-env as the single developer-environment skill for Java/JDK, Maven, mvnd, and other local toolchains, loading platform, runtime, or tool-registry workflows from bundled references only when needed. It also supports structure-aware Codex memory audits and safe ad-hoc memory change requests without directly modifying generated memory state.",
     "developerName": "Maintainer",
     "category": "Productivity",
     "capabilities": [
@@ -30,7 +33,7 @@
       "Shell"
     ],
     "defaultPrompt": [
-      "Use maintain-dev-env as the single skill for local developer environment audits, setup, repair, and task-blocking toolchain issues; load only its relevant bundled reference after read-only diagnosis.",
+      "Use maintain-dev-env as the single skill for Java/JDK, Maven, mvnd, and other local developer environment audits, setup, repair, and task-blocking toolchain issues; load only its relevant bundled reference after read-only diagnosis.",
       "Use curate-codex-memory to audit generated Codex memory state, review noisy or unsafe entries, and preview authorized ad-hoc change notes without directly editing generated memory files."
     ],
     "brandColor": "#0F766E",

@@ -11,7 +11,7 @@ platform="$(uname -s)"
 echo "Platform: $platform"
 echo "Shell: ${SHELL:-unknown}"
 
-commands="brew mise node npm go rustc cargo python3 uv pnpm codex codesearch officecli opencli onesearch doggo"
+commands="brew mise java javac mvn mvnd node npm go rustc cargo python3 uv pnpm codex codesearch officecli opencli onesearch doggo"
 for name in $commands; do
   if command -v "$name" >/dev/null 2>&1; then
     paths="$(type -a -p "$name" 2>/dev/null || true)"
@@ -25,6 +25,12 @@ for name in $commands; do
     printf 'MISSING %s\n' "$name"
   fi
 done
+
+echo
+echo "Java/Maven environment variables:"
+printf 'JAVA_HOME: %s\n' "${JAVA_HOME:-<unset>}"
+printf 'MAVEN_HOME: %s\n' "${MAVEN_HOME:-<unset>}"
+printf 'MVND: %s\n' "${MVND:-<unset>}"
 
 if command -v mise >/dev/null 2>&1; then
   echo
