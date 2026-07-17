@@ -1,9 +1,0 @@
-interface:
-  display_name: "Manage Mise"
-  short_description: "Maintain layered mise and npm toolchains"
-  icon_small: "./assets/icon.png"
-  icon_large: "./assets/icon.png"
-  brand_color: "#0F766E"
-  default_prompt: "Use $manage-mise to maintain mise runtimes while preserving native package-manager ownership and Node npm globals."
-policy:
-  allow_implicit_invocation: true

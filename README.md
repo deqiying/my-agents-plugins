@@ -82,17 +82,15 @@ Skills:
 
 ### Agent Utilities
 
-`agent-utilities` 提供本机开发环境维护、检查、初始化、更新和工具清单维护相关的辅助技能。
+`agent-utilities` 将开发环境能力收敛到一个主 Skill，并把平台与管理器流程作为该 Skill 内部按需读取的参考资料维护。
 
 
 Skills:
 
-- `maintain-dev-env`: 任务执行过程中遇到本地工具缺失、PATH 异常或项目声明版本与当前环境不一致时的主入口。
-- `setup-dev-env`: 用户主动要求检查、安装和更新本地开发环境时的主入口，按平台串联 Scoop、mise、Homebrew 和工具清单技能。
-- `manage-scoop`: Windows 专属，检查、安装和更新 Scoop，并作为 Windows 下 mise 的前置环境入口。
-- `manage-mise`: 检查、安装和更新 mise 管理的语言运行时和 agent 常用工具。
-- `manage-brew`: macOS 专属，检查、安装和更新 Homebrew 管理的开发工具。
-- `maintain-dev-tool-list`: 维护 agent 开发常用工具、语言运行时和环境管理器的共享工具清单，包括 OpenCLI 等 npm 全局 CLI 的直接与外层管理器关系。
+- `maintain-dev-env`: 唯一的开发环境 Skill，统一处理环境检查、设置、修复和任务过程中发现的工具链问题。
+- `curate-codex-memory`: 审计 Codex 长期记忆并生成授权的 ad-hoc 变更请求，不直接修改生成态记忆文件。
+
+`maintain-dev-env` 内部通过 `references/scoop.md`、`references/mise.md`、`references/brew.md` 和 `references/tool-registry.md` 路由专用流程；这些文件不是独立 Skill。
 
 ### Awesome DESIGN.md
 

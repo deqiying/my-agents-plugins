@@ -1,7 +1,7 @@
 {
   "name": "agent-utilities",
-  "version": "0.4.2",
-  "description": "Reusable local utility skills for agent environments, tool ownership, memory curation, configuration, and persistent-state maintenance.",
+  "version": "0.5.0",
+  "description": "Reusable local utility skills for routed developer-environment maintenance, tool ownership, memory curation, configuration, and persistent-state maintenance.",
   "author": {
     "name": "Maintainer"
   },
@@ -22,7 +22,7 @@
   "interface": {
     "displayName": "Agent Utilities",
     "shortDescription": "Utilities for local agent environments and state.",
-    "longDescription": "A personal local plugin for reusable agent utility workflows. It coordinates developer environment maintenance, runtime and tool ownership, shared tool registries, structure-aware Codex memory audits, and safe ad-hoc memory change requests without directly modifying generated memory state.",
+    "longDescription": "A personal local plugin for reusable agent utility workflows. It uses maintain-dev-env as the single developer-environment skill and loads platform, runtime, or tool-registry workflows from that skill's bundled references only when needed. It also supports structure-aware Codex memory audits and safe ad-hoc memory change requests without directly modifying generated memory state.",
     "developerName": "Maintainer",
     "category": "Productivity",
     "capabilities": [
@@ -30,11 +30,7 @@
       "Shell"
     ],
     "defaultPrompt": [
-      "Use maintain-dev-env when a task is blocked or may be misled by missing tools, PATH/shim issues, package-manager ownership, project runtime requirements, or toolchain install/update/repair needs.",
-      "Use setup-dev-env to inspect my local developer environment before installing anything.",
-      "Use manage-scoop for Windows Scoop checks and updates.",
-      "Use manage-mise for directly managed runtimes and tools, outer runtime layers, and Node/npm global-prefix diagnostics.",
-      "Use maintain-dev-tool-list to update the shared developer tool registry, including npm-global tools such as OpenCLI, without flattening nested manager ownership, and keep mise-managed Node postinstall recovery synchronized.",
+      "Use maintain-dev-env as the single skill for local developer environment audits, setup, repair, and task-blocking toolchain issues; load only its relevant bundled reference after read-only diagnosis.",
       "Use curate-codex-memory to audit generated Codex memory state, review noisy or unsafe entries, and preview authorized ad-hoc change notes without directly editing generated memory files."
     ],
     "brandColor": "#0F766E",

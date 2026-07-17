@@ -1,7 +1,7 @@
 {
   "name": "agent-utilities",
-  "version": "0.4.2",
-  "description": "Reusable local utility skills for agent environments, tool ownership, memory curation, configuration, and persistent-state maintenance.",
+  "version": "0.5.0",
+  "description": "Reusable local utility skills for routed developer-environment maintenance, tool ownership, memory curation, configuration, and persistent-state maintenance.",
   "displayName": "Agent Utilities",
   "author": {
     "name": "Maintainer"

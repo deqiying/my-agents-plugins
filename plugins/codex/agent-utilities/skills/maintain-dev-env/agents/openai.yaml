@@ -1,9 +1,9 @@
 interface:
   display_name: "Maintain Dev Env"
-  short_description: "Diagnose layered local developer toolchains"
+  short_description: "Route local developer environment maintenance"
   icon_small: "./assets/icon.png"
   icon_large: "./assets/icon.png"
   brand_color: "#0F766E"
-  default_prompt: "Use $maintain-dev-env to diagnose missing or duplicate commands, nested manager ownership, Node npm globals, and project toolchain mismatches."
+  default_prompt: "Use $maintain-dev-env to audit or repair my local developer environment and load only the relevant bundled manager workflow."
 policy:
   allow_implicit_invocation: true
