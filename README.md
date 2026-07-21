@@ -107,7 +107,6 @@ Skill:
 Skills:
 
 - `mcp-excel-tools`: 处理 Excel 原生工作簿操作；普通读取和提取优先走 `tool-officecli`。
-- `mcp-fast-context-mcp`: 未知入口场景首选的语义搜索，用于定位本地代码库中的相关文件、入口点和影响范围。
 
 ### OpenCLI
 
@@ -137,7 +136,8 @@ Skill:
 
 Skill:
 
-- `tool-codesearch`: 当 Fast Context 因网络、认证或 MCP 服务不可用时，使用本地 `codesearch` CLI 回退做语义代码库发现；索引在后台建立或刷新。
+- `tool-fast-context`: 未知入口场景首选的语义搜索 CLI，用于定位本地代码库中的相关文件、入口点和影响范围；搜索会向 Windsurf 发送仓库上下文，需先获得外发授权并在本地验证候选结果。
+- `tool-codesearch`: 当 `tool-fast-context` 不可用、未获外发授权或搜索失败时，使用本地 `codesearch` CLI 回退做语义代码库发现；索引在后台建立或刷新。
 - `tool-officecli`: 优先使用本地 `officecli` CLI 读取、提取、检查、修改、验证和渲染 Office 文档。
 
 ## 可移植性约定

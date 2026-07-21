@@ -1,7 +1,0 @@
-interface:
-  display_name: "MCP Fast Context"
-  short_description: "Proactive semantic code context locator"
-  icon_small: "./assets/icon.png"
-  icon_large: "./assets/icon.png"
-  brand_color: "#10B981"
-  default_prompt: "Use $mcp-fast-context-mcp as the first semantic locator for local unknown-entrypoint work: run fast_context_search before tool-codesearch, then verify with file reads and exact rg. If network, authentication, or MCP availability prevents fast_context_search, use $tool-codesearch as the fallback; its index work must stay in the background. Skip semantic search when an exact path, symbol, config key, or error text is already known."

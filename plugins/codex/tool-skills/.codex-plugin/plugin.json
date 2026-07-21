@@ -1,6 +1,6 @@
 {
   "name": "tool-skills",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "Local CLI tool skills for agent workflows.",
   "author": {
     "name": "Maintainer"
@@ -25,7 +25,8 @@
     ],
     "defaultPrompt": [
       "Use the right local CLI tool skill for this task.",
-      "Use tool-codesearch as the local semantic-search fallback when mcp-fast-context-mcp is unavailable; keep new and incremental codesearch index work in the background.",
+      "Use tool-fast-context as the first semantic locator for unknown local code entrypoints. Search requires authorization because it sends repository context to Windsurf, and every candidate must be verified locally.",
+      "Use tool-codesearch as the local-only semantic-search fallback when tool-fast-context is unavailable, external repository transmission is not authorized, or CLI search fails; keep new and incremental codesearch index work in the background.",
       "Use the tool-officecli skill first for reading, inspecting, or extracting Excel files, and for Word, Excel, and PowerPoint workflows that need bounded CLI output."
     ],
     "brandColor": "#0F766E",

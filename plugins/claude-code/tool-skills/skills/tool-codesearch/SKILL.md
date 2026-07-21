@@ -1,6 +1,6 @@
 ---
 name: tool-codesearch
-description: Use the local codesearch CLI as a secondary semantic-search fallback when fast-context-mcp is unavailable because of network, authentication, or MCP-service failures, or when the task explicitly requires local CLI search. Use it after fast-context-mcp for unknown-entrypoint discovery; use local deterministic tools for exact lookups.
+description: Use the local codesearch CLI as a local-only semantic-search fallback when tool-fast-context is unavailable, external repository transmission is not authorized, CLI search fails, or the task explicitly requires codesearch. Use it after tool-fast-context for unknown-entrypoint discovery and use local deterministic tools for exact lookups.
 ---
 
 # Codesearch CLI
@@ -9,15 +9,15 @@ description: Use the local codesearch CLI as a secondary semantic-search fallbac
 
 Use `codesearch` as a local CLI semantic-search fallback for local codebases. It is best for natural-language discovery such as "where is authentication handled", "find websocket reconnect logic", or "which files implement rate limiting".
 
-For unknown-entrypoint tasks, `$mcp-fast-context-mcp` has higher priority because it can locate context without a potentially long local index build. Enter this skill after `fast_context_search` fails because of network, DNS, TLS, authentication, remote-service, or MCP-tool availability failures, or when the user explicitly requires local CLI search. The host agent can run shell commands directly, parse JSON output, then read real files with native tools for verification.
+For unknown-entrypoint tasks, `$tool-fast-context` has higher priority because it can locate context without a potentially long local index build. Enter this skill when fast-context is unavailable, external repository transmission is not authorized, CLI search fails because of network, DNS, TLS, authentication, rate-limit, remote-service, or protocol failures, or when the user explicitly requires `codesearch`. The host agent can run shell commands directly, parse JSON output, then read real files with native tools for verification.
 
 ## Routing Ladder
 
 For semantic discovery, use this routing order:
 
 1. If an exact path, symbol, packet name, config key, error text, log line, or one narrow directory is known, use `fd`, `rg`, or direct file reads.
-2. Otherwise, run `$mcp-fast-context-mcp` first.
-3. Use this skill only when fast-context is unavailable for the documented network or service reasons, or when the user explicitly requests `codesearch`.
+2. Otherwise, run `$tool-fast-context` first when external repository transmission is authorized.
+3. Use this skill when fast-context is unavailable, its external transmission is not authorized, its CLI search fails, or the user explicitly requests `codesearch`.
 
 When this skill is the fallback, use it before broad local keyword scans when the task asks where a feature is implemented, asks to implement from a plan/design, asks for architecture/data-flow analysis, or gives business intent without exact files.
 
@@ -114,8 +114,8 @@ codesearch search "<narrower English query>" --create-index=false --json -m 10
 
 ## Use Automatically When
 
-- `fast_context_search` was attempted but cannot run because of network, authentication, or MCP-service availability failures.
-- The user explicitly asks for natural-language local CLI search, semantic code search with `codesearch`, or "like ace" local retrieval.
+- `tool-fast-context` is unavailable, external repository transmission is not authorized, or its search fails because of network, authentication, rate limits, service availability, or protocol failures.
+- The user explicitly asks for semantic code search with `codesearch`, or "like ace" local retrieval.
 - You do not know the exact files, classes, functions, config keys, or error text.
 - You need likely entry points before reading files.
 - You are analyzing architecture, request flow, data flow, or cross-module implementation shape from a natural-language prompt.
