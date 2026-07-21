@@ -42,6 +42,12 @@ Provider direct commands:
 - `onesearch anysearch extract "https://example.com/page"`
 - `onesearch anysearch batch "query 1" "query 2"`
 - `onesearch zhipu search "query"`
+- `onesearch ddg search "query"`
+- `onesearch ddg fetch-content "https://example.com/page"`
+- `onesearch freecrawl search "query"`
+- `onesearch freecrawl scrape "https://example.com/page"`
+- `onesearch freecrawl crawl "https://example.com"`
+- `onesearch freecrawl deep-research "topic"`
 
 Utility commands:
 
@@ -49,6 +55,7 @@ Utility commands:
 - `onesearch status`
 - `onesearch smoke`
 - `onesearch config path|list`
+- `onesearch config setup PROVIDER [--base-url URL] [--api-key-stdin]`
 - `onesearch model current`
 - `onesearch skills list`
 - `onesearch skills show NAME`
@@ -80,17 +87,22 @@ Responsibilities:
 
 - `defaults`: pipeline, fallback mode, validation level, minimum profile, timeout, retry, log, SSL, and cleanup defaults.
 - `pipelines`: ordered capability sets for tasks such as `default`, `research`, `docs`, and `crawl`.
-- `routes`: ordered provider fallback chains for each capability; providers that declare a capability in `providers.<id>.capabilities` are automatically appended to that capability route if they are not already listed.
+- `routes`: ordered provider fallback chains for each capability; providers that declare a capability in `providers.<id>.capabilities` are automatically appended to that capability route if they are not already listed. Providers with `settings.direct_only=true` are not auto-registered, but they can still participate when the user explicitly lists them in a route.
 - `profiles`: required and optional capabilities for readiness checks.
 - `providers`: adapter, capability list, base URL, direct API key, API-key environment key, enabled state, aliases, and settings.
 
-Configuration file defaults:
+Configuration file default on Windows, macOS, and Linux:
 
-- Windows: `%LOCALAPPDATA%\onesearch\config.json`
-- macOS/Linux: `~/.config/onesearch/config.json`
+- `~/.config/onesearch/config.json`
 - Override: `ONESEARCH_CONFIG_DIR`
 
 Provider secrets can be configured with either `providers.<id>.api_key` or the environment variable named by `providers.<id>.api_key_env`. When both are set, `api_key` wins. Runtime orchestration is read from the schema, not inferred from legacy KEY/value config entries.
+
+Use `onesearch config setup <provider>` to configure a provider credential without opening the JSON file. Provider identifiers accept canonical IDs, kebab-case/underscore equivalents, and aliases. Interactive terminals hide API key input and prompt for Base URL; an empty value preserves the current or built-in Base URL. Non-interactive callers must explicitly provide a key line through stdin with `--api-key-stdin` when no effective required key exists. The CLI intentionally has no `--api-key` argument.
+
+Successful setup writes only a non-empty new `api_key`, a non-empty explicitly supplied `base_url`, and `enabled: "auto"` under the canonical provider. It does not change `api_key_env`, settings, capabilities, aliases, routes, profiles, or defaults. Providers with `settings.anonymous_allowed=true` may keep an empty key. `mcp_stdio` providers are not supported by the generic setup command. Base URLs must use HTTP(S), include a host, and omit userinfo, query, and fragment.
+
+Setup success output contains only safe state: `provider`, `adapter`, `config_file`, `enabled`, `api_key_set`, `api_key_env`, `api_key_env_set`, `api_key_src`, `has_api_key`, `base_url`, and `changed_fields`. It never includes the key value.
 
 On first normal execution, the CLI creates the config directory and an initial `config.json` when the file is missing, then continues with that initial runtime schema. Only `doctor` reports whether the config file was just created. Initial provider defaults keep API-key-required providers disabled; anonymous providers that do not force an API key may be enabled. DeepWiki uses the public MCP endpoint anonymously for public repository docs; `DEEPWIKI_API_KEY` is optional and only needed for private documentation access.
 
@@ -134,6 +146,7 @@ The standard profile requires `answer_search`, `docs_search`, and `page_fetch`.
 - `site_crawl`: Tavily first, Firecrawl fallback.
 - `repo_wiki`: DeepWiki public repository docs are available anonymously; optional `DEEPWIKI_API_KEY` enables private documentation access.
 - `vertical_search`: AnySearch explicit commands only by default.
+- `ddg` and `freecrawl`: local `mcp_stdio` provider-direct endpoints. They are bundled as disabled direct-only templates and do not affect workflow routes until explicitly enabled and listed in `routes`.
 
 `repo-wiki` accepts GitHub repository names in `owner/repo` form or GitHub repository URLs such as `https://github.com/microsoft/playwright`. Bare repository names are rejected because they cannot be resolved to a unique owner. `repo-wiki --mode ask|structure|contents` selects DeepWiki's question answering, wiki structure, or full wiki contents. If no mode is supplied, a question selects `ask`; otherwise the command defaults to `structure`.
 
@@ -234,7 +247,8 @@ Doctor output fields:
 - `status`
 - `error_type`
 - `error`
-- `config`: only `file`, `created`, `missing_before_start`, and optional `initialization_error`
+- `config`: only `file`, `dir_source`, optional `dir_env`, `created`, `missing_before_start`, and optional `initialization_error`
+- `effective_environment`: effective variable names with `purpose` and optional `provider`; values are never included
 - `schema`: only `version` and `source`
 - `minimum_profile`: only `ok`, `profile`, `required`, `missing`, and error summary when failed
 - `issues`: compact diagnostics such as `missing_required_capability` and `provider_config_error`
@@ -247,14 +261,21 @@ Status output fields:
 - `ok`: report generation status.
 - `ready`: whether the configured minimum profile is currently satisfied.
 - `status`: `ready`, `degraded`, or `initialization_error`.
-- `config`: config path and initialization metadata.
+- `config`: effective config path, directory source, optional `ONESEARCH_CONFIG_DIR` variable name, and initialization metadata.
+- `effective_environment`: effective configuration/provider variable names, purposes, and optional providers, with no values.
 - `schema`: runtime schema version and source.
 - `minimum_profile`: compact profile readiness summary.
 - `capabilities`: capability-command availability for `answer_search`, `source_search`, `docs_search`, `page_fetch`, `site_map`, `site_crawl`, `repo_wiki`, and `vertical_search`.
-- `providers`: provider-level availability, enabled state, masked key metadata, aliases, base URL, settings, and supported capabilities.
-- `direct_endpoints`: provider-direct command families such as `exa`, `tavily`, `firecrawl`, `context7`, `deepwiki`, `anysearch`, and `zhipu`, with commands and availability copied from `providers`.
+- `providers`: provider-level availability, enabled state, masked key metadata (`api_key_set`, `api_key_env`, `api_key_env_set`, `api_key_src`, and `has_api_key`), aliases, base URL, settings, and supported capabilities.
+- `direct_endpoints`: provider-direct command families such as `exa`, `tavily`, `firecrawl`, `context7`, `deepwiki`, `anysearch`, `zhipu`, `ddg`, and `freecrawl`, with commands and direct availability.
 
 `status` is the agent preflight for choosing concrete tools. Use it after or alongside `doctor` when deciding whether to call a specific capability or provider-direct endpoint. A bundled skill such as `zhipu` only describes command usage; it does not imply `providers.zhipu` is enabled.
+
+## Output security
+
+Credential redaction is mandatory for every CLI command. JSON, content, markdown, quiet/default/verbose output, dynamic stderr, provider error bodies, and `--output` files must not contain configured API keys, values read through `api_key_env`, sensitive `settings.env` values, or transient `config setup` key input. Sensitive fields are masked before formatting, and known credential values are replaced with `********` again after rendering. There is no flag that disables redaction.
+
+Environment variable names and the effective config path are diagnostic metadata and may be shown by `doctor` and `status`. Environment variable values must never appear in their DTOs or rendered output.
 
 ## Load skill
 
@@ -288,6 +309,8 @@ Supported names and aliases:
 - `deepwiki`, `deepwiki-tools`, `repo-wiki`, `repository-wiki`
 - `anysearch`, `anysearch-tools`, `as`
 - `zhipu`, `zhipu-tools`, `zhipu-web-search`, `zp`
+- `ddg`, `ddg-search`, `duckduckgo`, `duckduckgo-mcp`
+- `freecrawl`, `freecrawl-mcp`
 - `deep-research`, `deep`, `research`
 
 `skills show` does not read user provider config, call network providers, write config, or install files. It only returns the bundled skill metadata and content.
@@ -312,7 +335,7 @@ Expected fields:
 - `allowed_tools`
 - `evidence_dir`
 
-Allowed `steps[].tool` values include `search`, `fetch`, `map`, `crawl`, `repo-wiki`, `exa web-search`, `exa web-fetch`, `exa similar`, `tavily search`, `tavily extract`, `context7 resolve-library-id`, `context7 query-docs`, `deepwiki ask-question`, and `zhipu search`.
+Allowed `steps[].tool` values include `search`, `fetch`, `map`, `crawl`, `repo-wiki`, `exa web-search`, `exa web-fetch`, `exa similar`, `tavily search`, `tavily extract`, `context7 resolve-library-id`, `context7 query-docs`, and `deepwiki ask-question`. Execute provider-direct steps only after `onesearch status --format json` confirms the matching `direct_endpoints.<provider>.available` value is true.
 
 ## Exit codes
 
@@ -332,10 +355,13 @@ go run .\cmd\onesearch smoke --mock --format json
 go run .\cmd\onesearch doctor --format json
 go run .\cmd\onesearch status --format json
 go run .\cmd\onesearch config list --format json
+go run .\cmd\onesearch config setup --help
 go run .\cmd\onesearch skills list --format json
 go run .\cmd\onesearch skills show onesearch-cli --format content
 go run .\cmd\onesearch skills show exa --format content
 go run .\cmd\onesearch skills show tavily --format content
+go run .\cmd\onesearch skills show ddg --format content
+go run .\cmd\onesearch skills show freecrawl --format content
 ```
 
 Deep Research examples:
