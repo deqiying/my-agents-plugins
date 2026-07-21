@@ -28,18 +28,7 @@
       },
       "category": "Productivity"
     },
-    {
-      "name": "mcp-skills",
-      "source": {
-        "source": "local",
-        "path": "./plugins/codex/mcp-skills"
-      },
-      "policy": {
-        "installation": "AVAILABLE",
-        "authentication": "ON_INSTALL"
-      },
-      "category": "Productivity"
-    },
+
     {
       "name": "opencli",
       "source": {

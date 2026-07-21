@@ -27,16 +27,6 @@
       }
     },
     {
-      "name": "mcp-skills",
-      "source": "./mcp-skills",
-      "version": "1.0.0",
-      "description": "Skill routing notes for local MCP services.",
-      "category": "Productivity",
-      "author": {
-        "name": "Maintainer"
-      }
-    },
-    {
       "name": "opencli",
       "source": "./opencli",
       "version": "1.8.6",
@@ -46,7 +36,7 @@
     {
       "name": "tool-skills",
       "source": "./tool-skills",
-      "version": "1.1.0",
+      "version": "2.0.0",
       "description": "Skill routing notes for local CLI tools.",
       "category": "Productivity",
       "author": {

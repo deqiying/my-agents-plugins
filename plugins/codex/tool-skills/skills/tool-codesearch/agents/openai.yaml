@@ -1,7 +1,0 @@
-interface:
-  display_name: "Tool Codesearch"
-  short_description: "CLI semantic locator for unknown code entrypoints"
-  icon_small: "./assets/icon.png"
-  icon_large: "./assets/icon.png"
-  brand_color: "#0F766E"
-  default_prompt: "Use $tool-codesearch only after $tool-fast-context is unavailable, external repository transmission is not authorized, CLI search fails, or codesearch is explicitly requested. Check codesearch stats first; if an index must be created or refreshed, launch codesearch index in the background and complete the current task with rg and direct reads. Never use synchronous --sync indexing in the active task."

@@ -1,7 +1,10 @@
 interface:
-  display_name: "Tool Fast Context"
-  short_description: "CLI semantic locator for local code discovery"
+  display_name: "Fast Context"
+  short_description: "Locate relevant local code with semantic search"
   icon_small: "./assets/icon.png"
   icon_large: "./assets/icon.png"
   brand_color: "#0F766E"
-  default_prompt: "Use $tool-fast-context as the first semantic locator for unknown local code entrypoints. Run doctor first, search only with authorization for external repository transmission, and verify every result with local reads and exact rg."
+  default_prompt: "Use $tool-fast-context to locate the implementation behind this request, then verify the returned code locally."
+
+policy:
+  allow_implicit_invocation: true

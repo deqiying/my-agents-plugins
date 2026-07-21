@@ -9,9 +9,9 @@ description: Use the local `officecli` CLI as the preferred first route for read
 
 Use `officecli` as a CLI-first Office document tool for `.docx`, `.xlsx`, and `.pptx` work. It is best when an agent needs to read structure, extract text, make targeted edits, create documents, run batch mutations, validate OpenXML output, or render documents to HTML/PNG for visual verification.
 
-For Excel read, inspect, and extract tasks, use `officecli` first after locating the workbook unless the task clearly requires Excel MCP-native semantics. This includes one-off checks of resource/config workbooks, key/value tables, sheet text, workbook shape, and targeted row/range extraction. Prefer it when the task needs precise extraction from a large workbook, bounded command output, stable paths/selectors, structured JSON that is easy to post-process, validation, rendered previews, or cross-Office workflows.
+For Excel read, inspect, and extract tasks, use `officecli` first after locating the workbook when its CLI can express the requested operation. This includes one-off checks of resource/config workbooks, key/value tables, sheet text, workbook shape, and targeted row/range extraction. Prefer it when the task needs precise extraction from a large workbook, bounded command output, stable paths/selectors, structured JSON that is easy to post-process, validation, rendered previews, or cross-Office workflows.
 
-Do not reach for ad hoc Python, `openpyxl`, ZIP/XML parsing, or generic spreadsheet libraries before considering this skill for local `.xlsx` files. If an Excel MCP can read metadata but a full range dump would be too verbose to extract from accurately, pivot to `officecli` for narrower inspection.
+Do not reach for ad hoc Python, `openpyxl`, ZIP/XML parsing, or generic spreadsheet libraries before considering this skill for local `.xlsx` files. Use another available workbook-native tool only when `officecli` cannot represent the required operation directly.
 
 This skill intentionally favors `skill + CLI` over ad hoc Python libraries. OfficeCLI is designed for AI agents: commands can return `--json`, elements have stable paths, and edits can be verified with `validate`, `view issues`, and rendered previews.
 
@@ -47,8 +47,8 @@ Before changing a user document:
 ## Prefer Other Tools When
 
 - The user explicitly asks to use another document pipeline or library.
-- The Excel task is primarily a workbook-native edit or semantic inspection that depends on Excel MCP-specific operations such as formula syntax validation, data validation inspection, merged-cell inspection, native table/chart/pivot manipulation, or style-preserving row/column changes, and the MCP output will stay targeted and compact.
-- `officecli` has been tried or inspected and cannot expose the needed workbook-native detail as directly as an available Excel MCP.
+- The Excel task needs a workbook-native operation that `officecli` cannot represent directly, and another available tool can provide targeted output without losing required workbook semantics.
+- `officecli` has been tried or inspected and cannot expose the needed workbook-native detail as directly as another available workbook-native tool.
 - The task is a polished Word/PPT/spreadsheet deliverable that must follow a higher-level artifact workflow already provided by a specialized skill.
 - `officecli` is not installed and the user has not approved installing or downloading binaries.
 - The document is open in Office/WPS/another editor and the edit may conflict with a file lock. Ask the user to close it or work on a copy.
@@ -152,5 +152,5 @@ If `officecli` fails, is missing, or returns irrelevant output:
 
 1. Run `Get-Command officecli -All` and `officecli --version` when setup is the likely issue.
 2. Run `officecli help` or format-specific help when syntax or property names are uncertain.
-3. For Excel files, use `$mcp-excel-tools` before ad hoc Python when workbook-native MCP operations better match the task or `officecli` is unavailable.
+3. For Excel files, use another available workbook-native tool before ad hoc Python when `officecli` is unavailable or cannot represent the required operation.
 4. In the final answer, distinguish `officecli CLI succeeded`, `officecli was attempted but failed`, or `officecli was not used because another tool was more direct`.

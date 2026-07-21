@@ -1,7 +1,0 @@
-interface:
-  display_name: "MCP Excel Tools"
-  short_description: "Targeted native Excel workbook MCP"
-  icon_small: "./assets/icon.png"
-  icon_large: "./assets/icon.png"
-  brand_color: "#16A34A"
-  default_prompt: "Use $mcp-excel-tools for targeted Excel-native workbook operations after checking $tool-officecli is not the better read or extract route."

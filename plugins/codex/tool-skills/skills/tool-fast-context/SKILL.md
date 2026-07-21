@@ -1,61 +1,91 @@
 ---
 name: tool-fast-context
-description: Use the local fast-context CLI as the first semantic discovery route for unknown local-code entrypoints, business-intent-to-code mapping, architecture or data-flow analysis, call-path tracing, impact discovery, and candidate-file narrowing before edits. The search sends repository context to an external service, so use it only with authorization and prefer deterministic local tools for exact paths, symbols, config keys, packet names, error text, or narrow paths.
+description: Use when an agent needs semantic discovery for unknown local-code entrypoints, business-intent-to-code mapping, architecture or data-flow analysis, call-path tracing, impact-area discovery, or candidate-file narrowing before edits, especially when broad rg searches would be noisy. Prefer deterministic local tools for exact paths, symbols, configuration keys, packet names, or error text. Do not use for web or remote-repository research, or when the user forbids sending code context to an external service.
 ---
 
-# Fast Context CLI
+# Fast Context
 
-## Routing Role
+Use the `fast-context` CLI to find likely local implementation files, then verify every conclusion with deterministic local reads, `rg`, builds, or tests.
 
-Use fast-context as the first route for natural-language local-code discovery. It returns likely files, line ranges, and follow-up ripgrep patterns; treat every result as a candidate and verify it with local reads and exact rg before editing or answering.
+## Respect the external-data boundary
 
-Do not enter this route for an exact path, symbol, configuration key, packet name, error text, or narrow directory. Use deterministic local tools directly. If the CLI is unavailable, external repository transmission is not authorized, or the search fails, load $tool-codesearch as the local-only semantic fallback.
+Treat `fast-context search` as the core semantic-discovery external-service operation. It sends the query, a repository map, and requested restricted-tool results to Windsurf Devstral.
 
-## Respect The External-Data Boundary
+Once this Skill is loaded and `fast-context doctor --project <target-project> --format json` reports a successful preflight, treat that as permission to run `search`; do not request separate per-search authorization. An explicit user instruction forbidding external transmission still takes precedence.
 
-fast-context search sends the query, repository map, and requested restricted-tool results to Windsurf Devstral.
+- Exclude sensitive, generated, or irrelevant directories before searching.
+- Keep `--include-snippets` off by default. Enable it only when the code is safe to transmit and snippets materially reduce follow-up reads.
+- Never print API keys, JWTs, npm tokens, full credential candidates, or private diagnostic paths in user-facing output.
 
-- Run search only when the user has authorized this external repository transmission for the task.
-- Exclude sensitive, generated, and irrelevant directories before a search.
-- Keep --include-snippets off unless code snippets are authorized and materially reduce follow-up reads.
-- Never print API keys, JWTs, tokens, complete credential candidates, or credential-source paths in user-facing output.
+## Resolve and verify the CLI
 
-## Resolve And Preflight
+On Windows, locate every candidate before choosing one:
 
-Locate and inspect the CLI before using it:
-
-~~~powershell
+```powershell
 Get-Command fast-context -All
 fast-context --version
-fast-context doctor --project . --format json
-~~~
+```
 
-For doctor --format json, inspect project.exists, ripgrep.ok, ripgrep.source, and credentials.ok without echoing its full credential object. doctor returns exit code 0 even when a check is unavailable, so the JSON fields are the source of truth.
+On macOS or Linux, use `type -a fast-context` when the shell supports it, otherwise use `command -v fast-context`, and then run `fast-context --version`.
 
-The npm package owns the CLI lifecycle while a runtime manager can own only Node and npm:
+If the CLI is missing, explain that npm directly owns the CLI lifecycle while mise may own the outer Node runtime:
 
-~~~text
+```text
 mise -> Node/npm -> fast-context
-~~~
+```
 
-If the command is missing, diagnose with npm prefix --global, npm list --global --depth=0, and command resolution. Do not install globally unless the user authorizes the change. Install @deqiying/fast-context through npm; pin an exact version when reproducibility matters.
+Use `npm prefix --global`, `npm list --global --depth=0`, and direct command resolution to diagnose installation. Do not treat `mise which fast-context` as decisive for an npm-global package.
 
-## Search, Narrow, Read, And Verify
+Ask for authorization before the first global install. Alpha releases intentionally use the default `latest` channel, so install with `npm install -g @deqiying/fast-context`. Pin an exact version when reproducibility is required.
 
-Write the semantic query primarily in English and add domain terms that match repository identifiers. Start with structured output and a modest result set:
+## Run the local preflight
 
-~~~powershell
-fast-context search "where user login authentication and JWT validation are handled" --project . --tree-depth 0 --max-results 10 --exclude node_modules --exclude dist --exclude coverage --format json
-~~~
+Run doctor against the intended project before search:
 
-Use the returned paths, 1-based inclusive line ranges, and rg_patterns to narrow local inspection. Read the indicated files, then use exact rg, tests, builds, or runtime evidence to verify the conclusion. Do not enable --include-snippets by default.
+```powershell
+fast-context doctor --project "<PROJECT_ROOT>" --format json
+```
 
-## Failure And Fallback
+Inspect `project.exists`, `ripgrep.ok`, `ripgrep.source`, and `credentials.ok`. The command intentionally returns exit code `0` even when a check is unavailable; use the JSON fields as the source of truth. Proceed to `search` only when the required checks pass (`ok: true`); this successful preflight, together with loading this Skill, is sufficient permission for the search.
 
-If the CLI search fails because of network, TLS, authentication, rate limits, service availability, or protocol drift:
+Credentials are resolved in this order: `FAST_CONTEXT_KEY`, `$HOME/.config/fast-context/config.json`, `WINDSURF_API_KEY`, then local Devin CLI/Windsurf sources. Resolve missing credentials locally with `fast-context doctor --format json`; use `fast-context key extract --format json` only for the legacy TOML/SQLite extraction path. Do not copy the complete doctor object or credential source paths into public logs.
 
-1. Report only the stable error category, not credential details.
-2. Load $tool-codesearch when a local-only semantic fallback is needed.
-3. Let codesearch create or refresh an index in the background; complete the current task with rg, direct reads, and repository-native checks rather than waiting.
+The optional JSON config is user-managed and has the strict first-version schema `{"api_key":"your-api-key"}`. The CLI never creates or rewrites it. Invalid JSON, unknown fields, or unreadable files are errors rather than silent fallback; blank `api_key` values are treated as unset.
 
-Run fast-context search --help for exact flags and fast-context skills show fast-context --format content for the version-matched embedded guidance.
+## Choose semantic search only when it helps
+
+Use fast-context for intent-level discovery such as:
+
+- locating where authentication, retries, caching, or a business workflow is implemented;
+- mapping a design or bug report to likely files before editing;
+- tracing architecture, ownership, data flow, or a multi-file call path;
+- narrowing a repository when a generic repo-wide `rg` query would be noisy.
+
+Skip it when an exact file, symbol, configuration key, packet name, error string, or narrow directory is already known. Use local deterministic tools directly for exhaustive matching.
+
+## Search, narrow, read, and verify
+
+Write the semantic query primarily in English and add local-language domain terms only when useful. Start lightweight:
+
+```powershell
+fast-context search "where is user login authentication and JWT validation handled" `
+  --project "<PROJECT_ROOT>" `
+  --tree-depth 0 `
+  --max-results 10 `
+  --format json
+```
+
+Add focused `--exclude` values for noisy directories. Narrow `--project` after a broad or empty result. Only increase `--max-turns` when another search round is likely to expose a real call path.
+
+Treat returned files, line ranges, and `rg_patterns` as candidates, not proof. Read the indicated source and use exact `rg` references, tests, builds, or runtime evidence before editing or answering.
+
+## Fall back without blocking the task
+
+If search fails because of network, TLS, authentication, rate limits, protocol drift, or service availability:
+
+1. Report the concrete error category without exposing credentials.
+2. Use an installed local `codesearch` only when it already has a usable index.
+3. If a new index is needed, start it in the background and do not wait for it in the current task.
+4. Continue with `rg`, direct file reads, and repository-native tests when no ready semantic fallback exists.
+
+Read [references/cli-contract.md](references/cli-contract.md) when exact flags, JSON fields, exit codes, error categories, or regression commands are needed.

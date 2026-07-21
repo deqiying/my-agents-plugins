@@ -6,7 +6,6 @@
     ".claude-plugin",
     "agent-workflows",
     "awesome-design-md",
-    "mcp-skills",
     "opencli",
     "tool-skills",
     "agent-utilities",
@@ -16,7 +15,6 @@
   "plugins": [
     "agent-workflows",
     "awesome-design-md",
-    "mcp-skills",
     "opencli",
     "tool-skills",
     "agent-utilities",
