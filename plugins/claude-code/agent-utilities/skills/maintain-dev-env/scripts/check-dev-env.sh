@@ -11,7 +11,7 @@ platform="$(uname -s)"
 echo "Platform: $platform"
 echo "Shell: ${SHELL:-unknown}"
 
-commands="brew mise java javac mvn mvnd node npm go rustc cargo python3 uv pnpm codex codesearch officecli opencli onesearch doggo"
+commands="brew mise java javac mvn mvnd node npm go rustc cargo python3 uv pnpm codex officecli opencli onesearch doggo"
 for name in $commands; do
   if command -v "$name" >/dev/null 2>&1; then
     paths="$(type -a -p "$name" 2>/dev/null || true)"

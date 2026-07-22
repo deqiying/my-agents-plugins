@@ -41,7 +41,7 @@ function Show-ScopedEnvironmentVariable {
 Write-Host "Platform: Windows"
 Write-Host "PowerShell: $($PSVersionTable.PSVersion)"
 
-$commands = @("scoop", "mise", "java", "javac", "mvn", "mvnd", "node", "npm", "go", "rustc", "cargo", "python", "uv", "pnpm", "codex", "codesearch", "officecli", "opencli", "onesearch", "doggo")
+$commands = @("scoop", "mise", "java", "javac", "mvn", "mvnd", "node", "npm", "go", "rustc", "cargo", "python", "uv", "pnpm", "codex", "officecli", "opencli", "onesearch", "doggo")
 foreach ($name in $commands) {
     foreach ($result in @(Test-Command $name)) {
         if ($result.Found) {

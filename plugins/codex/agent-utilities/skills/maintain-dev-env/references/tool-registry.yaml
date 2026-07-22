@@ -17,18 +17,6 @@ tools:
     check:
       - "doggo --version"
     notes: "DNS lookup utility used for quick network diagnostics."
-  - id: "github:flupkede/codesearch"
-    command: "codesearch"
-    manager_chain:
-      - "mise"
-    install_strategy: "mise"
-    update_owner: "mise"
-    category: "agent-tool"
-    version_policy: "latest"
-    check:
-      - "codesearch --version"
-      - "codesearch doctor"
-    notes: "Semantic local code search CLI for agent codebase discovery."
   - id: "officecli"
     command: "officecli"
     package: "@officecli/officecli"

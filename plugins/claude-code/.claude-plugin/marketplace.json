@@ -46,7 +46,7 @@
     {
       "name": "agent-utilities",
       "source": "./agent-utilities",
-      "version": "0.5.1",
+      "version": "0.5.2",
       "description": "Utilities for local agent environments and state.",
       "category": "Productivity",
       "author": {
