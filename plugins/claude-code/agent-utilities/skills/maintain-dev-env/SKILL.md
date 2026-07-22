@@ -27,13 +27,14 @@ Read only the references required for the current step. These are supporting wor
    - Java/Maven: `pom.xml` compiler or toolchain settings, `.mvn/jvm.config`, `.mvn/maven.config`, `.mvn/wrapper/maven-wrapper.properties`, `.java-version`, `mise.toml`, `.tool-versions`.
    - Node: `package.json` `engines` and `packageManager`, `.node-version`, `.nvmrc`, `mise.toml`, `.tool-versions`.
    - Python: `pyproject.toml` `requires-python`, `.python-version`, `uv.lock`, `mise.toml`, `.tool-versions`.
-4. Run read-only inspection first. For a broad audit, use:
+4. When the task just created or changed a project-level mise config, review its exact path and run `mise trust --show`. If `mise` reports that same reviewed config as untrusted, trust only it with `mise trust --yes <LOCAL_MISE_CONFIG>` before running the affected project command. This trust action is authorized within the task that created or changed the config; otherwise request approval.
+5. Run read-only inspection first. For a broad audit, use:
    - Windows: `powershell -ExecutionPolicy Bypass -File scripts/check-dev-env.ps1 -Action check`
    - macOS/Linux: `bash scripts/check-dev-env.sh check`
-5. Resolve every affected command and inspect its actual version. For Java/Maven, resolve `java`, `javac`, `mvn`, and `mvnd`, then verify `JAVA_HOME` and Maven's reported Java runtime after mise activation. For npm globals, use `npm prefix --global`, `npm list --global --depth=0`, and direct command resolution before mise-specific lookup.
-6. Determine the direct-to-outer `manager_chain`, `install_strategy`, and `update_owner`. Use the registry as desired state, not proof of installation.
-7. Load the relevant reference and choose the smallest corrective action. Prefer project-aware or temporary execution before changing shared/global state.
-8. After an authorized change, verify manager state, all resolved command paths, the target version, and the original blocked command.
+6. Resolve every affected command and inspect its actual version. For Java/Maven, resolve `java`, `javac`, `mvn`, and `mvnd`, then verify `JAVA_HOME` and Maven's reported Java runtime after mise activation. For npm globals, use `npm prefix --global`, `npm list --global --depth=0`, and direct command resolution before mise-specific lookup.
+7. Determine the direct-to-outer `manager_chain`, `install_strategy`, and `update_owner`. Use the registry as desired state, not proof of installation.
+8. Load the relevant reference and choose the smallest corrective action. Prefer project-aware or temporary execution before changing shared/global state.
+9. After an authorized change, verify manager state, all resolved command paths, the target version, and the original blocked command.
 
 ## Ownership And Version Rules
 
@@ -48,6 +49,7 @@ Read only the references required for the current step. These are supporting wor
 - Do not run remote installers, package-manager updates, profile/PATH edits, prune operations, or other persistent machine changes without explicit user approval.
 - Do not install the same tool through multiple managers unless the user intentionally chooses that layout.
 - Do not use a mise ecosystem backend as the default repair when a native package manager is the declared direct owner.
+- Do not use `mise trust --all`. The automatic trust exception applies only to the reviewed project config that the current task created or changed; never trust a parent, sibling, or unrelated config implicitly.
 - Keep persistent text sanitized with the placeholders in `references/placeholders.md`.
 - Keep all provided scripts read-only or dry-run by default; require `-Apply` or `--apply` for supported mutations.
 

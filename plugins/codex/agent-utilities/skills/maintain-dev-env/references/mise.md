@@ -6,6 +6,7 @@ Use this workflow for mise itself, directly mise-managed runtimes or tools, proj
 
 - [Scope And Ownership](#scope-and-ownership)
 - [Default Workflow](#default-workflow)
+- [Project Config Trust](#project-config-trust)
 - [Path Placeholders](#path-placeholders)
 - [Read-Only Checks](#read-only-checks)
 - [Java, Maven, And mvnd](#java-maven-and-mvnd)
@@ -43,6 +44,24 @@ Use this workflow for mise itself, directly mise-managed runtimes or tools, proj
 7. Verify the complete manager chain, all command paths, target version, and original blocked command.
 
 For project work, follow repository-declared versions. For shared/global tools, use `latest` unless the user explicitly requests a global pin.
+
+## Project Config Trust
+
+`mise` can refuse to load a project config that uses templates, `[env]`, tool options, or other active features until it is trusted. Treat an untrusted-config error after creating or changing `<LOCAL_MISE_CONFIG>` as a project-config trust blocker, not as a Go, shim, or package-manager failure.
+
+First confirm the project root and inspect the exact config created or changed in the current task. Then check trust state:
+
+```powershell
+mise trust --show
+```
+
+When the current task created or changed that reviewed project config, it is authorized to trust only that file without a separate confirmation:
+
+```powershell
+mise trust --yes <LOCAL_MISE_CONFIG>
+```
+
+Re-run the original blocked command after trust, for example `mise exec -- go version` or the project's intended build/test command. Do not use `mise trust --all`, which includes parent and descendant configs. If the config pre-existed, was not reviewed in the current task, resolves outside `<PROJECT_ROOT>`, or a different config is reported as untrusted, stop and request explicit approval before trusting it.
 
 ## Path Placeholders
 
@@ -228,6 +247,7 @@ bash scripts/manage-mise.sh update --apply node python
 ## Safety
 
 - Do not use `mise use` in a repository until the target config file is clear because it can write `mise.toml`.
+- Do not use `mise trust --all`. Only `mise trust --yes <LOCAL_MISE_CONFIG>` is pre-authorized when the current task created or changed that reviewed project config.
 - Do not update all tools by default, prune without a separate explicit request, or use `mise self-update` for a package-manager-owned copy.
 - Do not run an npm-based CLI self-updater when the resolved command is owned by a mise npm backend.
 - Do not install a native-manager CLI through a mise backend merely because mise exposes that backend.
