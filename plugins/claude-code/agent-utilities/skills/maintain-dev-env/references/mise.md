@@ -106,9 +106,8 @@ Before moving a Windows utility from Scoop to mise:
 1. Confirm `mise registry <tool>` resolves to an intended backend and classify the complete manager chain.
 2. Install the mise copy first and verify its direct executable with `mise which <command>` plus the registry check command.
 3. Remove the exact Scoop package only after the command resolves to the mise shim. Do not migrate Scoop, Git, or another package merely because it is adjacent to the utility set.
-4. After a Scoop BusyBox removal, scan Scoop shims for references to the removed package so failed launchers do not shadow a missing command.
 
-For non-interactive source inspection, use `bat --paging=never` with `--line-range`; use `rg` for search plus surrounding context. `fzf` is interactive and should not be used as an automation primitive, while `sd` is a replacement tool rather than a read-only file viewer.
+For non-interactive source inspection, use `bat -pp -- <path>` for complete text and `bat -ppn -r <start>:<end> -- <path>` for a numbered range; use `rg -n` or `rg -n -C <N>` for search plus surrounding context. `fzf` is interactive and should not be used as an automation primitive, while `sd` is a replacement tool rather than a read-only file viewer.
 
 ## Java, Maven, And mvnd
 
