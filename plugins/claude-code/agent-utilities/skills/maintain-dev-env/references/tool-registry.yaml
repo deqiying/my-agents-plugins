@@ -6,6 +6,51 @@ placeholders:
   local_mise_config: "<LOCAL_MISE_CONFIG>"
   mise_data_dir: "<MISE_DATA_DIR>"
 tools:
+  - id: "ast-grep"
+    command: "ast-grep"
+    manager_chain:
+      - "mise"
+    install_strategy: "mise"
+    update_owner: "mise"
+    category: "agent-tool"
+    version_policy: "latest"
+    check:
+      - "ast-grep --version"
+      - "sg --version"
+    notes: "AST-aware code search CLI managed through mise. Use it for structural code queries; retain ripgrep for literal or regular-expression search."
+  - id: "bat"
+    command: "bat"
+    manager_chain:
+      - "mise"
+    install_strategy: "mise"
+    update_owner: "mise"
+    category: "utility"
+    version_policy: "latest"
+    check:
+      - "bat --version"
+    notes: "Text reader with syntax highlighting and line-range support. Use --paging=never for non-interactive agent reads."
+  - id: "delta"
+    command: "delta"
+    manager_chain:
+      - "mise"
+    install_strategy: "mise"
+    update_owner: "mise"
+    category: "agent-tool"
+    version_policy: "latest"
+    check:
+      - "delta --version"
+    notes: "Syntax-aware Git diff pager and viewer managed through mise."
+  - id: "difftastic"
+    command: "difft"
+    manager_chain:
+      - "mise"
+    install_strategy: "mise"
+    update_owner: "mise"
+    category: "agent-tool"
+    version_policy: "latest"
+    check:
+      - "difft --version"
+    notes: "Structural diff CLI managed through mise; its executable is difft."
   - id: "doggo"
     command: "doggo"
     manager_chain:
@@ -17,6 +62,105 @@ tools:
     check:
       - "doggo --version"
     notes: "DNS lookup utility used for quick network diagnostics."
+  - id: "fd"
+    command: "fd"
+    manager_chain:
+      - "mise"
+    install_strategy: "mise"
+    update_owner: "mise"
+    category: "utility"
+    version_policy: "latest"
+    check:
+      - "fd --version"
+    notes: "Fast file finder managed through mise."
+  - id: "fzf"
+    command: "fzf"
+    manager_chain:
+      - "mise"
+    install_strategy: "mise"
+    update_owner: "mise"
+    category: "utility"
+    version_policy: "latest"
+    check:
+      - "fzf --version"
+    notes: "Interactive fuzzy finder managed through mise. Do not use it for non-interactive automation."
+  - id: "gh"
+    command: "gh"
+    manager_chain:
+      - "mise"
+    install_strategy: "mise"
+    update_owner: "mise"
+    category: "agent-tool"
+    version_policy: "latest"
+    check:
+      - "gh --version"
+    notes: "GitHub CLI managed through mise. Authentication state is separate from tool ownership."
+  - id: "jq"
+    command: "jq"
+    manager_chain:
+      - "mise"
+    install_strategy: "mise"
+    update_owner: "mise"
+    category: "utility"
+    version_policy: "latest"
+    check:
+      - "jq --version"
+    notes: "JSON query and transformation CLI managed through mise."
+  - id: "just"
+    command: "just"
+    manager_chain:
+      - "mise"
+    install_strategy: "mise"
+    update_owner: "mise"
+    category: "utility"
+    version_policy: "latest"
+    check:
+      - "just --version"
+    notes: "Command runner for project recipes managed through mise."
+  - id: "ripgrep"
+    command: "rg"
+    manager_chain:
+      - "mise"
+    install_strategy: "mise"
+    update_owner: "mise"
+    category: "agent-tool"
+    version_policy: "latest"
+    check:
+      - "rg --version"
+    notes: "Fast literal and regular-expression search CLI managed through mise."
+  - id: "sd"
+    command: "sd"
+    manager_chain:
+      - "mise"
+    install_strategy: "mise"
+    update_owner: "mise"
+    category: "utility"
+    version_policy: "latest"
+    check:
+      - "sd --version"
+    notes: "Find-and-replace CLI managed through mise. Use a read-only preview before applying replacements to tracked files."
+  - id: "sqlite"
+    command: "sqlite3"
+    manager_chain:
+      - "scoop"
+    install_strategy: "scoop"
+    update_owner: "scoop"
+    category: "utility"
+    version_policy: "latest"
+    check:
+      - "sqlite3 -version"
+    notes: "On Windows, manage SQLite through Scoop. Do not remove its working Scoop copy for a mise Conda backend until mise's sqlite3 shim passes an actual database query, not only an installation inventory check."
+  - id: "yq"
+    command: "yq"
+    manager_chain:
+      - "mise"
+    install_strategy: "mise"
+    update_owner: "mise"
+    category: "utility"
+    version_policy: "latest"
+    check:
+      - "yq --version"
+    notes: "YAML, JSON, XML, CSV, and properties query CLI managed through mise."
   - id: "officecli"
     command: "officecli"
     package: "@officecli/officecli"

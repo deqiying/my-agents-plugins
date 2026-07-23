@@ -1,9 +1,9 @@
 interface:
   display_name: "Maintain Dev Env"
-  short_description: "Maintain Java, Maven, mvnd, and local toolchains"
+  short_description: "Maintain mise, Scoop, and local toolchains"
   icon_small: "./assets/icon.png"
   icon_large: "./assets/icon.png"
   brand_color: "#0F766E"
-  default_prompt: "Use $maintain-dev-env to repair my project toolchain after changing mise.toml, trust only the reviewed project config, and verify the blocked command."
+  default_prompt: "Use $maintain-dev-env to audit or repair my mise, Scoop, runtimes, and developer CLIs; trust only a reviewed project mise config before verifying the blocked command."
 policy:
   allow_implicit_invocation: true

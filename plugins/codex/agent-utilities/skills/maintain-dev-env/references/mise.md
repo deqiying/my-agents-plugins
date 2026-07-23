@@ -9,6 +9,7 @@ Use this workflow for mise itself, directly mise-managed runtimes or tools, proj
 - [Project Config Trust](#project-config-trust)
 - [Path Placeholders](#path-placeholders)
 - [Read-Only Checks](#read-only-checks)
+- [Mise-Managed Developer Utilities](#mise-managed-developer-utilities)
 - [Java, Maven, And mvnd](#java-maven-and-mvnd)
 - [Manager And Update Ownership](#manager-and-update-ownership)
 - [Preserve npm CLIs Across Node Upgrades](#preserve-npm-clis-across-node-upgrades)
@@ -28,6 +29,7 @@ Use this workflow for mise itself, directly mise-managed runtimes or tools, proj
 - Treat registered `java`, `maven`, and `mvnd` as separate direct mise-managed tools. The Maven registry id is `maven`, while its primary command is `mvn`.
 - Treat shared/global Rust as mise-managed. If `rustc` or `cargo` resolves to rustup or `<HOME>/.cargo/bin`, report a manager mismatch unless a project explicitly requires rustup.
 - Use lowercase `officecli` as the canonical command. If it resolves to a different strategy than the registry declares, report the mismatch before installing another copy.
+- Manage registered developer utilities such as `ast-grep`, `bat`, `delta`, `difftastic`, `fd`, `fzf`, `gh`, `jq`, `just`, `ripgrep`, `sd`, and `yq` directly through mise. On Windows, keep `sqlite` Scoop-owned unless a mise Conda backend has passed an actual `sqlite3` database query through its shim.
 
 ## Default Workflow
 
@@ -94,6 +96,19 @@ Get-Command <CLI> -All
 On macOS or Linux, replace `Get-Command <CLI> -All` with `command -v -a <CLI>` when supported, or `type -a <CLI>`.
 
 `mise ls --current` confirms the active Node runtime and any explicitly declared mise backend tools. It does not list every package inside the active Node npm global prefix. Do not use `mise which <CLI>` as the primary test for an `npm-global` installation.
+
+## Mise-Managed Developer Utilities
+
+Use `tool-registry.yaml` as the authority for the complete utility set and expected command names. The shared/global tools in this group follow `latest` and are managed with `mise use --global <tool>@latest` or `mise upgrade <tool>` after explicit approval.
+
+Before moving a Windows utility from Scoop to mise:
+
+1. Confirm `mise registry <tool>` resolves to an intended backend and classify the complete manager chain.
+2. Install the mise copy first and verify its direct executable with `mise which <command>` plus the registry check command.
+3. Remove the exact Scoop package only after the command resolves to the mise shim. Do not migrate Scoop, Git, or another package merely because it is adjacent to the utility set.
+4. After a Scoop BusyBox removal, scan Scoop shims for references to the removed package so failed launchers do not shadow a missing command.
+
+For non-interactive source inspection, use `bat --paging=never` with `--line-range`; use `rg` for search plus surrounding context. `fzf` is interactive and should not be used as an automation primitive, while `sd` is a replacement tool rather than a read-only file viewer.
 
 ## Java, Maven, And mvnd
 
