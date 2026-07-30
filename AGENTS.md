@@ -33,7 +33,7 @@
 
 ### 源文件与镜像
 
-- 更新触发描述时，保持 `SKILL.md` frontmatter、`agents/openai.yaml` 提示词及相关 plugin interface metadata 一致。先编辑作为维护源的 `plugins/codex`，再通过同步脚本重新生成 `plugins/claude-code`，不要手工编辑镜像或其生成的 marketplace，例如 `plugins/claude-code/.claude-plugin/marketplace.json`。
+- 更新触发描述时，保持 `SKILL.md` frontmatter、`agents/openai.yaml` 提示词及相关 plugin interface metadata 一致。先编辑作为维护源的 `plugins/codex`，再通过同步脚本重新生成 `plugins/claude-code` 和仓库根目录的 `.claude-plugin/marketplace.json`，不要手工编辑这些生成内容。
 
 ### 版本与资源
 

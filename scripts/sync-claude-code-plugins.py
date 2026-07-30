@@ -2,7 +2,8 @@
 """Sync Codex-maintained plugins into the Claude Code marketplace layout.
 
 The repository keeps Codex plugin sources as the hand-maintained canonical
-format. This script regenerates the Claude Code marketplace from that source.
+format. This script regenerates the repository-root Claude Code marketplace
+and its plugin mirror from that source.
 """
 
 from __future__ import annotations
@@ -204,8 +205,11 @@ def collect_files(root: Path) -> dict[str, Path]:
 
 
 def render_claude_files(
-    codex_root: Path, excluded_plugins: set[str], excluded_skills: dict[str, set[str]]
-) -> tuple[dict[str, bytes], list[str]]:
+    codex_root: Path,
+    claude_root_relative: Path,
+    excluded_plugins: set[str],
+    excluded_skills: dict[str, set[str]],
+) -> tuple[dict[str, bytes], list[str], bytes]:
     entries = codex_plugin_entries(codex_root)
     files: dict[str, bytes] = {}
     plugin_names: list[str] = []
@@ -277,11 +281,15 @@ def render_claude_files(
         )
 
         marketplace_plugins.append(
-            build_marketplace_entry(plugin_name, codex_manifest, f"./{plugin_name}")
+            build_marketplace_entry(
+                plugin_name,
+                codex_manifest,
+                f"./{relative_posix(claude_root_relative / plugin_name)}",
+            )
         )
         plugin_names.append(plugin_name)
 
-    files[CLAUDE_MARKETPLACE] = json_bytes(
+    marketplace_content = json_bytes(
         {
             "name": "my-agents-plugins",
             "description": "Claude Code plugin marketplace mirrored from the Codex-maintained my-agents-plugins source tree.",
@@ -290,17 +298,18 @@ def render_claude_files(
         }
     )
 
-    managed_paths = [".claude-plugin", *plugin_names, STATE_FILE]
+    managed_paths = [*plugin_names, STATE_FILE]
     files[STATE_FILE] = json_bytes(
         {
             "generatedBy": SCRIPT_NAME,
             "sourceRoot": "plugins/codex",
-            "targetRoot": "plugins/claude-code",
+            "targetRoot": relative_posix(claude_root_relative),
+            "rootMarketplace": CLAUDE_MARKETPLACE,
             "managedPaths": managed_paths,
             "plugins": plugin_names,
         }
     )
-    return files, managed_paths
+    return files, managed_paths, marketplace_content
 
 
 def load_state(target_root: Path) -> dict[str, Any] | None:
@@ -360,6 +369,17 @@ def compare_generated(target_root: Path, generated_files: dict[str, bytes], gene
     return diffs
 
 
+def compare_root_marketplace(marketplace_root: Path, content: bytes) -> list[str]:
+    path = marketplace_root / CLAUDE_MARKETPLACE
+    if not path.exists():
+        return [f"missing: {CLAUDE_MARKETPLACE}"]
+    if not path.is_file():
+        return [f"changed: {CLAUDE_MARKETPLACE}"]
+    if path.read_bytes() != content:
+        return [f"changed: {CLAUDE_MARKETPLACE}"]
+    return []
+
+
 def remove_stale_files(
     target_root: Path,
     generated_files: dict[str, bytes],
@@ -396,6 +416,32 @@ def sync_to_target(target_root: Path, generated_files: dict[str, bytes], generat
         target.write_bytes(content)
 
 
+def sync_root_marketplace(
+    marketplace_root: Path,
+    claude_root_relative: Path,
+    content: bytes,
+    state: dict[str, Any] | None,
+) -> None:
+    path = marketplace_root / CLAUDE_MARKETPLACE
+    if path.exists() and not path.is_file():
+        raise SystemExit(
+            "refusing to overwrite non-file Claude Code marketplace path: "
+            f"{path}"
+        )
+    state_manages_path = (
+        state is not None
+        and state.get("rootMarketplace") == CLAUDE_MARKETPLACE
+        and state.get("targetRoot") == relative_posix(claude_root_relative)
+    )
+    if path.exists() and not state_manages_path and path.read_bytes() != content:
+        raise SystemExit(
+            "refusing to overwrite unmanaged Claude Code marketplace: "
+            f"{path}"
+        )
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(content)
+
+
 def parse_args(argv: list[str]) -> argparse.Namespace:
     repo_root = Path(__file__).resolve().parents[1]
     parser = argparse.ArgumentParser(
@@ -408,10 +454,16 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         help="Codex marketplace root. Defaults to plugins/codex.",
     )
     parser.add_argument(
+        "--marketplace-root",
+        type=Path,
+        default=repo_root,
+        help="Claude Code marketplace root. Defaults to the repository root.",
+    )
+    parser.add_argument(
         "--claude-root",
         type=Path,
         default=repo_root / "plugins" / "claude-code",
-        help="Claude Code marketplace root. Defaults to plugins/claude-code.",
+        help="Generated Claude Code plugin mirror. Defaults to plugins/claude-code.",
     )
     parser.add_argument(
         "--config",
@@ -435,15 +487,28 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
 def main(argv: list[str]) -> int:
     args = parse_args(argv)
     codex_root = args.codex_root.resolve()
+    marketplace_root = args.marketplace_root.resolve()
     claude_root = args.claude_root.resolve()
+    try:
+        claude_root_relative = claude_root.relative_to(marketplace_root)
+    except ValueError:
+        raise SystemExit(
+            "--claude-root must be located within --marketplace-root"
+        ) from None
     excluded_plugins, excluded_skills = load_exclusions(args.config.resolve())
     state = load_state(claude_root)
 
-    generated_files, managed_path_list = render_claude_files(
-        codex_root, excluded_plugins, excluded_skills
+    generated_files, managed_path_list, marketplace_content = render_claude_files(
+        codex_root,
+        claude_root_relative,
+        excluded_plugins,
+        excluded_skills,
     )
     managed_paths = set(managed_path_list)
-    diffs = compare_generated(claude_root, generated_files, managed_paths, state)
+    diffs = [
+        *compare_generated(claude_root, generated_files, managed_paths, state),
+        *compare_root_marketplace(marketplace_root, marketplace_content),
+    ]
 
     if args.check or args.dry_run:
         if diffs:
@@ -454,8 +519,22 @@ def main(argv: list[str]) -> int:
         print("Claude Code plugin mirror is up to date.")
         return 0
 
+    sync_root_marketplace(
+        marketplace_root,
+        claude_root_relative,
+        marketplace_content,
+        state,
+    )
     sync_to_target(claude_root, generated_files, managed_paths, state)
-    remaining_diffs = compare_generated(claude_root, generated_files, managed_paths, load_state(claude_root))
+    remaining_diffs = [
+        *compare_generated(
+            claude_root,
+            generated_files,
+            managed_paths,
+            load_state(claude_root),
+        ),
+        *compare_root_marketplace(marketplace_root, marketplace_content),
+    ]
     if remaining_diffs:
         print("Claude Code plugin mirror still has stale or conflicting managed files:")
         for diff in remaining_diffs:
@@ -463,7 +542,8 @@ def main(argv: list[str]) -> int:
         return 1
     print(
         "Synced Claude Code marketplace: "
-        f"{len(managed_paths) - 2} plugins -> {claude_root}"
+        f"{len(managed_path_list) - 1} plugins -> "
+        f"{marketplace_root / CLAUDE_MARKETPLACE}"
     )
     return 0
 

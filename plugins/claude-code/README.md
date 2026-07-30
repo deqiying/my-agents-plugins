@@ -1,6 +1,6 @@
 # Claude Code Plugins
 
-此目录是 Claude Code 插件市场镜像，由仓库根目录的同步脚本从 `plugins/codex/` 生成。
+此目录是 Claude Code 插件镜像，由仓库根目录的同步脚本从 `plugins/codex/` 生成。Claude Code marketplace root 是仓库根目录，入口文件位于 `<repo-root>/.claude-plugin/marketplace.json`。
 
 ## 维护方式
 
@@ -14,12 +14,12 @@ python scripts/sync-claude-code-plugins.py
 
 ```powershell
 python scripts/sync-claude-code-plugins.py --check
-claude plugin validate plugins/claude-code --strict
+claude plugin validate . --strict
 ```
 
 ## 目录格式
 
-- `.claude-plugin/marketplace.json`: Claude Code marketplace 入口。
+- `<repo-root>/.claude-plugin/marketplace.json`: Claude Code marketplace 入口。
 - `<plugin-name>/.claude-plugin/plugin.json`: Claude Code plugin manifest。
 - `<plugin-name>/skills/`: 从 Codex plugin 的 `skills` 目录同步而来。
 

@@ -5,11 +5,39 @@
 不同 agent 的插件市场格式不同，因此按 agent 分开维护：
 
 - `plugins/codex/`: Codex 插件包源码，也是本仓库的手工维护源。
-- `plugins/claude-code/`: Claude Code 插件市场镜像，由同步脚本从 `plugins/codex/` 生成。
+- `plugins/claude-code/`: Claude Code 插件镜像，由同步脚本从 `plugins/codex/` 生成。
 
-Codex CLI 的 marketplace root 是 `plugins/codex/`，入口文件位于 `plugins/codex/.agents/plugins/marketplace.json`。Claude Code 的 marketplace root 是 `plugins/claude-code/`，入口文件位于 `plugins/claude-code/.claude-plugin/marketplace.json`。
+Codex CLI 的 marketplace root 是 `plugins/codex/`，入口文件位于 `plugins/codex/.agents/plugins/marketplace.json`。Claude Code 的 marketplace root 是仓库根目录，入口文件位于 `.claude-plugin/marketplace.json`，插件内容位于 `plugins/claude-code/<plugin-name>/`。
 
 ## 添加插件市场
+
+### Claude Code
+
+从 GitHub 注册整个 marketplace：
+
+```powershell
+claude plugin marketplace add deqiying/my-agents-plugins --scope user
+```
+
+对于只需要 Claude Code 插件内容的环境，可以使用 sparse checkout：
+
+```powershell
+claude plugin marketplace add deqiying/my-agents-plugins --scope user --sparse .claude-plugin plugins/claude-code
+```
+
+从本地 checkout 注册：
+
+```powershell
+claude plugin marketplace add <repo-root> --scope user
+```
+
+安装插件示例：
+
+```powershell
+claude plugin install agent-workflows@my-agents-plugins --scope user
+```
+
+### Codex CLI
 
 在 Codex CLI 中，可以把 `plugins/codex` 目录添加为 Codex 插件市场来源：
 
@@ -46,25 +74,13 @@ python scripts/sync-claude-code-plugins.py --check
 
 脚本会读取 `plugins/codex/.agents/plugins/marketplace.json` 和每个 `plugins/codex/<plugin-name>/.codex-plugin/plugin.json`，生成：
 
-- `plugins/claude-code/.claude-plugin/marketplace.json`
+- `.claude-plugin/marketplace.json`
 - `plugins/claude-code/<plugin-name>/.claude-plugin/plugin.json`
 - `plugins/claude-code/<plugin-name>/skills/...`
 
 同步时会保留 `SKILL.md`、`references/`、`scripts/`、`assets/` 等 skill 内容，但不会复制 `agents/openai.yaml`，因为它是 Codex/OpenAI 专用的 UI metadata。不要直接手工维护 `plugins/claude-code/<plugin-name>/`，需要变更时先改 `plugins/codex/`，再重新运行同步脚本。
 
 不适用于 Claude Code 的内容在 `scripts/claude-code-sync.json` 中声明：`excludePlugins` 排除整个插件，`excludeSkills` 按插件名排除单个 skill。同步会从既有镜像删除已排除的受管文件；配置中引用不存在的插件或 skill 会报错，避免拼写错误被静默忽略。可通过 `--config <path>` 为临时或验证场景指定其他配置文件。
-
-在 Claude Code 中添加本地 marketplace：
-
-```powershell
-claude plugin marketplace add <repo-root>/plugins/claude-code
-```
-
-安装插件示例：
-
-```powershell
-claude plugin install agent-workflows@my-agents-plugins
-```
 
 ## 插件说明
 
@@ -151,6 +167,6 @@ Skill:
 1. `plugins/codex/.agents/plugins/marketplace.json` 可以被 JSON 解析。
 2. 每个 `plugins/codex/*/.codex-plugin/plugin.json` 可以被 JSON 解析。
 3. `python scripts/sync-claude-code-plugins.py --check` 通过，确认 Claude Code mirror 没有漂移。
-4. `claude plugin validate plugins/claude-code --strict` 通过。
+4. `claude plugin validate . --strict` 通过。
 5. 已扫描 skill 文本，确认没有本机绝对路径或指定用户目录残留。
 6. 安装或更新插件后，重启 Codex 或 Claude Code，或开启新会话以刷新插件缓存。

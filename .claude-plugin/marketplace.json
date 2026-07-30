@@ -7,7 +7,7 @@
   "plugins": [
     {
       "name": "agent-workflows",
-      "source": "./agent-workflows",
+      "source": "./plugins/claude-code/agent-workflows",
       "version": "1.0.0",
       "description": "Personal workflow skills for agents.",
       "category": "Productivity",
@@ -17,7 +17,7 @@
     },
     {
       "name": "awesome-design-md",
-      "source": "./awesome-design-md",
+      "source": "./plugins/claude-code/awesome-design-md",
       "version": "0.2.1",
       "description": "Select, fetch, and apply brand-inspired DESIGN.md templates for frontend work.",
       "category": "Productivity",
@@ -28,14 +28,14 @@
     },
     {
       "name": "opencli",
-      "source": "./opencli",
+      "source": "./plugins/claude-code/opencli",
       "version": "1.8.6",
       "description": "Skills for the npm-installed OpenCLI CLI.",
       "category": "Productivity"
     },
     {
       "name": "tool-skills",
-      "source": "./tool-skills",
+      "source": "./plugins/claude-code/tool-skills",
       "version": "2.0.0",
       "description": "Skill routing notes for local CLI tools.",
       "category": "Productivity",
@@ -45,7 +45,7 @@
     },
     {
       "name": "agent-utilities",
-      "source": "./agent-utilities",
+      "source": "./plugins/claude-code/agent-utilities",
       "version": "0.5.5",
       "description": "Utilities for local agent environments and state.",
       "category": "Productivity",
@@ -55,7 +55,7 @@
     },
     {
       "name": "onesearch",
-      "source": "./onesearch",
+      "source": "./plugins/claude-code/onesearch",
       "version": "0.3.1",
       "description": "Main Onesearch CLI router skill.",
       "category": "Productivity",

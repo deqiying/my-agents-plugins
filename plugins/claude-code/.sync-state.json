@@ -2,8 +2,8 @@
   "generatedBy": "scripts/sync-claude-code-plugins.py",
   "sourceRoot": "plugins/codex",
   "targetRoot": "plugins/claude-code",
+  "rootMarketplace": ".claude-plugin/marketplace.json",
   "managedPaths": [
-    ".claude-plugin",
     "agent-workflows",
     "awesome-design-md",
     "opencli",
