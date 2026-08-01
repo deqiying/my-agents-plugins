@@ -103,10 +103,10 @@ Skills:
 
 Skills:
 
-- `maintain-dev-env`: 唯一的开发环境 Skill，统一处理 Java/JDK、Maven/mvnd 及其他本地工具链的环境检查、设置、修复和任务阻塞问题。
+- `maintain-dev-env`: 唯一的开发环境 Skill，统一处理由 WinGet 维护的 PowerShell 7 MSI/WiX 安装、Java/JDK、Maven/mvnd 及其他本地工具链的环境检查、设置、修复和任务阻塞问题。
 - `curate-codex-memory`: 审计 Codex 长期记忆并生成授权的 ad-hoc 变更请求，不直接修改生成态记忆文件。
 
-`maintain-dev-env` 内部通过 `references/scoop.md`、`references/mise.md`、`references/brew.md` 和 `references/tool-registry.md` 路由专用流程；这些文件不是独立 Skill。
+`maintain-dev-env` 内部通过 `references/winget.md`、`references/scoop.md`、`references/mise.md`、`references/brew.md` 和 `references/tool-registry.md` 路由专用流程；这些文件不是独立 Skill。
 
 ### Awesome DESIGN.md
 

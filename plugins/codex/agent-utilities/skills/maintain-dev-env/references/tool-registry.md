@@ -15,6 +15,7 @@ Do not commit raw `mise ls --current --json` output because it can include local
 
 1. Read `references/tool-registry.yaml`.
 2. Inspect the current machine only when needed, using the direct manager first:
+   - PowerShell 7 on Windows: `powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File scripts/manage-pwsh.ps1 -Action check`.
    - Windows: `powershell -ExecutionPolicy Bypass -File scripts/export-mise-tools.ps1`
    - macOS/Linux: `bash scripts/export-mise-tools.sh`
    - npm globals: `npm prefix --global`, `npm list --global --depth=0`, and direct command resolution.
@@ -38,7 +39,7 @@ Each entry should include:
 - `command`: expected command on PATH.
 - `package`: native package id when required to build install/update commands; require it for qualifying `[npm, mise]` npm-global entries.
 - `manager_chain`: direct-to-outer manager order; never collapse `[npm, mise]` to `[mise]`.
-- `install_strategy`: provisioning strategy such as `mise`, `node-bundled`, `npm-global`, or `mise-npm-backend`.
+- `install_strategy`: provisioning strategy such as `winget-wix`, `mise`, `node-bundled`, `npm-global`, or `mise-npm-backend`.
 - `update_owner`: the single manager allowed to update the active installation.
 - `category`: `runtime`, `agent-tool`, `package-manager`, or `utility`.
 - `version_policy`: `latest` for shared/global tools; exact project versions come from repository files.

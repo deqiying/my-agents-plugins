@@ -37,6 +37,18 @@ def json_bytes(data: dict[str, Any]) -> bytes:
     return (json.dumps(data, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
 
 
+def mirrored_bytes(path: Path) -> bytes:
+    content = path.read_bytes()
+    # Keep generated text stable across platform checkout settings without rewriting binary assets.
+    if b"\0" in content:
+        return content
+    try:
+        text = content.decode("utf-8")
+    except UnicodeDecodeError:
+        return content
+    return text.replace("\r\n", "\n").replace("\r", "\n").encode("utf-8")
+
+
 def adapt_metadata_text(value: Any) -> Any:
     if not isinstance(value, str):
         return value
@@ -114,7 +126,7 @@ def add_skill_tree(
         ):
             continue
         if path.is_file() and not path.name.endswith(".pyc"):
-            files[relative_posix(target / rel)] = path.read_bytes()
+            files[relative_posix(target / rel)] = mirrored_bytes(path)
 
 
 def build_plugin_manifest(codex_manifest: dict[str, Any]) -> dict[str, Any]:

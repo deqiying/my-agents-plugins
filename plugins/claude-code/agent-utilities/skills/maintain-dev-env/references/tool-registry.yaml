@@ -6,6 +6,20 @@ placeholders:
   local_mise_config: "<LOCAL_MISE_CONFIG>"
   mise_data_dir: "<MISE_DATA_DIR>"
 tools:
+  - id: "powershell"
+    command: "pwsh"
+    package: "Microsoft.PowerShell"
+    manager_chain:
+      - "winget"
+    install_strategy: "winget-wix"
+    update_owner: "winget"
+    category: "runtime"
+    version_policy: "latest"
+    check:
+      - "winget list --id Microsoft.PowerShell --exact --source winget"
+      - "pwsh -NoLogo -NoProfile -Command '$PSVersionTable.PSVersion.ToString()'"
+      - "pwsh -NoLogo -NoProfile -Command '$PSHOME'"
+    notes: "Stable PowerShell 7 on Windows is machine-scoped and managed only through WinGet package Microsoft.PowerShell with installer type wix (MSI). Do not use the default MSIX installer, Microsoft Store, preview package, Scoop, mise, ZIP, or .NET global-tool copies. If the latest release has no WiX installer, retain the current compliant version and report the policy conflict instead of falling back to MSIX."
   - id: "ast-grep"
     command: "ast-grep"
     manager_chain:
@@ -340,6 +354,9 @@ tools:
       - "uv --version"
     notes: "Python package and project tool."
 manager_notes:
+  winget:
+    platform: "windows"
+    role: "Windows package manager and direct lifecycle owner for machine-scoped PowerShell 7 MSI/WiX installations."
   scoop:
     platform: "windows"
     role: "Windows package manager and prerequisite path for mise."

@@ -1,6 +1,6 @@
 {
   "name": "agent-utilities",
-  "version": "0.5.5",
+  "version": "0.6.0",
   "description": "Reusable local utility skills for routed developer-environment maintenance, tool ownership, memory curation, configuration, and persistent-state maintenance.",
   "author": {
     "name": "Maintainer"
@@ -9,6 +9,11 @@
   "keywords": [
     "utilities",
     "developer-environment",
+    "powershell",
+    "pwsh",
+    "winget",
+    "wix",
+    "msi",
     "scoop",
     "mise",
     "cli-tools",
@@ -28,7 +33,7 @@
   "interface": {
     "displayName": "Agent Utilities",
     "shortDescription": "Utilities for local agent environments and state.",
-    "longDescription": "A personal local plugin for reusable agent utility workflows. It uses maintain-dev-env as the single developer-environment skill for Java/JDK, Maven, mvnd, mise-managed developer CLIs, and other local toolchains, including scoped trust of reviewed project mise configs that the current task changed. It loads platform, runtime, or tool-registry workflows from bundled references only when needed. It also supports structure-aware Codex memory audits and safe ad-hoc memory change requests without directly modifying generated memory state.",
+    "longDescription": "A personal local plugin for reusable agent utility workflows. It uses maintain-dev-env as the single developer-environment skill for WinGet-managed PowerShell 7 MSI/WiX installations, Java/JDK, Maven, mvnd, mise-managed developer CLIs, and other local toolchains, including scoped trust of reviewed project mise configs that the current task changed. It loads platform, runtime, or tool-registry workflows from bundled references only when needed. It also supports structure-aware Codex memory audits and safe ad-hoc memory change requests without directly modifying generated memory state.",
     "developerName": "Maintainer",
     "category": "Productivity",
     "capabilities": [
@@ -36,7 +41,7 @@
       "Shell"
     ],
     "defaultPrompt": [
-      "Use maintain-dev-env as the single skill for Java/JDK, Maven, mvnd, mise-managed developer CLIs, and other local developer environment audits, setup, repair, and task-blocking toolchain issues; when the current task changed a reviewed project mise config, trust only that config before verifying the blocked command.",
+      "Use maintain-dev-env as the single skill for WinGet-managed PowerShell 7 MSI/WiX installations, Java/JDK, Maven, mvnd, mise-managed developer CLIs, and other local developer environment audits, setup, repair, and task-blocking toolchain issues; trust only a reviewed project mise config that the current task changed.",
       "Use curate-codex-memory to audit generated Codex memory state, review noisy or unsafe entries, and preview authorized ad-hoc change notes without directly editing generated memory files."
     ],
     "brandColor": "#0F766E",
