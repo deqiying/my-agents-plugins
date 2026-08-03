@@ -1,7 +1,0 @@
-interface:
-  display_name: "Tool OfficeCLI"
-  short_description: "Precise CLI workflows for Office documents"
-  icon_small: "./assets/icon.png"
-  icon_large: "./assets/icon.png"
-  brand_color: "#2563EB"
-  default_prompt: "Use $tool-officecli first to read, inspect, extract, edit, validate, or render this Office document, especially Excel workbooks that need bounded CLI output."

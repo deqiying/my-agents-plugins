@@ -1,7 +1,10 @@
 {
   "name": "opencli",
-  "version": "1.8.6",
+  "version": "1.8.7",
   "description": "OpenCLI workflow skills for using the npm-installed CLI from Codex.",
+  "author": {
+    "name": "Maintainer"
+  },
   "homepage": "https://github.com/jackwener/OpenCLI",
   "repository": "https://github.com/jackwener/OpenCLI",
   "license": "Apache-2.0",

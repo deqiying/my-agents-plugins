@@ -8,7 +8,7 @@
     {
       "name": "agent-workflows",
       "source": "./plugins/claude-code/agent-workflows",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "description": "Personal workflow skills for agents.",
       "category": "Productivity",
       "author": {
@@ -29,14 +29,17 @@
     {
       "name": "opencli",
       "source": "./plugins/claude-code/opencli",
-      "version": "1.8.6",
+      "version": "1.8.7",
       "description": "Skills for the npm-installed OpenCLI CLI.",
-      "category": "Productivity"
+      "category": "Productivity",
+      "author": {
+        "name": "Maintainer"
+      }
     },
     {
       "name": "tool-skills",
       "source": "./plugins/claude-code/tool-skills",
-      "version": "2.0.1",
+      "version": "3.0.0",
       "description": "Skill routing notes for local CLI tools.",
       "category": "Productivity",
       "author": {

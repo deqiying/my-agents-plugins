@@ -90,11 +90,12 @@ python scripts/sync-claude-code-plugins.py --check
 
 Skills:
 
-- `workflows-grill-with-docs`: 自适应地逐题深挖或分批追问设计与方案，并在目标仓库中按需沉淀术语表与 ADR。
-- `workflows-evidence-diagnostics`: 用于反复失败、证据冲突、状态不一致与高回滚成本改动的证据驱动诊断。
-- `workflows-guidelines`: 以最小改动、风险分级和可验证性约束非平凡工程改动。
-- `workflows-git-operations`: 规范 Git 仓库初始化、分支创建、检查、暂存、提交、拉取、推送、回滚和安全锁处理。
-- `workflows-output-formatting`: 将复杂技术回复整理成更容易阅读的结构，同时保留关键信息。
+- `dev`: 对非简单软件改动执行研究、方案、计划确认、实施和验收的完整流程。
+- `grill-with-docs`: 自适应地逐题深挖或分批追问设计与方案，并在目标仓库中按需沉淀术语表与 ADR。
+- `evidence-diagnostics`: 用于反复失败、证据冲突、状态不一致与高回滚成本改动的证据驱动诊断。
+- `guidelines`: 以最小改动、风险分级和可验证性约束非平凡工程改动。
+- `git-operations`: 规范 Git 仓库初始化、分支创建、检查、暂存、提交、拉取、推送、回滚和安全锁处理。
+- `output-formatting`: 将复杂技术回复整理成更容易阅读的结构，同时保留关键信息。
 
 ### Agent Utilities
 
@@ -145,8 +146,8 @@ Skill:
 
 Skill:
 
-- `tool-fast-context`: 未知入口场景首选的语义搜索 CLI，用于定位本地代码库中的相关文件、入口点和影响范围；在 skill 已加载且 `doctor` 预检通过后执行搜索，并在本地验证候选结果。
-- `tool-officecli`: 优先使用本地 `officecli` CLI 读取、提取、检查、修改、验证和渲染 Office 文档。
+- `fast-context`: 未知入口场景首选的语义搜索 CLI，用于定位本地代码库中的相关文件、入口点和影响范围；在 skill 已加载且 `doctor` 预检通过后执行搜索，并在本地验证候选结果。
+- `officecli`: 优先使用本地 `officecli` CLI 读取、提取、检查、修改、验证和渲染 Office 文档。
 
 ## 可移植性约定
 

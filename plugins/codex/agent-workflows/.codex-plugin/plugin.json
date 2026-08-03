@@ -1,6 +1,6 @@
 {
   "name": "agent-workflows",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Personal workflow skills for agent task planning and execution.",
   "author": {
     "name": "Maintainer"
@@ -23,12 +23,12 @@
       "Read"
     ],
     "defaultPrompt": [
-      "Use workflows-dev when a non-trivial change must be researched, planned, explicitly approved, implemented, and verified as one controlled workflow.",
-      "Use workflows-evidence-diagnostics only when repeated failures, conflicting evidence, diverging source/generated/runtime states, or rollback risk require explicit diagnosis.",
-      "Apply workflows-output-formatting to any dense user-facing response so it keeps important details while becoming easier to read.",
-      "Apply workflows-guidelines to keep non-trivial engineering edits simple, surgical, and verifiable.",
-      "Apply workflows-git-operations before initializing repositories, creating branches, conditionally staging after separate index and worktree inspection, committing, handling Git author identity errors, pulling, pushing, rolling back, or clearing stale Git index locks.",
-      "Use Workflows Grill With Docs to adaptively stress-test a plan and capture settled terminology or durable decisions in the target repository."
+      "Use $dev when a non-trivial change must be researched, planned, explicitly approved, implemented, and verified as one controlled workflow.",
+      "Use $evidence-diagnostics only when repeated failures, conflicting evidence, diverging source/generated/runtime states, or rollback risk require explicit diagnosis.",
+      "Apply $output-formatting to any dense user-facing response so it keeps important details while becoming easier to read.",
+      "Apply $guidelines to keep non-trivial engineering edits simple, surgical, and verifiable.",
+      "Apply $git-operations before initializing repositories, creating branches, conditionally staging after separate index and worktree inspection, committing, handling Git author identity errors, pulling, pushing, rolling back, or clearing stale Git index locks.",
+      "Use $grill-with-docs to adaptively stress-test a plan and capture settled terminology or durable decisions in the target repository."
     ],
     "brandColor": "#0F766E",
     "composerIcon": "./assets/icon.png",

@@ -1,0 +1,10 @@
+interface:
+  display_name: "Development Workflow"
+  short_description: "Approval-gated software change workflow"
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/icon.png"
+  brand_color: "#7C3AED"
+  default_prompt: "Use $dev to research and plan this change, wait for my approval, then implement and verify it."
+
+policy:
+  allow_implicit_invocation: false

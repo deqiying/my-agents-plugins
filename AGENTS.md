@@ -11,17 +11,18 @@
 
 ### Skill 命名
 
-- `tool-skills` 中的 skill 用于封装普通本地 CLI 工具，必须使用 `tool-<tool-id>` 形式的名称，例如 `tool-codesearch` 或 `tool-officecli`。
-- `mcp-skills` 中的 skill 用于路由 MCP server，必须使用 `mcp-<server-id>` 形式的名称，例如 `mcp-context7`。
-- `agent-workflows` 中的 skill 用于描述可复用的 agent workflow，必须使用 `workflows-<workflow-id>` 形式的名称。
+- plugin 名称负责表达能力分类，skill 名称默认不要重复所属 plugin 的类别前缀。
+- `tool-skills` 中的 skill 用于封装普通本地 CLI 工具，直接使用清晰的工具标识作为名称，例如 `fast-context` 或 `officecli`；仅在发生真实重名或能显著改善辨识度时增加领域限定。
+- `agent-workflows` 中的 skill 用于描述可复用的 agent workflow，使用聚焦于目标或能力的名称，例如 `dev`、`evidence-diagnostics` 或 `git-operations`，不添加 `workflows-` 类别前缀。
 - `utility skill` 应使用与 plugin 领域匹配、以动词开头且含义明确的名称，例如 `setup-*`、`manage-*` 或 `maintain-*`。
-- 当仓库封装层需要类别前缀时，不要向分类 plugin 添加不带前缀的上游 skill 名称。描述 `onesearch skills show onesearch-cli` 等命令时，只能在 skill 正文或参考资料中保留上游或 CLI 原生的 skill 名称。
+- 不要仅为表达所属 plugin 而给 skill 添加类别前缀。描述 `onesearch skills show onesearch-cli` 等命令时，只能在 skill 正文或参考资料中保留上游或 CLI 原生的 skill 名称。
 
 ## 二、Skill 路由与元数据
 
 - 默认将 `SKILL.md` frontmatter 的 `description` 和面向触发的 metadata 写成 agent-neutral 的路由文本。该仓库是可复用的多 agent plugin 与 skill 集合，因此应优先使用 “Use when an agent needs”、“Use when the task involves” 或 “Use for” 等表述，而非 “when <product> needs” 这类产品绑定措辞。
 - 仅当 skill 实际操作 `Codex`、`Claude Code`、OpenAI 或其他产品本身、其配置、marketplace、app、CLI 或产品专属 UI metadata 时，才可在 skill 描述中提及它们。不要将 `Codex` 当作消费该 skill 的 agent 的同义词。
 - 触发描述必须具体并以能力为中心：说明 skill 的作用、应触发它的任务场景、重要的文件/工具/数据线索，以及必要时的关键排除项。不要依赖正文中的 “when to use” 小节作为路由依据，因为正文只会在 skill 触发后才加载。
+- Plugin 的 `name`、`description`、`interface.displayName`、`shortDescription`、`longDescription` 和 `defaultPrompt` 使用英文。Skill 的 frontmatter `name`、`description`，以及 `agents/openai.yaml` 中的 `display_name`、`short_description` 和 `default_prompt` 使用英文；`SKILL.md` 正文、references 和面向维护者的仓库文档可以使用中文。
 - `SKILL.md` YAML frontmatter 的 `description` 默认不加引号，并使用 YAML plain scalar 写法；其中的冒号必须使用半角 `:`。仅当内容包含 `: ` 等会使 plain scalar 无法被 YAML 正确解析的序列时，才添加双引号。
 - `SKILL.md` 正文可以使用全角引号等中文标点；该规则不适用于 YAML frontmatter。
 
