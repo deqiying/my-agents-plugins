@@ -1,7 +1,7 @@
 {
   "name": "onesearch",
-  "version": "0.3.1",
-  "description": "Main Onesearch CLI router skill for Claude Code workflows.",
+  "version": "0.3.2",
+  "description": "Thin host entry for version-matched Onesearch CLI skills.",
   "displayName": "Onesearch",
   "author": {
     "name": "Maintainer"

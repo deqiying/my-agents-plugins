@@ -15,7 +15,7 @@
 - `tool-skills` 中的 skill 用于封装普通本地 CLI 工具，直接使用清晰的工具标识作为名称，例如 `fast-context` 或 `officecli`；仅在发生真实重名或能显著改善辨识度时增加领域限定。
 - `agent-workflows` 中的 skill 用于描述可复用的 agent workflow，使用聚焦于目标或能力的名称，例如 `dev`、`evidence-diagnostics` 或 `git-operations`，不添加 `workflows-` 类别前缀。
 - `utility skill` 应使用与 plugin 领域匹配、以动词开头且含义明确的名称，例如 `setup-*`、`manage-*` 或 `maintain-*`。
-- 不要仅为表达所属 plugin 而给 skill 添加类别前缀。描述 `onesearch skills show onesearch-cli` 等命令时，只能在 skill 正文或参考资料中保留上游或 CLI 原生的 skill 名称。
+- 不要仅为表达所属 plugin 而给 skill 添加类别前缀。描述 CLI 的 skill 加载命令时，在 skill 正文或参考资料中保留上游原生 skill ID，不要将该 ID 反向用作仓库 skill 的类别前缀。
 
 ## 二、Skill 路由与元数据
 
