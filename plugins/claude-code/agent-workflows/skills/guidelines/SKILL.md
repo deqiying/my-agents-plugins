@@ -47,7 +47,3 @@ For small changes with a clear scope and obvious success criteria, act directly.
 - Add or run tests when the behavior risk warrants them and the project has a suitable test foundation. Do not invent a test framework or expand scope for formality.
 - When updating a plugin or skill, update the source and declared generated mirror. Do not refresh installed caches or marketplaces unless the user explicitly asks for installation verification.
 - Inspect the diff, run the smallest sufficient validation, and report remaining unverified boundaries.
-
-## 5. Reader-Facing Output
-
-When a user-facing update or answer includes multiple decisions, files, risks, verification steps, or implementation details, apply `$output-formatting`. Keep simple answers simple.

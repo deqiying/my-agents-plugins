@@ -33,4 +33,3 @@ description: Use for diagnosing repeated failures, conflicting evidence, source/
 ## 输出
 
 - 仅报告结论、关键证据、已排除的状态与剩余未验证边界；不要公开冗长的内部推理。
-- 当答复包含多个证据或决策时，使用 `$output-formatting`。

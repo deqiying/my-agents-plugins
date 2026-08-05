@@ -1,6 +1,6 @@
 {
   "name": "agent-workflows",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Personal workflow skills for agent task planning and execution.",
   "displayName": "Agent Workflows",
   "author": {
