@@ -1,6 +1,6 @@
 {
   "name": "agent-workflows",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "Personal workflow skills for agent task planning and execution.",
   "author": {
     "name": "Maintainer"
@@ -16,7 +16,7 @@
   "interface": {
     "displayName": "Agent Workflows",
     "shortDescription": "Personal workflow skills for agents.",
-    "longDescription": "A local skills-only plugin for reusable agent workflows such as approval-gated development, evidence-driven diagnostics, coding guidelines, Git initialization and operation discipline with conditional staging and author identity error handling, adaptive documentation-backed plan stress-testing, and task execution discipline. It intentionally does not ship MCP servers.",
+    "longDescription": "A local skills-only plugin for reusable agent workflows such as approval-gated development, coding guidelines, Git initialization and operation discipline with conditional staging and author identity error handling, adaptive documentation-backed plan stress-testing, and task execution discipline. It intentionally does not ship MCP servers.",
     "developerName": "Maintainer",
     "category": "Productivity",
     "capabilities": [
@@ -24,7 +24,6 @@
     ],
     "defaultPrompt": [
       "Use $dev when a non-trivial change must be researched, planned, explicitly approved, implemented, and verified as one controlled workflow.",
-      "Use $evidence-diagnostics only when repeated failures, conflicting evidence, diverging source/generated/runtime states, or rollback risk require explicit diagnosis.",
       "Apply $guidelines to keep non-trivial engineering edits simple, surgical, and verifiable.",
       "Apply $git-operations before initializing repositories, creating branches, conditionally staging after separate index and worktree inspection, committing, handling Git author identity errors, pulling, pushing, rolling back, or clearing stale Git index locks.",
       "Use $grill-with-docs to adaptively stress-test a plan and capture settled terminology or durable decisions in the target repository."

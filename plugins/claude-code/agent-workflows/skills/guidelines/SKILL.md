@@ -20,7 +20,7 @@ For small changes with a clear scope and obvious success criteria, act directly.
 ## Avoid
 
 - One-line factual answers, simple command output, writing without engineering behavior, or tiny known-file edits with obvious success criteria.
-- Architecture decisions, repeated failures, or evidence-driven diagnostics; use `$evidence-diagnostics` or the appropriate specialized skill instead.
+- Architecture decisions, repeated failures, or evidence-driven diagnostics; use the appropriate specialized workflow instead.
 - Do not override project rules, user instructions, or specialized skills. Apply the more specific rule when they overlap.
 
 ## 1. Verify Before Deciding
