@@ -39,7 +39,7 @@
     {
       "name": "tool-skills",
       "source": "./plugins/claude-code/tool-skills",
-      "version": "3.0.1",
+      "version": "3.0.2",
       "description": "Skill routing notes for local CLI tools.",
       "category": "Productivity",
       "author": {
