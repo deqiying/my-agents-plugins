@@ -6,10 +6,29 @@
 
 - `plugins/codex/`: Codex 插件包源码，也是本仓库的手工维护源。
 - `plugins/claude-code/`: Claude Code 插件镜像，由同步脚本从 `plugins/codex/` 生成。
+- 仓库根目录的 `package.json`: pi package 清单，通过 `pi.skills` 直接引用 `plugins/codex/*/skills`，使整个仓库可以作为一个 pi package 安装。
 
 Codex CLI 的 marketplace root 是 `plugins/codex/`，入口文件位于 `plugins/codex/.agents/plugins/marketplace.json`。Claude Code 的 marketplace root 是仓库根目录，入口文件位于 `.claude-plugin/marketplace.json`，插件内容位于 `plugins/claude-code/<plugin-name>/`。
 
 ## 添加插件市场
+
+### pi
+
+pi 没有独立的插件市场格式，整个仓库就是一个 pi package（根目录 `package.json` 声明 `pi.skills`）。直接从 GitHub 安装：
+
+```bash
+pi install git:github.com/deqiying/my-agents-plugins@v0.1.0
+```
+
+`@v0.1.0` 是 pin 住的 git tag，用于多设备保持一致；更新时切换到新 tag：
+
+```bash
+pi install git:github.com/deqiying/my-agents-plugins@v0.2.0
+```
+
+不写 ref 则跟随默认分支，可用 `pi update --extensions` 更新。也可以试用不安装：`pi -e git:github.com/deqiying/my-agents-plugins`。安装后用 `pi list` 查看、`pi config` 按设备启用或禁用单个 skill。
+
+pi 版本线独立于各 plugin 的 `.codex-plugin/plugin.json` 版本：有 skill 变更需要分发到 pi 设备时，递增根目录 `package.json` 的 `version` 并打同名 git tag。
 
 ### Claude Code
 
@@ -167,5 +186,6 @@ Skill:
 2. 每个 `plugins/codex/*/.codex-plugin/plugin.json` 可以被 JSON 解析。
 3. `python scripts/sync-claude-code-plugins.py --check` 通过，确认 Claude Code mirror 没有漂移。
 4. `claude plugin validate . --strict` 通过。
-5. 已扫描 skill 文本，确认没有本机绝对路径或指定用户目录残留。
+5. 根目录 `package.json` 可以被 JSON 解析，且 `pi.skills` glob 匹配到的目录与 `plugins/codex/*/skills` 实际目录一致。
+6. 已扫描 skill 文本，确认没有本机绝对路径或指定用户目录残留。
 6. 安装或更新插件后，重启 Codex 或 Claude Code，或开启新会话以刷新插件缓存。

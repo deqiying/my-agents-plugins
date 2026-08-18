@@ -1,0 +1,14 @@
+{
+  "name": "my-agents-plugins",
+  "version": "0.1.0",
+  "description": "Reusable agent workflow, tool, and utility skills packaged for pi, Codex, and Claude Code.",
+  "keywords": ["pi-package"],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deqiying/my-agents-plugins.git"
+  },
+  "pi": {
+    "skills": ["plugins/codex/*/skills"]
+  }
+}
