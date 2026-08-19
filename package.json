@@ -9,6 +9,10 @@
     "url": "git+https://github.com/deqiying/my-agents-plugins.git"
   },
   "pi": {
-    "skills": ["plugins/codex/*/skills"]
+    "skills": [
+      "plugins/codex/*/skills",
+      "!plugins/codex/opencli/skills",
+      "!plugins/codex/awesome-design-md/skills"
+    ]
   }
 }
