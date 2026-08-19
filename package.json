@@ -11,8 +11,8 @@
   "pi": {
     "skills": [
       "plugins/codex/*/skills",
-      "!plugins/codex/opencli/skills",
-      "!plugins/codex/awesome-design-md/skills"
+      "!plugins/codex/opencli/skills/**",
+      "!plugins/codex/awesome-design-md/skills/**"
     ]
   }
 }
