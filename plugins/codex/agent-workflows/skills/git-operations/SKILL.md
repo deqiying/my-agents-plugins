@@ -118,7 +118,11 @@ Commit message rules:
 - Write the subject in Chinese. Keep simple changes brief, with no trailing punctuation.
 - Choose `type` from the actual staged diff, not from the user's initial wording.
 - Use `docs` for documentation and skill text changes; use `chore` for dependency, metadata, generated housekeeping, or repository maintenance that does not fit another type.
-- For broad or complex changes, keep the subject as the total summary and add a short body with `总:` and `分:`. Do not turn the body into a detailed changelog.
+- Default to a concise single-line subject for a normal commit request. Do not add a body merely because the diff touches several files, repositories, generated outputs, tests, or documentation.
+- Judge complexity by semantic scope and the context that must remain in history, not by file count, diff size, repository count, or generated line count.
+- Treat a change as simple when it serves one user goal, even when implementation and generated or mirrored artifacts span multiple paths or repositories. When separate commits are needed for those repositories, keep each subject to one line by default.
+- Add a body only when the user explicitly asks for one, the commit combines multiple independent user goals, or a compatibility, migration, security, release, or rollback note is essential to understand the change later.
+- When a body is warranted, keep it to one concise `总:` sentence and one concise `分:` sentence. Do not turn the body into a file list, validation report, or detailed changelog.
 
 Examples:
 
@@ -128,6 +132,8 @@ git commit -m 'docs(workflow): 新增Git操作规范'
 git commit -m 'refactor(gateway): 梳理连接生命周期' -m '总: 统一网关连接注册、断线清理和重连入口。
 分: 调整链路管理、会话校验和关键回归测试。'
 ```
+
+For example, adding one fake enum and synchronizing its generated C#/TypeScript output is still one user goal. Use `feat(rank): 新增地区编码枚举` and `chore(enum): 同步地区编码枚举` as separate one-line subjects; do not add a body solely because the generated files are large or live in another repository.
 
 ## Branch Creation
 

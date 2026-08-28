@@ -4,7 +4,7 @@ interface:
   icon_small: "./assets/icon.png"
   icon_large: "./assets/icon.png"
   brand_color: "#16A34A"
-  default_prompt: "Use $git-operations to inspect staged and unstaged changes separately, stage only missing task changes, and perform approved Git operations safely."
+  default_prompt: "Use $git-operations to inspect staged and unstaged changes separately, stage only missing task changes, and perform approved Git operations safely. Default to a concise single-line Chinese Conventional Commit; add a short body only when the user asks for it or the change has multiple independent goals or essential compatibility, migration, security, release, or rollback context."
 
 policy:
   allow_implicit_invocation: true
