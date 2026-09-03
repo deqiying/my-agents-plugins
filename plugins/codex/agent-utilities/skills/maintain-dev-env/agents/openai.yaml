@@ -4,6 +4,6 @@ interface:
   icon_small: "./assets/icon.png"
   icon_large: "./assets/icon.png"
   brand_color: "#0F766E"
-  default_prompt: "Use $maintain-dev-env to audit or repair my WinGet-managed PowerShell 7 MSI/WiX installation, Scoop, mise, runtimes, and developer CLIs; trust only a reviewed project mise config."
+  default_prompt: "Use $maintain-dev-env to audit or repair my WinGet-managed PowerShell 7 MSI/WiX installation, Scoop, mise, runtimes, and developer CLIs, including project-level Rust proxy mismatches; trust only a reviewed project mise config."
 policy:
   allow_implicit_invocation: true

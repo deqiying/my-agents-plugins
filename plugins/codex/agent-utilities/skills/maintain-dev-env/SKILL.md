@@ -24,7 +24,7 @@ Read only the references required for the current step. These are supporting wor
 2. Identify the platform and shell with real commands.
 3. Read project toolchain declarations before trusting global commands:
    - Go: `go.mod`, `toolchain`, `mise.toml`, `.tool-versions`.
-   - Rust: `rust-toolchain.toml`, `Cargo.toml` `rust-version`, `mise.toml`, `.tool-versions`.
+   - Rust: `rust-toolchain.toml`, `Cargo.toml` `rust-version`, `mise.toml`, `.tool-versions`; when a project config sets `MISE_CARGO_HOME` or `MISE_RUSTUP_HOME`, load [mise-rust.md](./references/mise-rust.md).
    - Java/Maven: `pom.xml` compiler or toolchain settings, `.mvn/jvm.config`, `.mvn/maven.config`, `.mvn/wrapper/maven-wrapper.properties`, `.java-version`, `mise.toml`, `.tool-versions`.
    - Node: `package.json` `engines` and `packageManager`, `.node-version`, `.nvmrc`, `mise.toml`, `.tool-versions`.
    - Python: `pyproject.toml` `requires-python`, `.python-version`, `uv.lock`, `mise.toml`, `.tool-versions`.

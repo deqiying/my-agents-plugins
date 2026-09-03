@@ -7,6 +7,7 @@ Use this workflow for mise itself, directly mise-managed runtimes or tools, proj
 - [Scope And Ownership](#scope-and-ownership)
 - [Default Workflow](#default-workflow)
 - [Project Config Trust](#project-config-trust)
+- [Project-Level Rust Proxy Recovery](./mise-rust.md#project-level-rust-proxy-recovery)
 - [Path Placeholders](#path-placeholders)
 - [Read-Only Checks](#read-only-checks)
 - [Mise-Managed Developer Utilities](#mise-managed-developer-utilities)
@@ -25,6 +26,7 @@ Use this workflow for mise itself, directly mise-managed runtimes or tools, proj
 - On Linux, confirm the install source before running any remote installer.
 - Read `tool-registry.yaml` before changing a registered tool. Keep `manager_chain`, `install_strategy`, and `update_owner` distinct.
 - Use mise commands directly only for entries whose manager chain begins with `mise`.
+- For project-level Rust with `MISE_CARGO_HOME` or `MISE_RUSTUP_HOME`, load [mise-rust.md](./mise-rust.md#project-level-rust-proxy-recovery) for the dedicated diagnosis, recovery, and verification workflow.
 - For `[npm, mise]`, use npm for `npm-global`; use a mise npm backend only after an explicit strategy decision and duplicate check.
 - Treat registered `java`, `maven`, and `mvnd` as separate direct mise-managed tools. The Maven registry id is `maven`, while its primary command is `mvn`.
 - Treat shared/global Rust as mise-managed. If `rustc` or `cargo` resolves to rustup or `<HOME>/.cargo/bin`, report a manager mismatch unless a project explicitly requires rustup.
